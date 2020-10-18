@@ -1,0 +1,6 @@
+export const pink = '#FF3180'
+export const blue = '#287EF3'
+export const grayBackground = '#ececec'
+export const grayLabel = '#858688'
+export const black = '#000000'
+export const white = '#ffffff'
