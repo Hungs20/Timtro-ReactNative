@@ -20,7 +20,6 @@ function HomeScreen({ navigation }) {
 function CreateRoomIndex({ navigation }) {
   return (
       <CreateRoom/>
-      
   );
 }
 const Stack = createStackNavigator();
