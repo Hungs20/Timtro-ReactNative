@@ -2,7 +2,7 @@ import React from 'react'
 import {Colors, Fonts} from '../../../styles'
 import {Text, StyleSheet, View} from 'react-native'
 import { Component } from 'react'
-import { RadioButton } from 'react-native-paper';
+import { RadioButton, TextInput  } from 'react-native-paper';
 import Step from './step'
 
 class CreateRoom extends Component {
@@ -10,12 +10,25 @@ class CreateRoom extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            valueRoom: ''
+            valueRoom: '',
+            dataTypeRoom: [
+                {'label': 'Kí túc xá/Homestay', 'value' : 'ktx'}, 
+                {'label': 'Phòng cho thuê', 'value' : 'pct'}, 
+                {'label': 'Phòng ở ghép', 'value' : 'pog'}, 
+                {'label': 'Nhà nguyên căn', 'value' : 'nnc'}, 
+                {'label': 'Căn hộ', 'value' : 'ch'}
+            ],
+            numRoom : ''
         }
     }
     setValueRoom = (value) => {
         this.setState({
             valueRoom : value
+        })
+    }
+    setNumRoom = (value) => {
+        this.setState({
+            numRoom : value
         })
     }
     render() {
@@ -26,10 +39,27 @@ class CreateRoom extends Component {
                 <Text style={styles.subTitleLabel}>LOẠI PHÒNG</Text>
                 
                 <RadioButton.Group onValueChange={value => this.setValueRoom(value)} value={this.state.valueRoom}>
-                    <RadioButton.Item label="First item" value="first" style={styles.radioButton} labelStyle={styles.radioLabel} color={Colors.blue}/>
+                    {this.state.dataTypeRoom.map((data,index) => {
+                        return(
+                            <RadioButton.Item 
+                                key={data.value}
+                                label={data.label} 
+                                value={data.value} 
+                                style={styles.radioButton} 
+                                labelStyle= {(this.state.valueRoom === data.value) ? styles.radioLabelSelected : styles.radioLabel}
+                                color={Colors.blue}
+                            />
+                        )
+                    })}
                     
-                    <RadioButton.Item label="Second item" value="second" />
                 </RadioButton.Group>
+
+                <Text style={styles.subTitleLabel}>SỐ LƯỢNG PHÒNG</Text>
+                <TextInput
+                    label="phòng"
+                    value={this.state.numRoom}
+                    placeholder="Nhập số phòng bạn đang quản lý"
+                />
             </View>
            
         )
@@ -60,17 +90,19 @@ const styles = StyleSheet.create({
         color: Colors.grayLabel,
         fontSize: Fonts.smallFontSize,
         marginLeft: 15,
-        marginVertical: 10
+        marginVertical: 15
     },
     radioLabel: {
         color: Colors.grayLabel,
     },
+    radioLabelSelected: {
+        color: Colors.black
+    },
     radioButton: {
         borderBottomColor: Colors.grayLabel,
         borderBottomWidth: 1,
-        marginLeft: 15,
-        marginVertical: 10,
-        marginRight: 15
+       // marginVertical: 10,
+        marginHorizontal: 15
     }
 
   })

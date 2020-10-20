@@ -3,7 +3,6 @@ import { Component } from 'react';
 import {View, Text, StyleSheet} from 'react-native'
 import StepIndicator from 'react-native-step-indicator';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Swiper from 'react-native-swiper';
 import {Colors} from './../../../styles';
 const PAGES = ['Page 1', 'Page 2', 'Page 3', 'Page 4'];
 const labels = ["Thông tin","Địa chỉ","Tiện ích","Xác nhận"];
