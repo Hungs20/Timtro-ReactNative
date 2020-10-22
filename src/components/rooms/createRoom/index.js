@@ -32,6 +32,7 @@ class CreateRoom extends Component {
         })
     }
     render() {
+        console.log(this.state.numRoom)
         return (
             <View style={styles.container}>
                 <View style={{backgroundColor: Colors.white}}><Step/></View>
@@ -56,10 +57,17 @@ class CreateRoom extends Component {
 
                 <Text style={styles.subTitleLabel}>SỐ LƯỢNG PHÒNG</Text>
                 <TextInput
-                    label="phòng"
+                style = {{marginHorizontal: 15}}
+                selectionColor={Colors.pink}
+                underlineColor={Colors.pink}
+                    label="Số lượng phòng"
                     value={this.state.numRoom}
                     placeholder="Nhập số phòng bạn đang quản lý"
-                />
+                    onChangeText={text => this.setNumRoom({ text })}
+                >
+                
+                </TextInput>
+                
             </View>
            
         )
