@@ -21,7 +21,7 @@ git add .
 ```
 - Commit
 ```
-git commit -m 'message'
+git commit -m "message"
 ```
 - Push lên git
 ```
@@ -30,10 +30,6 @@ git push origin features/ten_branch
 - Cập nhật code
 ```
 git pull origin develop
-```
-- Test
-```
-test git
 ```
 # Install
 ``` sh
