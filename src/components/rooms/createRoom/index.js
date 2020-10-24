@@ -1,9 +1,11 @@
 import React from 'react'
 import {Colors, Fonts} from '../../../styles'
-import {Text, StyleSheet, View} from 'react-native'
+import {StyleSheet} from 'react-native'
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Card, ListItem, Button, Text, CheckBox, Divider, ThemeProvider, Input } from 'react-native-elements'
 import { Component } from 'react'
-import { RadioButton, TextInput  } from 'react-native-paper';
 import Step from './step'
+import { ScrollView } from 'react-native-gesture-handler'
 
 class CreateRoom extends Component {
     
@@ -32,42 +34,44 @@ class CreateRoom extends Component {
         })
     }
     render() {
-        console.log(this.state.numRoom)
+        console.log(this.state.checked);
         return (
-            <View style={styles.container}>
-                <View style={{backgroundColor: Colors.white}}><Step/></View>
-                <Text style={styles.titleLabel}>Thông tin phòng</Text>
-                <Text style={styles.subTitleLabel}>LOẠI PHÒNG</Text>
-                
-                <RadioButton.Group onValueChange={value => this.setValueRoom(value)} value={this.state.valueRoom}>
-                    {this.state.dataTypeRoom.map((data,index) => {
+            <ScrollView>
+                <ThemeProvider>
+                    <Card><Step/></Card>
+                    <Text h4>Thông tin phòng</Text>
+<Card>
+  <Card.Title>Loại phòng</Card.Title>
+  <Card.Divider/>
+  {//<Card.Image source={require('../images/pic2.jpg')} />
+  }
+  {this.state.dataTypeRoom.map((data,index) => {
                         return(
-                            <RadioButton.Item 
+                            
+                            <CheckBox
                                 key={data.value}
-                                label={data.label} 
-                                value={data.value} 
-                                style={styles.radioButton} 
-                                labelStyle= {(this.state.valueRoom === data.value) ? styles.radioLabelSelected : styles.radioLabel}
-                                color={Colors.blue}
+                                title={data.label}
+                                checkedIcon='dot-circle-o'
+                                uncheckedIcon='circle-o'
+                                checked={this.state.valueRoom == data.value}
+                                onPress = {() => this.setValueRoom(data.value)}
                             />
                         )
                     })}
-                    
-                </RadioButton.Group>
+</Card>
 
-                <Text style={styles.subTitleLabel}>SỐ LƯỢNG PHÒNG</Text>
-                <TextInput
-                    style = {{marginHorizontal: 15}}
-                    selectionColor={Colors.pink}
-                    underlineColor={Colors.pink}
-                    label="Số lượng phòng"
-                    value={this.state.numRoom}
-                    placeholder="Nhập số phòng bạn đang quản lý"
-                    onChangeText={text => this.setNumRoom({ text })}
-                />
-                
-            </View>
-           
+
+
+                <Input
+   placeholder="Nhập số lượng phòng"
+   label="Số lượng phòng"
+   rightIcon={{ type: 'font-awesome', name: 'home' }}
+   style={styles}
+   onChangeText={value => this.setValueRoom(value)}
+  />
+
+            </ThemeProvider>
+            </ScrollView>
         )
         
     }
