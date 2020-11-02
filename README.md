@@ -1,8 +1,8 @@
 # Timtro-ReactNative
 Project UI/UX
 # Doc
-  https://reactnative.dev/docs/environment-setup
-  https://reactnativeelements.com/docs/
+- https://reactnative.dev/docs/environment-setup
+- https://reactnativeelements.com/docs/
 # Git flow
 - Tải project về máy
 ```
