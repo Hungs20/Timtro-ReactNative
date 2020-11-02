@@ -1,19 +1,22 @@
 import React from 'react';
-import { Text, View, Button, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import {Colors, Fonts} from './src/styles';
 import CreateRoom from './src/components/rooms/createRoom'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Button, ThemeProvider, Text } from 'react-native-elements';
 
 function HomeScreen({ navigation }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+<ThemeProvider>
+
       <Text>Home Screen</Text>
       <Button
         title="Go to Details"
         onPress={() => navigation.navigate('createRoom')}
       />
-    </View>
+          </ThemeProvider>
+
   );
 }
 

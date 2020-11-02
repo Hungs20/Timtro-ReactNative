@@ -4,7 +4,6 @@ import {View, Text, StyleSheet} from 'react-native'
 import StepIndicator from 'react-native-step-indicator';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Colors} from './../../../styles';
-const PAGES = ['Page 1', 'Page 2', 'Page 3', 'Page 4'];
 const labels = ["Thông tin","Địa chỉ","Tiện ích","Xác nhận"];
 const customStyles = {
   stepIndicatorSize: 30,
@@ -36,7 +35,7 @@ class Step extends Component {
   constructor(props) {
       super(props)
       this.state = {
-          currentPage: 0,
+          currentPage: this.props.currentStep,
       }
   }
   getStepIndicatorIconConfig = ({position, stepStatus}) => {
@@ -104,10 +103,9 @@ class Step extends Component {
       <View style={styles.stepIndicator}>
         <StepIndicator
             customStyles={customStyles}
-            stepCount={4}
-            currentPosition={this.state.currentPage}
+            stepCount={this.props.maxStep}
+            currentPosition={this.props.currentStep}
             renderStepIndicator={this.renderStepIndicator}
-            onPress={this.onStepPress}
             labels={labels}
         />
       </View>
