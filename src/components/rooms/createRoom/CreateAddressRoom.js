@@ -4,7 +4,6 @@ import {StyleSheet, View, TouchableOpacity} from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Card, ListItem, Button, Text, CheckBox, Divider, ThemeProvider, Input, Overlay, Avatar  } from 'react-native-elements'
 import { Component } from 'react'
-import Step from './step'
 import { ScrollView } from 'react-native-gesture-handler'
 import * as Language from '../../language'
 import { blue, grayBackground, grayLabel, white } from '../../../styles/colors';
@@ -22,12 +21,14 @@ class CreateAddressRoom extends Component {
             idPhuong:-1,
             nameQuan: '',
             namePhuong: '',
+            nameDuong: '',
             nameCity: listLocation[0].name,
             typeSelected: '',
             isShowErrorCity : false,
             isShowErrorQuan : false,
             isShowErrorPhuong : false,
-            listData: listLocation
+            listData: listLocation,
+            focused: '',
         }
     }
     getListData = (value) => {
@@ -223,6 +224,25 @@ class CreateAddressRoom extends Component {
                         </ListItem>
                         </TouchableOpacity>
                         {this.state.isShowErrorPhuong ? <Text style={styles.itemError}>Vui lòng chọn {Language.ROOM_PHUONG}</Text> : <View></View>}
+                        
+                        <ListItem containerStyle={styles.containerListItem}>
+                            <ListItem.Content>
+                                <Text style={styles.title}>{Language.ROOM_DUONG}</Text>
+                                <ListItem.Input 
+                                    onChangeText={value => this.setState({nameDuong : value})} 
+                                    placeholder="Ví dụ: Huỳnh Văn Bánh"
+                                    inputStyle={styles.inputStyle}
+                                />
+                                <Input
+                                    placeholder="Ví dụ: Huỳnh Văn Bánh"
+                                    onChangeText={value => this.setState({nameDuong : value})}
+                                    inputContainerStyle={this.state.focused == 'roomduong' ? styles.inputContainerFocus : styles.inputContainer}
+                                    inputStyle={styles.inputStyle}
+                                    onFocus={() => this.setState({ focused: 'roomduong' })}
+                                    onBlur={() => this.setState({ focused: '' })}
+                                />
+                            </ListItem.Content>
+                        </ListItem>
                     </Card>
                 </ThemeProvider>
         )
