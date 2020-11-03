@@ -68,7 +68,6 @@ class CreateInfoRoom extends Component {
     /// Render
     render() {
         return (
-            <ScrollView>
                 <ThemeProvider>
                     <Card>
                         <Card.Title><Text h4>{Language.ROOM_INFO}</Text></Card.Title>
@@ -123,7 +122,7 @@ class CreateInfoRoom extends Component {
                         {this.state.listGender.map((data,index) => {
                             return(
                                 <CheckBox
-                                    key={data.value}
+                                    key={index}
                                     title={data.label}
                                     checkedIcon='dot-circle-o'
                                     uncheckedIcon='circle-o'
@@ -318,8 +317,6 @@ class CreateInfoRoom extends Component {
 
                     </Card>
             </ThemeProvider>
-            
-            </ScrollView>
         )
         
     }

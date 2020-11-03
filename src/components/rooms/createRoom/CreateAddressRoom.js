@@ -161,78 +161,70 @@ class CreateAddressRoom extends Component {
     render(){
         //console.log(this.state.listData)
         return(
-            
-            <ScrollView>
-                <Overlay isVisible={this.state.visible} onBackdropPress={()=>this.toggleOverlay('')} overlayStyle={{
-                    width: 365, maxHeight: 400, paddingHorizontal: 10
-                }}>
-                    <Text style={styles.title}>{this.renderLanguage(this.state.typeSelected)}
-                    </Text>
-                    <ScrollView>
-                        {this.state.listData.map((data,index) => {
-                            return(
-                                <CheckBox
-                                    left
-                                    key={data.id}
-                                    title={data.name}
-                                    checkedIcon='dot-circle-o'
-                                    uncheckedIcon='circle-o'
-                                    checked={this.state.idSelected == index}
-                                    onPress = {() => this.setState({
-                                        idSelected: index
-                                    })}
-                                    containerStyle={styles.radioBackground}
-                                    textStyle={styles.radioLabel}
-                                />
-                            )
-                        })}
-                    </ScrollView>
-                    <Text>{'\n'}</Text>
-                    <Button title="OK" onPress={this.chooseLocation}/>
-                </Overlay>
-
-
-
                 <ThemeProvider>
-                    
+                <Overlay isVisible={this.state.visible} onBackdropPress={()=>this.toggleOverlay('')}>
+                    <View style={{width: 365, maxHeight: 400}}>
+                        <Text style={styles.title}>{this.renderLanguage(this.state.typeSelected)}</Text>
+                            <ScrollView>
+                                {this.state.listData.map((data,index) => {
+                                    return(
+                                        <CheckBox
+                                            left
+                                            key={data.id}
+                                            title={data.name}
+                                            checkedIcon='dot-circle-o'
+                                            uncheckedIcon='circle-o'
+                                            checked={this.state.idSelected == index}
+                                            onPress = {() => this.setState({
+                                                idSelected: index
+                                            })}
+                                            containerStyle={styles.radioBackground}
+                                            textStyle={styles.radioLabel}
+                                        />
+                                    )
+                                })}
+                            </ScrollView>
+                            <Text>{'\n'}</Text>
+                            <Button title="OK" onPress={this.chooseLocation}/>
+                    </View>
+                </Overlay>
                     <Card>
                         <Card.Title><Text h4>{Language.ROOM_ADDRESS}</Text></Card.Title>
                         <Card.Divider/>
-
-                         <ListItem onPress={() => this.toggleOverlay('thanhpho')} containerStyle={this.state.isShowErrorCity ? styles.containerListItemError : styles.containerListItem} >
+                        <TouchableOpacity onPress={() => this.toggleOverlay('thanhpho')}>
+                         <ListItem containerStyle={this.state.isShowErrorCity ? styles.containerListItemError : styles.containerListItem} >
                             <ListItem.Content>
                             <Text style={styles.title}>{Language.ROOM_CITY}</Text>
                                 <Text style={this.state.nameCity == '' ? styles.subtitleItemPlaceholder : styles.subtitleItem}>{this.state.nameCity == '' ? 'Bấm vào đây để chọn ' + Language.ROOM_CITY : this.state.nameCity} </Text>
                             </ListItem.Content>
                             <Icon name='chevron-down' size={13}/>
                         </ListItem>
+                        </TouchableOpacity>
                         {this.state.isShowErrorCity ? <Text style={styles.itemError}>Vui lòng chọn {Language.ROOM_CITY}</Text> : <View></View>}
                         
-                        <ListItem onPress={() => this.toggleOverlay('quan')} containerStyle={this.state.isShowErrorQuan ? styles.containerListItemError : styles.containerListItem} >
+                        <TouchableOpacity onPress={() => this.toggleOverlay('quan')}>
+                        <ListItem containerStyle={this.state.isShowErrorQuan ? styles.containerListItemError : styles.containerListItem} >
                             <ListItem.Content>
                             <Text style={styles.title}>{Language.ROOM_QUAN}</Text>
                                 <Text style={this.state.nameQuan == '' ? styles.subtitleItemPlaceholder : styles.subtitleItem}>{this.state.nameQuan == '' ? 'Bấm vào đây để chọn ' + Language.ROOM_QUAN : this.state.nameQuan} </Text>
                             </ListItem.Content>
                             <Icon name='chevron-down' size={13}/>
                         </ListItem>
+                        </TouchableOpacity>
                         {this.state.isShowErrorQuan ? <Text style={styles.itemError}>Vui lòng chọn {Language.ROOM_QUAN}</Text> : <View></View>}
                         
-                        <ListItem onPress={() => this.toggleOverlay('phuong')} containerStyle={this.state.isShowErrorPhuong ? styles.containerListItemError : styles.containerListItem} >
+                        <TouchableOpacity onPress={() => this.toggleOverlay('phuong')}>
+                        <ListItem containerStyle={this.state.isShowErrorPhuong ? styles.containerListItemError : styles.containerListItem} >
                             <ListItem.Content>
                             <Text style={styles.title}>{Language.ROOM_PHUONG}</Text>
                                 <Text style={this.state.namePhuong == '' ? styles.subtitleItemPlaceholder : styles.subtitleItem}>{this.state.namePhuong == '' ? 'Bấm vào đây để chọn ' + Language.ROOM_PHUONG : this.state.namePhuong} </Text>
                             </ListItem.Content>
                             <Icon name='chevron-down' size={13}/>
                         </ListItem>
+                        </TouchableOpacity>
                         {this.state.isShowErrorPhuong ? <Text style={styles.itemError}>Vui lòng chọn {Language.ROOM_PHUONG}</Text> : <View></View>}
-                        
-                       
-
-                        
-
                     </Card>
                 </ThemeProvider>
-            </ScrollView>
         )
     }
 }
