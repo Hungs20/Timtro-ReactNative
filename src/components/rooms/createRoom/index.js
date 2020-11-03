@@ -48,8 +48,7 @@ class CreateRoom extends Component {
                             })
                         }
                     />
-            </ThemeProvider>
-            
+                </ThemeProvider>
             </ScrollView>
         )
         
