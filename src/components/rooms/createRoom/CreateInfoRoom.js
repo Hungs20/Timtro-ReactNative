@@ -70,7 +70,7 @@ class CreateInfoRoom extends Component {
         return (
                 <ThemeProvider>
                     <Card>
-                        <Card.Title><Text h4>{Language.ROOM_INFO}</Text></Card.Title>
+                        <Card.Title><Text h5>{Language.ROOM_INFO}</Text></Card.Title>
                         <Card.Divider/>
                         <Text style={styles.title}>{Language.ROOM_TYPE}</Text>
                         {this.state.listRoom.map((data,index) => {
@@ -150,7 +150,7 @@ class CreateInfoRoom extends Component {
                         </View>
                     </Card>
                     <Card>
-                        <Card.Title><Text h4>{Language.ROOM_COST}</Text></Card.Title>
+                        <Card.Title><Text h5>{Language.ROOM_COST}</Text></Card.Title>
                         <Card.Divider/>
                         <Text style={styles.title}>{Language.ROOM_COST_THUE}</Text>
                         <View style={styles.viewRightIcon}>
