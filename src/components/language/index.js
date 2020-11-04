@@ -1,3 +1,5 @@
+import { exp } from "react-native-reanimated"
+
 export const ROOM_INFO = "Thông tin phòng"
 export const ROOM_TYPE = "Loại phòng"
 export const ROOM_NUM = "Số lượng phòng"
@@ -19,5 +21,7 @@ export const ROOM_QUAN = "Quận/Huyện"
 export const ROOM_PHUONG = "Phường/Xã"
 export const ROOM_DUONG = "Tên đường"
 export const ROOM_NHA = "Số nhà"
+
+export const ROOM_EXTENSION = "Thông tin hình ảnh và tiện ích"
 
 

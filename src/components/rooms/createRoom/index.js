@@ -10,6 +10,7 @@ import * as Language from '../../language'
 import { blue, grayBackground, grayLabel, white } from '../../../styles/colors';
 import CreateInfoRoom from './CreateInfoRoom'
 import CreateAddressRoom from './CreateAddressRoom'
+import CreateExtensionRoom from './CreateExtensionRoom'
 class CreateRoom extends Component {
     
     constructor(props) {
@@ -25,6 +26,8 @@ class CreateRoom extends Component {
                 return <CreateInfoRoom/>
             case 1:
                 return <CreateAddressRoom/>
+            case 2:
+                return <CreateExtensionRoom/>
             default:
                 break;
         }

@@ -4,7 +4,6 @@ import {StyleSheet, View, TouchableOpacity} from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Card, ListItem, Button, Text, CheckBox, Divider, ThemeProvider, Input, Overlay, Avatar  } from 'react-native-elements'
 import { Component } from 'react'
-import Step from './step'
 import { ScrollView } from 'react-native-gesture-handler'
 import * as Language from '../../language'
 import { blue, grayBackground, grayLabel, white } from '../../../styles/colors';
@@ -22,12 +21,15 @@ class CreateAddressRoom extends Component {
             idPhuong:-1,
             nameQuan: '',
             namePhuong: '',
+            nameDuong: '',
+            nameNha: '',
             nameCity: listLocation[0].name,
             typeSelected: '',
             isShowErrorCity : false,
             isShowErrorQuan : false,
             isShowErrorPhuong : false,
-            listData: listLocation
+            listData: listLocation,
+            focused: '',
         }
     }
     getListData = (value) => {
@@ -189,7 +191,7 @@ class CreateAddressRoom extends Component {
                     </View>
                 </Overlay>
                     <Card>
-                        <Card.Title><Text h4>{Language.ROOM_ADDRESS}</Text></Card.Title>
+                        <Card.Title><Text h5>{Language.ROOM_ADDRESS}</Text></Card.Title>
                         <Card.Divider/>
                         <TouchableOpacity onPress={() => this.toggleOverlay('thanhpho')}>
                          <ListItem containerStyle={this.state.isShowErrorCity ? styles.containerListItemError : styles.containerListItem} >
@@ -223,6 +225,35 @@ class CreateAddressRoom extends Component {
                         </ListItem>
                         </TouchableOpacity>
                         {this.state.isShowErrorPhuong ? <Text style={styles.itemError}>Vui lòng chọn {Language.ROOM_PHUONG}</Text> : <View></View>}
+                        
+                        <ListItem containerStyle={this.state.focused == 'roomduong' ? styles.containerListItemFocus : styles.containerListItem}>
+                            <ListItem.Content>
+                                <Text style={styles.title}>{Language.ROOM_DUONG}</Text>
+                                <Input
+                                    placeholder="Ví dụ: Huỳnh Văn Bánh"
+                                    onChangeText={value => this.setState({nameDuong : value})}
+                                    inputContainerStyle={{marginHorizontal: -10, borderBottomColor: 'white', marginBottom: -25, marginTop: -10}}
+                                    inputStyle={styles.inputStyle}
+                                    onFocus={() => this.setState({ focused: 'roomduong' })}
+                                    onBlur={() => this.setState({ focused: '' })}
+                                />
+                            </ListItem.Content>
+                        </ListItem>
+                        
+                        <ListItem containerStyle={this.state.focused == 'sonha' ? styles.containerListItemFocus : styles.containerListItem}>
+                            <ListItem.Content>
+                                <Text style={styles.title}>{Language.ROOM_NHA}</Text>
+                                <Input
+                                    placeholder="Ví dụ: 244/31"
+                                    onChangeText={value => this.setState({nameNha : value})}
+                                    inputContainerStyle={{marginHorizontal: -10, borderBottomColor: 'white', marginBottom: -25, marginTop: -10}}
+                                    inputStyle={styles.inputStyle}
+                                    onFocus={() => this.setState({ focused: 'sonha' })}
+                                    onBlur={() => this.setState({ focused: '' })}
+                                />
+                            </ListItem.Content>
+                        </ListItem>
+
                     </Card>
                 </ThemeProvider>
         )
@@ -283,6 +314,8 @@ const styles = StyleSheet.create({
         color: 'grey'
         },
         containerListItem: {paddingVertical: 5, borderBottomColor: grayBackground, borderBottomWidth: 1, paddingHorizontal: 0},
+        containerListItemFocus: {paddingVertical: 5, borderBottomColor: blue, borderBottomWidth: 1, paddingHorizontal: 0},
+        
         containerListItemError: {paddingVertical: 0, borderBottomColor: "red", borderBottomWidth: 1, paddingHorizontal: 0},
         subtitleItem:{color: 'black', fontSize: 16},
         subtitleItemPlaceholder:{color: grayLabel, fontSize: 16},
