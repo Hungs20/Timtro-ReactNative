@@ -60,15 +60,15 @@ class CreateExtensionRoom extends Component {
                         <View style={{flex: 1, flexDirection:'row', alignItems: 'center', justifyContent: 'center'}}>
                         {this.showImagePicker(this.state.singleFileOBJ)}
                         </View>
-                        <TouchableOpacity onPress={this.SingleFilePicker.bind(this)}>
-                            <Icon name='upload' color='blue' size={25} style={{paddingTop: 30, paddingHorizontal: 150}}/>
-                            <Text style={{justifyContent: 'center', color: 'blue',alignItems: 'center', paddingVertical: 10}}>  Bấm vào đây để đăng hình ảnh từ thư viện nhé</Text>
+                        <TouchableOpacity onPress={this.SingleFilePicker.bind(this)} style={{alignItems: 'center', paddingVertical: 10, paddingHorizontal: 20}}>
+                            <Icon name='upload' color={Colors.primary} size={25}/>
+                            <Text style={{justifyContent: 'center', color: Colors.primary}}>  Bấm vào đây để đăng hình ảnh từ thư viện nhé</Text>
                         </TouchableOpacity>
                     </View>
-
+                    <Text>{'\n'}</Text>
                     <Button
                     title=" Chụp hình"
-                    titleStyle={{color:'#0275D8',fontSize: 15}}
+                    titleStyle={{color:Colors.primary,fontSize: 15}}
                     icon={
                         <Icon
                           name="camera"
@@ -78,22 +78,41 @@ class CreateExtensionRoom extends Component {
                       }
                     type="outline"
                     buttonStyle={{borderRadius: 10, width: 150}}
-                    containerStyle={{alignItems: 'center', paddingTop: 10}}
+                    containerStyle={{alignItems: 'center'}}
                     />
 
                 <Text style={styles.title}>{'Tiện ích'}</Text>
-                {exts.map((data, index) => {
-                    return (
-                    <CheckBox
-                        title={data.name}
-                        iconType='font-awesome'
-                        checkedIcon={data.icon}
-                        uncheckedIcon={data.icon}
-                        containerStyle={styles.extensionButton}
-                    />
-                    )
-                })}
-                
+                <View style={{flex: 1, flexDirection: 'row'}}>
+                  <View style={{flex: 1, flexDirection: 'column'}}>
+                  {exts.map((data, index) => {
+                      return (
+                      <CheckBox
+                          title={data.name}
+                          iconType='font-awesome'
+                          checkedIcon={data.icon}
+                          uncheckedIcon={data.icon}
+                          containerStyle={styles.extensionButton}
+                          textStyle={{fontSize: 14}}
+                          size={14}
+                      />
+                      )
+                  })}
+                </View>
+                <View style={{flex: 1, flexDirection: 'column'}}>
+                  {exts.map((data, index) => {
+                      return (
+                      <CheckBox
+                          title={data.name}
+                          iconType='font-awesome'
+                          checkedIcon={data.icon}
+                          uncheckedIcon={data.icon}
+                          containerStyle={styles.extensionButton}
+                          textStyle={{fontSize: 13}}
+                      />
+                      )
+                  })}
+                </View>
+                </View>
                 </Card>
             </ThemeProvider>
         )
@@ -160,10 +179,7 @@ const styles = StyleSheet.create({
         subtitleItem:{color: 'black', fontSize: 16},
         subtitleItemPlaceholder:{color: grayLabel, fontSize: 16},
         itemError: {color: "red", fontSize: 13},
-        extensionButton:{borderColor: '#0275D8', borderWidth: 1, borderRadius: 10, width: 120},
-
-    
-    
-        
+        extensionButtonSelected:{borderColor: Colors.primary, borderWidth: 1, borderRadius: 10},
+        extensionButton:{borderColor: Colors.grayBackground, borderWidth: 1, borderRadius: 10},
 })
 export default CreateExtensionRoom;
