@@ -85,6 +85,7 @@ class CreateInfoRoom extends Component {
                                     onPress = {() => this.setValueRoom(data.value)}
                                     containerStyle={styles.radioBackground}
                                     textStyle={this.state.valueRoom == data.value ? styles.radioLabelSelected : styles.radioLabel}
+                                    checkedColor={Colors.primary}
                                 />
                             )
                         })}
@@ -130,6 +131,7 @@ class CreateInfoRoom extends Component {
                                     onPress = {() => this.setGender(data.value)}
                                     containerStyle={styles.radioBackground}
                                     textStyle={this.state.gender == data.value ? styles.radioLabelSelected : styles.radioLabel}
+                                    checkedColor={Colors.primary}
                                 />
                             )
                         })}
