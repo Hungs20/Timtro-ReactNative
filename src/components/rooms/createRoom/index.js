@@ -11,6 +11,7 @@ import { blue, grayBackground, grayLabel, white } from '../../../styles/colors';
 import CreateInfoRoom from './CreateInfoRoom'
 import CreateAddressRoom from './CreateAddressRoom'
 import CreateExtensionRoom from './CreateExtensionRoom'
+import CreateConfirmRoom from './CreateConfirmRoom'
 class CreateRoom extends Component {
     
     constructor(props) {
@@ -28,6 +29,8 @@ class CreateRoom extends Component {
                 return <CreateAddressRoom/>
             case 2:
                 return <CreateExtensionRoom/>
+            case 3:
+                return <CreateConfirmRoom/>
             default:
                 break;
         }
@@ -36,23 +39,25 @@ class CreateRoom extends Component {
     /// Render
     render() {
         return (
-            <ScrollView>
+            
                 <ThemeProvider>
                     <Card><Step currentStep={this.state.currentStep} maxStep={4}/></Card>
-                    {this.renderSwitch(this.state.currentStep)}
-                    <Text>{'\n'}</Text>
-                    <Button
-                        title="Tiếp theo"
-                        type="solid"
-                        containerStyle={{paddingHorizontal: 15}}
-                        onPress={
-                            ()=>this.setState({
-                                currentStep: this.state.currentStep < 3 ? this.state.currentStep+1 : 3
-                            })
-                        }
-                    />
+                    <ScrollView>
+                        {this.renderSwitch(this.state.currentStep)}
+                        <Text>{'\n'}</Text>
+                        <Button
+                            title="Tiếp theo"
+                            type="solid"
+                            containerStyle={{paddingHorizontal: 15}}
+                            onPress={
+                                ()=>this.setState({
+                                    currentStep: this.state.currentStep < 3 ? this.state.currentStep+1 : 3
+                                })
+                            }
+                        />
+                    </ScrollView>
                 </ThemeProvider>
-            </ScrollView>
+            
         )
         
     }

@@ -15,12 +15,17 @@ class CreateExtensionRoom extends Component {
         super(props);
         this.state = {
             singleFileOBJ: [],
-            selectedIndex: []
+            listExtChecked: []
           };
     }
-    updateIndex = (selectedIndex) => {
-        this.setState({selectedIndex: selectedIndex})
-      }
+    addExtChecked = (array, value) => {
+      var index = array.indexOf(value)
+      if (index === -1) array.push(value);
+      else array.splice(index, 1);
+      this.setState({
+        listExtChecked: array
+      })
+    }
     async SingleFilePicker() {
         
         try {
@@ -49,7 +54,9 @@ class CreateExtensionRoom extends Component {
       }
       
     render(){
-        const exts = [{name: 'WC riêng',icon: 'bath'},{name: 'Cửa sổ', icon: 'window-maximize'}, {name: 'Wifi', icon: 'wifi'}, {name:'Chủ riêng',icon:'key'}, {name:'Máy nước nóng',icon:'tint'}, {name:'Tủ lạnh',icon:''}, {name:'Gác lửng',icon:''}, {name:'Tủ đồ',icon:''}, {name:'Thú cưng', icon:''}]
+      const exts = [{name: 'WC riêng',icon: 'toilet'},{name: 'Cửa sổ', icon: 'window-open-variant'}, {name: 'Wifi', icon: 'wifi'}, {name:'Chủ riêng',icon:'account-key-outline'}, {name:'Máy nước nóng',icon:'water-boiler'}, {name:'Tủ lạnh',icon:'fridge-outline'}, {name:'Gác lửng',icon:'stairs'}, {name:'Tủ đồ',icon:'locker'}, {name:'Thú cưng', icon:'dog'}]
+      const exts2 = [{name: 'Chỗ để xe',icon: 'motorbike'},{name: 'An ninh', icon: 'security'}, {name: 'Tự do', icon: 'clock-outline'}, {name:'Máy lạnh',icon:'air-conditioner'}, {name:'Nhà bếp',icon:'chef-hat'}, {name:'Máy giặt',icon:'washing-machine'}, {name:'Giường',icon:'bed-outline'}, {name:'Tivi',icon:'television'}, {name:'Ban công', icon:'window-shutter'}]
+         
         return(
             <ThemeProvider>
                 <Card>
@@ -86,28 +93,35 @@ class CreateExtensionRoom extends Component {
                   <View style={{flex: 1, flexDirection: 'column'}}>
                   {exts.map((data, index) => {
                       return (
-                      <CheckBox
-                          title={data.name}
-                          iconType='font-awesome'
-                          checkedIcon={data.icon}
-                          uncheckedIcon={data.icon}
-                          containerStyle={styles.extensionButton}
-                          textStyle={{fontSize: 14}}
-                          size={14}
-                      />
+                        <CheckBox
+                        title={data.name}
+                        iconType='material-community'
+                        checkedIcon={data.icon}
+                        uncheckedIcon={data.icon}
+                        containerStyle={this.state.listExtChecked.indexOf(data.name) === -1 ? styles.extensionButton : styles.extensionButtonSelected}
+                        textStyle={this.state.listExtChecked.indexOf(data.name) === -1 ? styles.extensionText : styles.extensionTextSelected}
+                        size={17}
+                        checkedColor={Colors.primary}
+                        checked={this.state.listExtChecked.indexOf(data.name) === -1 ? false : true}
+                        onPress={() => this.addExtChecked(this.state.listExtChecked, data.name)}
+                    />
                       )
                   })}
                 </View>
                 <View style={{flex: 1, flexDirection: 'column'}}>
-                  {exts.map((data, index) => {
+                  {exts2.map((data, index) => {
                       return (
                       <CheckBox
                           title={data.name}
-                          iconType='font-awesome'
+                          iconType='material-community'
                           checkedIcon={data.icon}
                           uncheckedIcon={data.icon}
-                          containerStyle={styles.extensionButton}
-                          textStyle={{fontSize: 13}}
+                          containerStyle={this.state.listExtChecked.indexOf(data.name) === -1 ? styles.extensionButton : styles.extensionButtonSelected}
+                          textStyle={this.state.listExtChecked.indexOf(data.name) === -1 ? styles.extensionText : styles.extensionTextSelected}
+                          size={17}
+                          checkedColor={Colors.primary}
+                          checked={this.state.listExtChecked.indexOf(data.name) === -1 ? false : true}
+                          onPress={() => this.addExtChecked(this.state.listExtChecked, data.name)}
                       />
                       )
                   })}
@@ -180,6 +194,8 @@ const styles = StyleSheet.create({
         subtitleItemPlaceholder:{color: grayLabel, fontSize: 16},
         itemError: {color: "red", fontSize: 13},
         extensionButtonSelected:{borderColor: Colors.primary, borderWidth: 1, borderRadius: 10},
-        extensionButton:{borderColor: Colors.grayBackground, borderWidth: 1, borderRadius: 10},
+        extensionButton:{borderColor: Colors.grayBackground, borderWidth: 0, borderRadius: 10},
+        extensionTextSelected:{fontSize: 14, color: Colors.primary, fontWeight: 'normal'},
+        extensionText:{fontSize: 14, color: grayLabel, fontWeight: 'normal'},
 })
 export default CreateExtensionRoom;

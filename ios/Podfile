@@ -11,6 +11,8 @@ target 'Tro' do
 
   pod 'react-native-document-picker', :path => '../node_modules/react-native-document-picker'
 
+  pod 'RNDateTimePicker', :path => '../node_modules/@react-native-community/datetimepicker'
+
   target 'TroTests' do
     inherit! :complete
     # Pods for testing

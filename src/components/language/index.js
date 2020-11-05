@@ -23,5 +23,13 @@ export const ROOM_DUONG = "Tên đường"
 export const ROOM_NHA = "Số nhà"
 
 export const ROOM_EXTENSION = "Thông tin hình ảnh và tiện ích"
+export const ROOM_CONFIRM = "Xác nhận"
+export const ROOM_PHONE = "Số điện thoại"
+export const ROOM_TITLE = "Tiêu đề bài đăng"
+export const ROOM_DESCRIPTION = "Nội dung mô tả"
+export const ROOM_TIME_OPEN = "Thời gian mở cửa"
+export const ROOM_TIME_CLOSE = "Thời gian đóng cửa"
+
+
 
 
