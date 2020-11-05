@@ -8,6 +8,8 @@ import Step from './step'
 import { ScrollView } from 'react-native-gesture-handler'
 import * as Language from '../../language'
 import { blue, grayBackground, grayLabel, white } from '../../../styles/colors';
+
+
 class CreateInfoRoom extends Component {
     
     constructor(props) {
@@ -367,4 +369,5 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center" }
 })
+//export default connect(null, actions)(CreateInfoRoom);
 export default CreateInfoRoom;

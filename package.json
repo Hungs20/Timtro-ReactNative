@@ -27,7 +27,9 @@
     "react-native-step-indicator": "^1.0.3",
     "react-native-swiper": "^1.6.0",
     "react-native-vector-icons": "^7.1.0",
-    "react-navigation": "^4.4.2"
+    "react-navigation": "^4.4.2",
+    "react-redux": "^7.2.2",
+    "redux": "^4.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
