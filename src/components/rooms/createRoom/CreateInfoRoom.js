@@ -8,6 +8,8 @@ import Step from './step'
 import { ScrollView } from 'react-native-gesture-handler'
 import * as Language from '../../language'
 import { blue, grayBackground, grayLabel, white } from '../../../styles/colors';
+
+
 class CreateInfoRoom extends Component {
     
     constructor(props) {
@@ -85,6 +87,7 @@ class CreateInfoRoom extends Component {
                                     onPress = {() => this.setValueRoom(data.value)}
                                     containerStyle={styles.radioBackground}
                                     textStyle={this.state.valueRoom == data.value ? styles.radioLabelSelected : styles.radioLabel}
+                                    checkedColor={Colors.primary}
                                 />
                             )
                         })}
@@ -130,6 +133,7 @@ class CreateInfoRoom extends Component {
                                     onPress = {() => this.setGender(data.value)}
                                     containerStyle={styles.radioBackground}
                                     textStyle={this.state.gender == data.value ? styles.radioLabelSelected : styles.radioLabel}
+                                    checkedColor={Colors.primary}
                                 />
                             )
                         })}
@@ -365,4 +369,5 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center" }
 })
+//export default connect(null, actions)(CreateInfoRoom);
 export default CreateInfoRoom;

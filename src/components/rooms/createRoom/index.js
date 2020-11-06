@@ -46,9 +46,14 @@ class CreateRoom extends Component {
                         {this.renderSwitch(this.state.currentStep)}
                         <Text>{'\n'}</Text>
                         <Button
-                            title="Tiếp theo"
-                            type="solid"
-                            containerStyle={{paddingHorizontal: 15}}
+                            title="Tiếp theo "
+                            type="clear"
+                            iconRight
+                            icon={
+                                <Icon name='chevron-right'color={Colors.primary} size={14}/>
+                            }
+                            titleStyle={{color: Colors.primary}}
+                            containerStyle={{marginHorizontal: 35, borderColor: Colors.primary, borderWidth: 1, borderRadius: 10}}
                             onPress={
                                 ()=>this.setState({
                                     currentStep: this.state.currentStep < 3 ? this.state.currentStep+1 : 3

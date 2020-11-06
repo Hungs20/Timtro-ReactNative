@@ -182,6 +182,7 @@ class CreateAddressRoom extends Component {
                                             })}
                                             containerStyle={styles.radioBackground}
                                             textStyle={styles.radioLabel}
+                                            checkedColor={Colors.primary}
                                         />
                                     )
                                 })}
