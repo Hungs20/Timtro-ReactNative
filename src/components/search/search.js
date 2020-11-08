@@ -1,51 +1,47 @@
 import React, { Component } from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import CupertinoSearchBarBasic from "./CupertinoSearchBarBasic";
 
-class Search extends Component {
-  constructor(props){
-    super(props)
-  }
-  render(){
+function Search(props) {
   return (
     <View style={styles.container}>
-      <View style={styles.scrollArea}>
-        <ScrollView
-          horizontal={true}
-          contentContainerStyle={styles.scrollArea_contentContainerStyle}
-        ></ScrollView>
-      </View>
-      <View style={styles.rectStack}>
-        <View style={styles.rect}></View>
-        <View style={styles.rect2}>
-          <View style={styles.rect3}></View>
-          <View style={styles.rect4}></View>
-          <CupertinoSearchBarBasic
-            style={styles.cupertinoSearchBarBasic}
-          ></CupertinoSearchBarBasic>
-        </View>
+      <View style={styles.sliderStack}>
+        <View style={styles.slider}></View>
+        
+          <View style={styles.wholeSearchBox}>
+            <View style={styles.searchBox}>
+              <View style={styles.topSearchBox}></View>
+              <View style={styles.bottomSearchBox}></View>
+              <CupertinoSearchBarBasic
+                style={styles.cupertinoSearchBarBasic}
+              ></CupertinoSearchBarBasic>
+              <TouchableOpacity style={styles.districSearch}>
+                <View style={styles.districtIcon}></View>
+                <Text style={styles.districText}>Tìm theo{"\n"}nhiều quận</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.nearYouSearch}>
+                <View style={styles.nearYou}></View>
+                <Text style={styles.nearYouText}>
+                Tìm gần nơi{"\n"}học &amp; làm
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.postRoom}>
+                <View style={styles.postRoomIcon}></View>
+                <Text style={styles.postRoomText}>Đăng{"\n"}phòng dễ</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        
       </View>
     </View>
   );
-  }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexDirection: "row"
+    flex: 1
   },
-  scrollArea: {
-    width: 362,
-    height: 740,
-    backgroundColor: "#E6E6E6",
-    marginLeft: 409
-  },
-  scrollArea_contentContainerStyle: {
-    width: 363,
-    height: 740
-  },
-  rect: {
+  slider: {
     top: 0,
     height: 247,
     position: "absolute",
@@ -53,12 +49,16 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0
   },
-  rect2: {
+  wholeSearchBox: {
     top: 198,
-    left: 15,
     width: 330,
     height: 193,
-    position: "absolute",
+    alignSelf: "center",
+    position: "absolute"
+  },
+  searchBox: {
+    width: 330,
+    height: 193,
     backgroundColor: "#E6E6E6",
     borderRadius: 24,
     shadowColor: "rgba(0,0,0,1)",
@@ -70,16 +70,16 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.19,
     shadowRadius: 2
   },
-  rect3: {
+  topSearchBox: {
     flex: 0.33,
     backgroundColor: "rgba(255,255,255,1)",
     margin: 0,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24
   },
-  rect4: {
+  bottomSearchBox: {
     flex: 0.68,
-    backgroundColor: "rgba(236,236,236,1)",
+    backgroundColor: "rgba(246,244,244,1)",
     borderBottomRightRadius: 24,
     borderBottomLeftRadius: 24,
     margin: 0
@@ -89,13 +89,74 @@ const styles = StyleSheet.create({
     width: 310,
     position: "absolute",
     left: 10,
-    top: 9,
+    top: 10,
     backgroundColor: "#fff"
   },
-  rectStack: {
-    height: 391,
-    flex: 1,
-    marginLeft: -772
+  districSearch: {
+    top: 91,
+    left: 33,
+    width: 50,
+    height: 81,
+    position: "absolute"
+  },
+  districtIcon: {
+    width: 49,
+    height: 49,
+    backgroundColor: "rgba(255,168,49,1)",
+    borderRadius: 20
+  },
+  districText: {
+    fontFamily: "roboto-regular",
+    color: "rgba(133,134,136,1)",
+    fontSize: 10,
+    textAlign: "center",
+    marginTop: 8
+  },
+  nearYouSearch: {
+    top: 91,
+    left: 140,
+    width: 60,
+    height: 81,
+    position: "absolute"
+  },
+  nearYou: {
+    width: 49,
+    height: 49,
+    backgroundColor: "rgba(0,214,131,1)",
+    borderRadius: 20,
+    alignSelf: "center",
+    marginLeft: 1
+  },
+  nearYouText: {
+    fontFamily: "roboto-regular",
+    color: "rgba(133,134,136,1)",
+    fontSize: 10,
+    textAlign: "center",
+    marginTop: 8
+  },
+  postRoom: {
+    top: 91,
+    left: 258,
+    width: 49,
+    height: 81,
+    position: "absolute"
+  },
+  postRoomIcon: {
+    width: 49,
+    height: 49,
+    backgroundColor: "rgba(255,49,128,1)",
+    borderRadius: 20
+  },
+  postRoomText: {
+    fontFamily: "roboto-regular",
+    color: "rgba(133,134,136,1)",
+    fontSize: 10,
+    textAlign: "center",
+    marginTop: 8,
+    marginLeft: 2
+  },
+  sliderStack: {
+    height: 391
   }
 });
 

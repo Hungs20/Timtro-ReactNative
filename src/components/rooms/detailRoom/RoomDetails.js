@@ -465,7 +465,7 @@ const styles = StyleSheet.create({
     width: 360,
     height: 126,
     backgroundColor: "rgba(255,255,255,1)",
-    borderRadius: 11
+    borderRadius: 11,
   },
   titlePart2: {
     fontFamily: "roboto-regular",
@@ -1127,13 +1127,13 @@ const styles = StyleSheet.create({
     width: 343,
     height: 54,
     position: "relative",
-    marginVertical: 20,
+    marginBottom: 25,
     alignSelf: "center",
     left: 8
   },
   rect2: {
     width: 360,
-    height: 77,
+    height: 80,
     backgroundColor: "rgba(255,255,255,1)",
     flexDirection: "row",
     alignSelf: "center"
@@ -1152,7 +1152,7 @@ const styles = StyleSheet.create({
     fontFamily: "roboto-regular",
     color: "rgba(255,255,255,1)",
     fontSize: 17,
-    marginTop: 17,
+    marginTop: 15,
     marginLeft: 37
   },
   holdPlaceGroup: {
@@ -1172,7 +1172,7 @@ const styles = StyleSheet.create({
     fontFamily: "roboto-regular",
     color: "rgba(255,49,128,1)",
     fontSize: 17,
-    marginTop: 17,
+    marginTop: 15,
     marginLeft: 27
   },
   callGroup: {
@@ -1192,7 +1192,7 @@ const styles = StyleSheet.create({
     fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     fontSize: 17,
-    marginTop: 17,
+    marginTop: 15,
     marginLeft: 42
   },
   chatGroupRow: {

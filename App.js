@@ -66,7 +66,7 @@ const App = () => {
             },
           }} />
           <Stack.Screen name="searchRoom" component={SearchRoomIndex} options={{
-            title: 'Tim kiem phòng',
+            title: 'Tìm kiếm phòng',
             headerStyle: {
               backgroundColor: Colors.pink,
             },
@@ -77,7 +77,7 @@ const App = () => {
             },
           }} />
 
-<Stack.Screen name="detailRoom" component={DetailRoomIndex} options={{
+          <Stack.Screen name="detailRoom" component={DetailRoomIndex} options={{
             title: 'Chi tiết phòng',
             headerStyle: {
               backgroundColor: Colors.pink,
