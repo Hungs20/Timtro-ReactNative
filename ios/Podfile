@@ -13,6 +13,8 @@ target 'Tro' do
 
   pod 'RNDateTimePicker', :path => '../node_modules/@react-native-community/datetimepicker'
 
+  pod 'RNSVG', :path => '../node_modules/react-native-svg'
+
   target 'TroTests' do
     inherit! :complete
     # Pods for testing

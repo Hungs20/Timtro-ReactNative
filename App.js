@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import {Colors, Fonts} from './src/styles';
 import CreateRoom from './src/components/rooms/createRoom'
+import Search from './src/components/search/search'
+import RoomDetail from './src/components/rooms/detailRoom/RoomDetails'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Button, ThemeProvider, Text } from 'react-native-elements';
@@ -16,6 +18,14 @@ function HomeScreen({ navigation }) {
         title="Go to Details"
         onPress={() => navigation.navigate('createRoom')}
       />
+      <Button
+        title="Go to search"
+        onPress={() => navigation.navigate('searchRoom')}
+      />
+      <Button
+        title="Go to detail"
+        onPress={() => navigation.navigate('detailRoom')}
+      />
           </ThemeProvider>
 
   );
@@ -26,11 +36,21 @@ function CreateRoomIndex({ navigation }) {
       <CreateRoom/>
   );
 }
+function SearchRoomIndex({ navigation }) {
+  return (
+      <Search/>
+  );
+}
+function DetailRoomIndex({ navigation }) {
+  return (
+      <RoomDetail/>
+  );
+}
+
 const Stack = createStackNavigator();
 
 const App = () => {
   return (
-    <Provider store = {store}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName='Home'>
           <Stack.Screen name="Home" component={HomeScreen} />
@@ -45,9 +65,31 @@ const App = () => {
               fontSize: Fonts.headerFontSize
             },
           }} />
+          <Stack.Screen name="searchRoom" component={SearchRoomIndex} options={{
+            title: 'Tim kiem phòng',
+            headerStyle: {
+              backgroundColor: Colors.pink,
+            },
+            headerTintColor: Colors.white,
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontSize: Fonts.headerFontSize
+            },
+          }} />
+
+<Stack.Screen name="detailRoom" component={DetailRoomIndex} options={{
+            title: 'Chi tiết phòng',
+            headerStyle: {
+              backgroundColor: Colors.pink,
+            },
+            headerTintColor: Colors.white,
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontSize: Fonts.headerFontSize
+            },
+          }} />
         </Stack.Navigator>
     </NavigationContainer>
-    </Provider>
   );
 }
 
