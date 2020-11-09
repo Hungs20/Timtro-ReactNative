@@ -2,29 +2,26 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import {Colors, Fonts} from './src/styles';
 import CreateRoom from './src/components/rooms/createRoom'
-import Search from './src/components/search/search'
+import Home from './src/components/home'
 import RoomDetail from './src/components/rooms/detailRoom/RoomDetails'
+import Message from './src/components/message'
+import Account from './src/components/account'
+import Partner from './src/components/partner'
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Button, ThemeProvider, Text } from 'react-native-elements';
+import CreateAddressRoom from './src/components/rooms/createRoom/CreateAddressRoom';
 function HomeScreen({ navigation }) {
   return (
-<ThemeProvider>
+      <ThemeProvider>
 
-      <Text>Home Screen</Text>
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate('createRoom')}
-      />
-      <Button
-        title="Go to search"
-        onPress={() => navigation.navigate('searchRoom')}
-      />
-      <Button
-        title="Go to detail"
-        onPress={() => navigation.navigate('detailRoom')}
-      />
-          </ThemeProvider>
+        <Home/>
+      
+      </ThemeProvider>
 
   );
 }
@@ -34,9 +31,9 @@ function CreateRoomIndex({ navigation }) {
       <CreateRoom/>
   );
 }
-function SearchRoomIndex({ navigation }) {
+function HomeRoomIndex({ navigation }) {
   return (
-      <Search/>
+      <Home/>
   );
 }
 function DetailRoomIndex({ navigation }) {
@@ -44,49 +41,64 @@ function DetailRoomIndex({ navigation }) {
       <RoomDetail/>
   );
 }
+function MessageIndex({ navigation }) {
+  return (
+      <Message/>
+  );
+}
+function AccountIndex({ navigation }) {
+  return (
+      <Account/>
+  );
+}
+function PartnerIndex({ navigation }) {
+  return (
+      <Partner/>
+  );
+}
 
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
 const App = () => {
   return (
+    
       <NavigationContainer>
-        <Stack.Navigator initialRouteName='Home'>
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="createRoom" component={CreateRoomIndex} options={{
-            title: 'Đăng phòng',
-            headerStyle: {
-              backgroundColor: Colors.pink,
-            },
-            headerTintColor: Colors.white,
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              fontSize: Fonts.headerFontSize
-            },
-          }} />
-          <Stack.Screen name="searchRoom" component={SearchRoomIndex} options={{
-            title: 'Tìm kiếm phòng',
-            headerStyle: {
-              backgroundColor: Colors.pink,
-            },
-            headerTintColor: Colors.white,
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              fontSize: Fonts.headerFontSize
-            },
-          }} />
+        <Tab.Navigator screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
 
-          <Stack.Screen name="detailRoom" component={DetailRoomIndex} options={{
-            title: 'Chi tiết phòng',
-            headerStyle: {
-              backgroundColor: Colors.pink,
-            },
-            headerTintColor: Colors.white,
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              fontSize: Fonts.headerFontSize
-            },
-          }} />
-        </Stack.Navigator>
+            if (route.name === 'Tìm kiếm') {
+              iconName = focused
+                ? 'search-outline'
+                : 'search-outline';
+            } else if (route.name === 'Ở ghép') {
+              iconName = focused ? 'people-outline' : 'people-outline';
+            } else if (route.name === 'Yêu thích'){
+              iconName = focused ? 'heart-outline' : 'heart-outline';
+            } else if (route.name === 'Tin nhắn'){
+              iconName = focused ? 'chatbox-ellipses-outline' : 'chatbox-ellipses-outline';
+            } else if (route.name === 'Tài khoản'){
+              iconName = focused ? 'person-outline' : 'person-outline';
+            }
+
+
+            // You can return any component that you like here!
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+        })}
+        tabBarOptions={{
+          activeTintColor: Colors.pink,
+          inactiveTintColor: 'gray',
+        }}>
+        <Tab.Screen name="Tìm kiếm" component={HomeScreen} />
+        <Tab.Screen name="Yêu thích" component={CreateRoomIndex} />
+        <Tab.Screen name="Ở ghép" component={PartnerIndex} />
+        <Tab.Screen name="Tin nhắn" component={MessageIndex} options={{ tabBarBadge: 3 }} />
+        <Tab.Screen name="Tài khoản" component={AccountIndex} />
+      </Tab.Navigator>
+
+        
     </NavigationContainer>
   );
 }
