@@ -13,13 +13,6 @@ class CreateConfirmRoom extends Component {
     constructor(props){
         super(props);
         this.state = {
-            phone: '',
-            title: '',
-            description: '',
-            timeOpen: new Date(),
-            timeClose: new Date(),
-            isTimeOpen: false,
-            isTimeClose: false,
             focused: '',    
           };
     }
@@ -29,25 +22,43 @@ class CreateConfirmRoom extends Component {
         })
     }
     onChangeTime = (event, selectedDate) => {
-        switch (this.state.focused) {
-            case 'open':
-                this.setState({
-                    isTimeOpen: true,
-                    timeOpen: selectedDate || this.state.timeOpen,
-                })
-                break;
-            case 'close':
-                this.setState({
-                    isTimeClose: true,
-                    timeClose: selectedDate || this.state.timeClose,
-                })
-                break;
-            default:
-                break;
+       
+        
+        if(event.type == "set") {
+            //ok button clicked
+            switch (this.state.focused) {
+                case 'open':
+                    this.setState({
+                        //isTimeOpen: true,
+                        //timeOpen: selectedDate || this.state.timeOpen,
+                        focused: '',
+                    });
+                    this.props.setConfirm(selectedDate || this.props.confirm.timeOpen, 'timeOpen');
+                    this.props.setConfirm(true, 'isTimeOpen');
+                    break;
+                case 'close':
+                    this.setState({
+                        //isTimeClose: true,
+                        //timeClose: selectedDate || this.state.timeClose,
+                        focused: '',
+                    });
+                    this.props.setConfirm(selectedDate || this.props.confirm.timeClose, 'timeClose');
+                    this.props.setConfirm(true, 'isTimeClose');
+                    break;
+                default:
+                    break;
+            }
+
+            return;
+        } else {
+            //cancel button clicked
+            this.setState({
+                focused: ''
+            })
+            return;
         }
     }
     render(){ 
-        console.log(this.state.timeClose.toTimeString())
         return(
             <ThemeProvider>
                 <Card>
@@ -57,7 +68,8 @@ class CreateConfirmRoom extends Component {
                     <Input
                         placeholder="Nhập số điện thoại"
                         keyboardType='phone-pad'
-                        onChangeText={value => this.setState({phone : value})}
+                        value={this.props.confirm.phone}
+                        onChangeText={value => this.props.setConfirm(value, 'phone')}
                         inputContainerStyle={this.state.focused == 'phone' ? styles.inputContainerFocus : styles.inputContainer}
                         inputStyle={styles.inputStyle}
                         onFocus={() => this.setState({ focused: 'phone' })}
@@ -67,7 +79,8 @@ class CreateConfirmRoom extends Component {
                     <Text style={styles.title}>{Language.ROOM_TITLE}</Text>
                     <Input
                         placeholder="Nhập tiêu đề bài đăng"
-                        onChangeText={value => this.setState({title : value})}
+                        value={this.props.confirm.title}
+                        onChangeText={value => this.props.setConfirm(value, 'title')}
                         inputContainerStyle={this.state.focused == 'title' ? styles.inputContainerFocus : styles.inputContainer}
                         inputStyle={styles.inputStyle}
                         onFocus={() => this.setState({ focused: 'title' })}
@@ -78,7 +91,8 @@ class CreateConfirmRoom extends Component {
                     <Text style={styles.title}>{Language.ROOM_DESCRIPTION}</Text>
                     <Input
                         placeholder="Môi trường sống sạch, khu phố an ninh..."
-                        onChangeText={value => this.setState({description : value})}
+                        value={this.props.confirm.description}
+                        onChangeText={value => this.props.setConfirm(value, 'description')}
                         inputContainerStyle={this.state.focused == 'description' ? styles.inputContainerFocus : styles.inputContainer}
                         inputStyle={styles.inputStyle}
                         onFocus={() => this.setState({ focused: 'description' })}
@@ -89,13 +103,13 @@ class CreateConfirmRoom extends Component {
                         <View style={{flex: 1, flexDirection: 'column'}}>
                             <Text style={styles.title}>{Language.ROOM_TIME_OPEN}</Text>
                             <TouchableOpacity style={this.state.focused === 'open' ? styles.timePickerSelected : styles.timePicker} onPress={() => this.showTimePicker('open')}>
-                                <Text style={this.state.isTimeOpen ? styles.inputStyle : styles.inputEmptyStyle}>{this.state.isTimeOpen ? this.state.timeOpen.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Giở mở cửa'}</Text>
+                                <Text style={this.props.confirm.isTimeOpen ? styles.inputStyle : styles.inputEmptyStyle}>{this.props.confirm.isTimeOpen ? this.props.confirm.timeOpen.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Giờ mở cửa'}</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={{flex: 1, flexDirection: 'column'}}>
                             <Text style={styles.title}>{Language.ROOM_TIME_CLOSE}</Text>
                             <TouchableOpacity style={this.state.focused === 'close' ? styles.timePickerSelected : styles.timePicker} onPress={() => this.showTimePicker('close')}>
-                            <Text style={this.state.isTimeClose ? styles.inputStyle : styles.inputEmptyStyle}>{this.state.isTimeClose ? this.state.timeClose.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Giở đóng cửa'}</Text>
+                            <Text style={this.props.confirm.isTimeClose ? styles.inputStyle : styles.inputEmptyStyle}>{this.props.confirm.isTimeClose ? this.props.confirm.timeClose.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Giờ đóng cửa'}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -105,7 +119,7 @@ class CreateConfirmRoom extends Component {
                         <DateTimePicker
                         textColor={Colors.grayLabel}
                         testID="dateTimePicker"
-                        value={this.state.focused === 'open' ? this.state.timeOpen : this.state.timeClose}
+                        value={this.state.focused === 'open' ? this.props.confirm.timeOpen : this.props.confirm.timeClose}
                         mode='time'
                         onChange={this.onChangeTime}
                         style={{height: 150}}

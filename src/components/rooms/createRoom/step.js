@@ -69,7 +69,8 @@ class Step extends Component {
     return iconConfig;
   };
   onStepPress = (position) => {
-    this.setState({currentPage: position})
+    //this.setState({currentPage: position})
+    this.props.setStep(position)
   }
   renderViewPagerPage = (data) => {
     return (
@@ -107,6 +108,7 @@ class Step extends Component {
             currentPosition={this.props.currentStep}
             renderStepIndicator={this.renderStepIndicator}
             labels={labels}
+            onPress={this.onStepPress}
         />
       </View>
 

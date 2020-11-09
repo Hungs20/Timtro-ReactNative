@@ -5,8 +5,6 @@ import CreateRoom from './src/components/rooms/createRoom'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Button, ThemeProvider, Text } from 'react-native-elements';
-import {Provider} from 'react-redux';
-import store from './src/store';
 function HomeScreen({ navigation }) {
   return (
 <ThemeProvider>
@@ -30,7 +28,6 @@ const Stack = createStackNavigator();
 
 const App = () => {
   return (
-    <Provider store = {store}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName='Home'>
           <Stack.Screen name="Home" component={HomeScreen} />
@@ -47,7 +44,6 @@ const App = () => {
           }} />
         </Stack.Navigator>
     </NavigationContainer>
-    </Provider>
   );
 }
 

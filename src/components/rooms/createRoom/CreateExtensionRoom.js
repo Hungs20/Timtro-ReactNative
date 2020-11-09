@@ -22,9 +22,10 @@ class CreateExtensionRoom extends Component {
       var index = array.indexOf(value)
       if (index === -1) array.push(value);
       else array.splice(index, 1);
-      this.setState({
+      /*this.setState({
         listExtChecked: array
-      })
+      })*/
+      this.props.setExtension(array,'ext');
     }
     async SingleFilePicker() {
         
@@ -32,7 +33,8 @@ class CreateExtensionRoom extends Component {
             const results = await DocumentPicker.pickMultiple({
               type: [DocumentPicker.types.images],
             });
-            this.setState({singleFileOBJ: results})
+            //this.setState({singleFileOBJ: results})
+            this.props.setExtension(results,'image');
           } catch (err) {
             if (DocumentPicker.isCancel(err)) {
               // User cancelled the picker, exit any dialogs or menus and move on
@@ -65,7 +67,7 @@ class CreateExtensionRoom extends Component {
                     <Text style={styles.title}>{'Hình ảnh'}</Text>
                     <View style={{paddingHorizontal: 10, borderStyle:'dashed',borderColor: grayBackground, borderWidth: 1, flex: 1, flexDirection:'column'}}>
                         <View style={{flex: 1, flexDirection:'row', alignItems: 'center', justifyContent: 'center'}}>
-                        {this.showImagePicker(this.state.singleFileOBJ)}
+                        {this.showImagePicker(this.props.extension.singleFileOBJ)}
                         </View>
                         <TouchableOpacity onPress={this.SingleFilePicker.bind(this)} style={{alignItems: 'center', paddingVertical: 10, paddingHorizontal: 20}}>
                             <Icon name='upload' color={Colors.primary} size={25}/>
@@ -94,16 +96,17 @@ class CreateExtensionRoom extends Component {
                   {exts.map((data, index) => {
                       return (
                         <CheckBox
+                        key={index}
                         title={data.name}
                         iconType='material-community'
                         checkedIcon={data.icon}
                         uncheckedIcon={data.icon}
-                        containerStyle={this.state.listExtChecked.indexOf(data.name) === -1 ? styles.extensionButton : styles.extensionButtonSelected}
-                        textStyle={this.state.listExtChecked.indexOf(data.name) === -1 ? styles.extensionText : styles.extensionTextSelected}
+                        containerStyle={this.props.extension.listExtChecked.indexOf(data.name) === -1 ? styles.extensionButton : styles.extensionButtonSelected}
+                        textStyle={this.props.extension.listExtChecked.indexOf(data.name) === -1 ? styles.extensionText : styles.extensionTextSelected}
                         size={17}
                         checkedColor={Colors.primary}
-                        checked={this.state.listExtChecked.indexOf(data.name) === -1 ? false : true}
-                        onPress={() => this.addExtChecked(this.state.listExtChecked, data.name)}
+                        checked={this.props.extension.listExtChecked.indexOf(data.name) === -1 ? false : true}
+                        onPress={() => this.addExtChecked(this.props.extension.listExtChecked, data.name)}
                     />
                       )
                   })}
@@ -112,16 +115,17 @@ class CreateExtensionRoom extends Component {
                   {exts2.map((data, index) => {
                       return (
                       <CheckBox
+                          key={index}
                           title={data.name}
                           iconType='material-community'
                           checkedIcon={data.icon}
                           uncheckedIcon={data.icon}
-                          containerStyle={this.state.listExtChecked.indexOf(data.name) === -1 ? styles.extensionButton : styles.extensionButtonSelected}
-                          textStyle={this.state.listExtChecked.indexOf(data.name) === -1 ? styles.extensionText : styles.extensionTextSelected}
+                          containerStyle={this.props.extension.listExtChecked.indexOf(data.name) === -1 ? styles.extensionButton : styles.extensionButtonSelected}
+                          textStyle={this.props.extension.listExtChecked.indexOf(data.name) === -1 ? styles.extensionText : styles.extensionTextSelected}
                           size={17}
                           checkedColor={Colors.primary}
-                          checked={this.state.listExtChecked.indexOf(data.name) === -1 ? false : true}
-                          onPress={() => this.addExtChecked(this.state.listExtChecked, data.name)}
+                          checked={this.props.extension.listExtChecked.indexOf(data.name) === -1 ? false : true}
+                          onPress={() => this.addExtChecked(this.props.extension.listExtChecked, data.name)}
                       />
                       )
                   })}

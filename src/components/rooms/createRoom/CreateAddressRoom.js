@@ -72,7 +72,6 @@ class CreateAddressRoom extends Component {
             default:
                 break;
         }
-        console.log(this.state.idSelected)
     }
    toggleOverlay = (value) => {
         switch (value) {
@@ -116,27 +115,32 @@ class CreateAddressRoom extends Component {
             case 'thanhpho':
                 this.setState({
                     idCity: this.state.idSelected,
-                    nameCity: this.state.listData[this.state.idSelected].name,
+                   // nameCity: this.state.listData[this.state.idSelected].name,
                     isShowErrorCity: false,
                     idQuan : -1,
-                    nameQuan : '',
+                  //  nameQuan : '',
                     idPhuong : -1,
-                    namePhuong : '',
+                  //  namePhuong : '',
                 })
+                this.props.setAddress(this.state.listData[this.state.idSelected].name, 'nameCity');
+                this.props.setAddress('', 'nameQuan');
+                this.props.setAddress('', 'namePhuong');
                 break;
             case 'quan':
                 this.setState({
                     idQuan: this.state.idSelected,
-                    nameQuan: this.state.listData[this.state.idSelected].name,
+                    //nameQuan: this.state.listData[this.state.idSelected].name,
                     isShowErrorQuan: false
-                })
+                });
+                this.props.setAddress(this.state.listData[this.state.idSelected].name, 'nameQuan');
                 break;
             case 'phuong':
                 this.setState({
                     idPhuong: this.state.idSelected,
-                    namePhuong: this.state.listData[this.state.idSelected].name,
+                    //namePhuong: this.state.listData[this.state.idSelected].name,
                     isShowErrorPhuong: false
-                })
+                });
+                this.props.setAddress(this.state.listData[this.state.idSelected].name, 'namePhuong');
                 break;
             default:
 
@@ -161,7 +165,6 @@ class CreateAddressRoom extends Component {
     }
     
     render(){
-        //console.log(this.state.listData)
         return(
                 <ThemeProvider>
                 <Overlay isVisible={this.state.visible} onBackdropPress={()=>this.toggleOverlay('')}>
@@ -198,7 +201,7 @@ class CreateAddressRoom extends Component {
                          <ListItem containerStyle={this.state.isShowErrorCity ? styles.containerListItemError : styles.containerListItem} >
                             <ListItem.Content>
                             <Text style={styles.title}>{Language.ROOM_CITY}</Text>
-                                <Text style={this.state.nameCity == '' ? styles.subtitleItemPlaceholder : styles.subtitleItem}>{this.state.nameCity == '' ? 'Bấm vào đây để chọn ' + Language.ROOM_CITY : this.state.nameCity} </Text>
+                                <Text style={this.props.address.nameCity == '' ? styles.subtitleItemPlaceholder : styles.subtitleItem}>{this.props.address.nameCity == '' ? 'Bấm vào đây để chọn ' + Language.ROOM_CITY : this.props.address.nameCity} </Text>
                             </ListItem.Content>
                             <Icon name='chevron-down' size={13}/>
                         </ListItem>
@@ -209,7 +212,7 @@ class CreateAddressRoom extends Component {
                         <ListItem containerStyle={this.state.isShowErrorQuan ? styles.containerListItemError : styles.containerListItem} >
                             <ListItem.Content>
                             <Text style={styles.title}>{Language.ROOM_QUAN}</Text>
-                                <Text style={this.state.nameQuan == '' ? styles.subtitleItemPlaceholder : styles.subtitleItem}>{this.state.nameQuan == '' ? 'Bấm vào đây để chọn ' + Language.ROOM_QUAN : this.state.nameQuan} </Text>
+                                <Text style={this.props.address.nameQuan == '' ? styles.subtitleItemPlaceholder : styles.subtitleItem}>{this.props.address.nameQuan == '' ? 'Bấm vào đây để chọn ' + Language.ROOM_QUAN : this.props.address.nameQuan} </Text>
                             </ListItem.Content>
                             <Icon name='chevron-down' size={13}/>
                         </ListItem>
@@ -220,7 +223,7 @@ class CreateAddressRoom extends Component {
                         <ListItem containerStyle={this.state.isShowErrorPhuong ? styles.containerListItemError : styles.containerListItem} >
                             <ListItem.Content>
                             <Text style={styles.title}>{Language.ROOM_PHUONG}</Text>
-                                <Text style={this.state.namePhuong == '' ? styles.subtitleItemPlaceholder : styles.subtitleItem}>{this.state.namePhuong == '' ? 'Bấm vào đây để chọn ' + Language.ROOM_PHUONG : this.state.namePhuong} </Text>
+                                <Text style={this.props.address.namePhuong == '' ? styles.subtitleItemPlaceholder : styles.subtitleItem}>{this.props.address.namePhuong == '' ? 'Bấm vào đây để chọn ' + Language.ROOM_PHUONG : this.props.address.namePhuong} </Text>
                             </ListItem.Content>
                             <Icon name='chevron-down' size={13}/>
                         </ListItem>
@@ -232,7 +235,8 @@ class CreateAddressRoom extends Component {
                                 <Text style={styles.title}>{Language.ROOM_DUONG}</Text>
                                 <Input
                                     placeholder="Ví dụ: Huỳnh Văn Bánh"
-                                    onChangeText={value => this.setState({nameDuong : value})}
+                                    value={this.props.address.nameDuong}
+                                    onChangeText={value => this.props.setAddress(value, 'nameDuong')}
                                     inputContainerStyle={{marginHorizontal: -10, borderBottomColor: 'white', marginBottom: -25, marginTop: -10}}
                                     inputStyle={styles.inputStyle}
                                     onFocus={() => this.setState({ focused: 'roomduong' })}
@@ -246,7 +250,8 @@ class CreateAddressRoom extends Component {
                                 <Text style={styles.title}>{Language.ROOM_NHA}</Text>
                                 <Input
                                     placeholder="Ví dụ: 244/31"
-                                    onChangeText={value => this.setState({nameNha : value})}
+                                    value={this.props.address.nameNha}
+                                    onChangeText={value => this.props.setAddress(value, 'nameNha')}
                                     inputContainerStyle={{marginHorizontal: -10, borderBottomColor: 'white', marginBottom: -25, marginTop: -10}}
                                     inputStyle={styles.inputStyle}
                                     onFocus={() => this.setState({ focused: 'sonha' })}

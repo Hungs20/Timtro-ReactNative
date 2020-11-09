@@ -10,13 +10,13 @@ import * as Language from '../../language'
 import { blue, grayBackground, grayLabel, white } from '../../../styles/colors';
 
 
+
 class CreateInfoRoom extends Component {
     
     constructor(props) {
         super(props)
         this.state = {
             focused: '',
-            valueRoom: '',
             listRoom: [
                 {'label': 'Kí túc xá/Homestay', 'value' : 'ktx'}, 
                 {'label': 'Phòng cho thuê', 'value' : 'pct'}, 
@@ -29,15 +29,7 @@ class CreateInfoRoom extends Component {
                 {'label' : 'Nam', 'value' : 'nam'},
                 {'label' : 'Nữ', 'vaule' : 'nu'}
             ],
-            numRoom : '',
-            numPersonOfRoom : '',
-            gender : '',
-            area : '',
-            giathue: '',
-            giacoc: '',
-            tiendien: '',
-            tiennuoc: '',
-            tienmang: '',
+
             dexe: false,
             isCheckedFreeDien: false,
             isCheckedFreeNuoc: false,
@@ -45,27 +37,7 @@ class CreateInfoRoom extends Component {
             isCheckedXe: false,
         }
     }
-    // SET STATE
-    setValueRoom = (value) => {
-        this.setState({
-            valueRoom : value
-        })
-    }
-    setNumRoom = (value) => {
-        this.setState({
-            numRoom : value
-        })
-    }
-    setGender = (value) => {
-        this.setState({
-            gender : value
-        })
-    }
-    setArea = (value) => {
-        this.setState({
-            area : value
-        })
-    }
+   
 
     /// Render
     render() {
@@ -83,10 +55,10 @@ class CreateInfoRoom extends Component {
                                     title={data.label}
                                     checkedIcon='dot-circle-o'
                                     uncheckedIcon='circle-o'
-                                    checked={this.state.valueRoom == data.value}
-                                    onPress = {() => this.setValueRoom(data.value)}
+                                    checked={this.props.info.typeRoom == data.value}
+                                    onPress = {() => this.props.setInfo(data.value, 'typeRoom')}
                                     containerStyle={styles.radioBackground}
-                                    textStyle={this.state.valueRoom == data.value ? styles.radioLabelSelected : styles.radioLabel}
+                                    textStyle={this.props.info.typeRoom == data.value ? styles.radioLabelSelected : styles.radioLabel}
                                     checkedColor={Colors.primary}
                                 />
                             )
@@ -97,7 +69,8 @@ class CreateInfoRoom extends Component {
                             <Input
                                 keyboardType="numeric"
                                 placeholder="Nhập số lượng phòng"
-                                onChangeText={value => this.setState({numRoom : value})}
+                                value={this.props.info.numRoom}
+                                onChangeText={value => this.props.setInfo(value, 'numRoom')}
                                 inputContainerStyle={this.state.focused == 'roomnum' ? styles.inputContainerFocus : styles.inputContainer}
                                 inputStyle={styles.inputStyle}
                                 containerStyle={{marginRight: -300}}
@@ -112,7 +85,8 @@ class CreateInfoRoom extends Component {
                             <Input
                                 keyboardType="numeric"
                                 placeholder="Nhập số người/phòng"
-                                onChangeText={value => this.setState({numPersonOfRoom : value})}
+                                value={this.props.info.numPersonOfRoom}
+                                onChangeText={value => this.props.setInfo(value, 'numPersonOfRoom')}
                                 inputContainerStyle={this.state.focused == 'roomhave' ? styles.inputContainerFocus : styles.inputContainer}
                                 inputStyle={styles.inputStyle}
                                 containerStyle={{marginRight: -300}}
@@ -129,10 +103,10 @@ class CreateInfoRoom extends Component {
                                     title={data.label}
                                     checkedIcon='dot-circle-o'
                                     uncheckedIcon='circle-o'
-                                    checked={this.state.gender == data.value}
-                                    onPress = {() => this.setGender(data.value)}
+                                    checked={this.props.info.gender == data.value}
+                                    onPress = {() => this.props.setInfo(data.value, 'gender')}
                                     containerStyle={styles.radioBackground}
-                                    textStyle={this.state.gender == data.value ? styles.radioLabelSelected : styles.radioLabel}
+                                    textStyle={this.props.info.gender == data.value ? styles.radioLabelSelected : styles.radioLabel}
                                     checkedColor={Colors.primary}
                                 />
                             )
@@ -143,7 +117,8 @@ class CreateInfoRoom extends Component {
                             <Input
                                 keyboardType="numeric"
                                 placeholder="Nhập diện tích phòng"
-                                onChangeText={value => this.setState({numRoom : value})}
+                                value={this.props.info.area}
+                                onChangeText={value => this.props.setInfo(value, 'area')}
                                 inputContainerStyle={this.state.focused == 'dientich' ? styles.inputContainerFocus : styles.inputContainer}
                                 inputStyle={styles.inputStyle}
                                 containerStyle={{marginRight: -300}}
@@ -161,7 +136,8 @@ class CreateInfoRoom extends Component {
                             <Input
                                 keyboardType="numeric"
                                 placeholder="Nhập giá cho thuê"
-                                onChangeText={value => this.setState({giathue : value})}
+                                value={this.props.info.giathue}
+                                onChangeText={value => this.props.setInfo(value, 'giathue')}
                                 inputContainerStyle={this.state.focused == 'roomcostthue' ? styles.inputContainerFocus : styles.inputContainer}
                                 inputStyle={styles.inputStyle}
                                 containerStyle={{marginRight: -300}}
@@ -176,7 +152,8 @@ class CreateInfoRoom extends Component {
                             <Input
                                 keyboardType="numeric"
                                 placeholder="Nhập số tiền cọc"
-                                onChangeText={value => this.setState({giacoc : value})}
+                                value={this.props.info.giacoc}
+                                onChangeText={value => this.props.setInfo(value, 'giacoc')}
                                 inputContainerStyle={this.state.focused == 'roomcostcoc' ? styles.inputContainerFocus : styles.inputContainer}
                                 inputStyle={styles.inputStyle}
                                 containerStyle={{marginRight: -300}}
@@ -200,7 +177,8 @@ class CreateInfoRoom extends Component {
                             : <Input
                             keyboardType="numeric"
                             placeholder="Nhập số tiền"
-                            onChangeText={value => this.setState({tiendien : value})}
+                            value={this.props.info.tiendien}
+                            onChangeText={value => this.props.setInfo(value, 'tiendien')}
                             inputContainerStyle={this.state.focused == 'tiendien' ? styles.inputContainerFocus : styles.inputContainer}
                             inputStyle={styles.inputStyle}
                             containerStyle={{marginRight: -200}}
@@ -240,7 +218,8 @@ class CreateInfoRoom extends Component {
                             : <Input
                             keyboardType="numeric"
                             placeholder="Nhập số tiền"
-                            onChangeText={value => this.setState({tiennuoc : value})}
+                            value={this.props.info.tiennuoc}
+                            onChangeText={value => this.props.setInfo(value, 'tiennuoc')}
                             inputContainerStyle={this.state.focused == 'tiennuoc' ? styles.inputContainerFocus : styles.inputContainer}
                             inputStyle={styles.inputStyle}
                             containerStyle={{marginRight: -200}}
@@ -279,7 +258,8 @@ class CreateInfoRoom extends Component {
                             : <Input
                             keyboardType="numeric"
                             placeholder="Nhập số tiền"
-                            onChangeText={value => this.setState({tienmang : value})}
+                            value={this.props.info.tienmang}
+                            onChangeText={value => this.props.setInfo(value, 'tienmang')}
                             inputContainerStyle={this.state.focused == 'tienmang' ? styles.inputContainerFocus : styles.inputContainer}
                             inputStyle={styles.inputStyle}
                             containerStyle={{marginRight: -200}}
@@ -307,12 +287,10 @@ class CreateInfoRoom extends Component {
                         <CheckBox
                             left
                             title={Language.ROOM_HAVE_XE}
-                            checked={this.state.isCheckedXe}
+                            checked={this.props.info.dexe}
                             onPress={
                                 ()=>{
-                                    this.setState({
-                                        isCheckedXe : !this.state.isCheckedXe
-                                    })
+                                    this.props.setInfo(!this.props.info.dexe, 'dexe')
                                 }
                             }
                             containerStyle={{backgroundColor: white, borderColor: white, marginVertical: 0}}
@@ -369,5 +347,4 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center" }
 })
-//export default connect(null, actions)(CreateInfoRoom);
 export default CreateInfoRoom;
