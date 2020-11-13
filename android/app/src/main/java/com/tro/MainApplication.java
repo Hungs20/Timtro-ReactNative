@@ -6,6 +6,8 @@ import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.horcrux.svg.SvgPackage;
 import com.horcrux.svg.SvgPackage;
+import com.horcrux.svg.SvgPackage;
+import com.horcrux.svg.SvgPackage;
 import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
 import io.github.elyx0.reactnativedocumentpicker.DocumentPickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -15,7 +17,8 @@ import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-
+// import io.invertase.firebase.app.ReactNativeFirebaseAppPackage;
+// import io.invertase.firebase.auth.ReactNativeFirebaseAuthPackage;
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =
@@ -30,9 +33,12 @@ public class MainApplication extends Application implements ReactApplication {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
-          // packages.add(new MyReactNativePackage());
+          // // packages.add(new MyReactNativePackage());
+          // packages.add(new ReactNativeFirebaseAppPackage());
+          // packages.add(new ReactNativeFirebaseAuthPackage());
           return packages;
         }
+
 
         @Override
         protected String getJSMainModuleName() {
