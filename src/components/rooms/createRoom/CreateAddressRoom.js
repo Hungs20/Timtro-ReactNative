@@ -191,7 +191,9 @@ class CreateAddressRoom extends Component {
                                 })}
                             </ScrollView>
                             <Text>{'\n'}</Text>
-                            <Button title="OK" onPress={this.chooseLocation}/>
+                            <Button title="OK" type="outline"  titleStyle={{color: Colors.primary}}
+                            containerStyle={{marginHorizontal: 35, borderColor: Colors.primary, borderWidth: 1, borderRadius: 10}}
+                              onPress={this.chooseLocation}/>
                     </View>
                 </Overlay>
                     <Card>

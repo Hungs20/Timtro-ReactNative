@@ -1,12 +1,27 @@
 import React, { Component } from "react";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import CupertinoSearchBarBasic from "./CupertinoSearchBarBasic";
-
+import * as Colors from '../../styles/colors'
+import { SliderBox } from "react-native-image-slider-box";
+const images = [
+  require('../../data/img/intro1.jpg'),
+  require('../../data/img/intro2.png'),          // Local image
+];
 function Search(props) {
   return (
     <View style={styles.container}>
       <View style={styles.sliderStack}>
-        <View style={styles.slider}></View>
+        <View style={styles.slider}>
+        <SliderBox
+          images={images}
+          sliderBoxHeight={300}
+          dotColor={Colors.blue}
+          inactiveDotColor={Colors.white}
+          paginationBoxVerticalPadding={20}
+          autoplay
+          circleLoop
+        />
+        </View>
         
           <View style={styles.wholeSearchBox}>
             <View style={styles.searchBox}>
@@ -39,7 +54,6 @@ function Search(props) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
   },
   slider: {
     top: 0,
