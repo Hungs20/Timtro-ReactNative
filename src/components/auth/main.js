@@ -1,8 +1,11 @@
 import React from 'react'
-import { StyleSheet, Platform, Image, Text, View } from 'react-native'
+import {View, Image, StyleSheet, SafeAreaView} from 'react-native'
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Card, ListItem, Button, Text, CheckBox, Divider, ThemeProvider, Input } from 'react-native-elements'
+import { ScrollView } from 'react-native-gesture-handler'
 import firebase from '@react-native-firebase/app'
 import '@react-native-firebase/auth'
-
+import Tabbar from '../tabbar'
 export default class Main extends React.Component {
   state = { currentUser: null }
   componentDidMount() {
@@ -13,9 +16,7 @@ render() {
     const { currentUser } = this.state
 return (
       <View style={styles.container}>
-        <Text>
-          Hi {currentUser && currentUser.email}!
-        </Text>
+        <Tabbar/>
       </View>
     )
   }

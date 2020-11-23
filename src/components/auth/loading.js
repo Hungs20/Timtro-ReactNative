@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native'
 import firebase from '@react-native-firebase/app'
 import '@react-native-firebase/auth'
+import * as Colors from '../../styles/colors'
 export default class Loading extends React.Component {
     componentDidMount() {
   //     firebase.auth()
@@ -16,7 +17,7 @@ export default class Loading extends React.Component {
     return (
       <View style={styles.container}>
         <Text>Loading</Text>
-        <ActivityIndicator size="large" />
+        <ActivityIndicator size="large" color={Colors.pink} />
       </View>
     )
   }

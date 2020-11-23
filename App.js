@@ -8,14 +8,13 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import Loading from './src/components/auth/loading'
 import SignUp from './src/components/auth/signup'
 import Login from './src/components/auth/login'
-import Main from './src/components/home'
+import Main from './src/components/tabbar'
 
 
 const App = createAppContainer(
   createSwitchNavigator(
     {
       Loading,
-      SignUp,
       Login,
       Main
     },
