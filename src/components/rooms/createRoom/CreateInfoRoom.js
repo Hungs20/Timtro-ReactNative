@@ -18,16 +18,16 @@ class CreateInfoRoom extends Component {
         this.state = {
             focused: '',
             listRoom: [
-                {'label': 'Kí túc xá/Homestay', 'value' : 'ktx'}, 
-                {'label': 'Phòng cho thuê', 'value' : 'pct'}, 
-                {'label': 'Phòng ở ghép', 'value' : 'pog'}, 
-                {'label': 'Nhà nguyên căn', 'value' : 'nnc'}, 
-                {'label': 'Căn hộ', 'value' : 'ch'}
+                {'label': 'Kí túc xá/Homestay', 'value' : 'Kí túc xá/Homestay'}, 
+                {'label': 'Phòng cho thuê', 'value' : 'Phòng cho thuê'}, 
+                {'label': 'Phòng ở ghép', 'value' : 'Phòng ở ghép'}, 
+                {'label': 'Nhà nguyên căn', 'value' : 'Nhà nguyên căn'}, 
+                {'label': 'Căn hộ', 'value' : 'Căn hộ'}
             ],
             listGender: [
-                {'label' : 'Tất cả', 'value' : 'all'},
-                {'label' : 'Nam', 'value' : 'nam'},
-                {'label' : 'Nữ', 'vaule' : 'nu'}
+                {'label' : 'Tất cả', 'value' : 'Tất cả'},
+                {'label' : 'Nam', 'value' : 'Nam'},
+                {'label' : 'Nữ', 'vaule' : 'Nữ'}
             ],
 
             dexe: false,

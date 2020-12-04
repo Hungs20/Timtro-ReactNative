@@ -5,23 +5,17 @@ class CellTable extends Component {
     constructor(props){
         super(props)
         this.state = {
-            image: require('../../../data/haibatrung.png'),
-            type: 'Tìm người thuê',
-            title: 'Phòng cho thuê Hồ Tùng Mậu, Quận Bắc Từ Liêm',
-            cost: '3.7 triệu VND/phòng',
-            address: 'Ngõ 136 Hồ Tùng Mậu, Phường abc',
-            address2: 'Quận Nam Từ Liêm'
         }
     }
     render(){
         return(
             <View style={{flex: 1, margin: 5}}>
-                <Image source={this.state.image} style={{height: 100, borderRadius: 10, margin: 5, width: '100%'}}/>
-                <Text numberOfLines={1} style={styles.type}>{this.state.type}</Text>
-                <Text numberOfLines={2} style={styles.title}>{this.state.title}</Text>
-                <Text style={styles.cost}>{this.state.cost}</Text>
-                <Text numberOfLines={1} style={styles.address}>{this.state.address}</Text>
-                <Text style={styles.address2}>{this.state.address2}</Text>
+                <Image source={{uri: this.props.room.extension.listImageUrl[0]}} style={{height: 100, borderRadius: 10, margin: 5, width: '100%'}}/>
+                <Text numberOfLines={1} style={styles.type}>{this.props.room.info.typeRoom}</Text>
+                <Text numberOfLines={2} style={styles.title}>{this.props.room.confirm.title}</Text>
+                <Text style={styles.cost}>{this.props.room.info.giathue}</Text>
+                <Text numberOfLines={1} style={styles.address}>{this.props.room.address.nameNha}, {this.props.room.address.nameDuong}, {this.props.room.address.namePhuong}</Text>
+                <Text style={styles.address2}>{this.props.room.address.nameQuan}</Text>
             </View>
         )   
     }
