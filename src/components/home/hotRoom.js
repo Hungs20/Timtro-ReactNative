@@ -29,11 +29,12 @@ const styles = StyleSheet.create({
         flex:1, borderRadius: 10, margin: 5, height: 100, width: '100%'
     },
     title : {
+        fontFamily: "roboto-regular",
         fontSize: 14,
-        color: Colors.white, 
+        color: 'black', 
         fontWeight:'bold',
-        textTransform: 'uppercase',
-        paddingVertical: 10
+        paddingVertical: 10,
+        paddingLeft: 10
     },
   })
 export default HotRoom;

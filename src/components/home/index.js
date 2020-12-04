@@ -37,7 +37,7 @@ class Home extends Component {
         return (
             <ThemeProvider style={{flex: 1}}>
             <ScrollView>
-                <Search/>
+                <Search navigation={this.props.navigation}/>
                 <View style={styles.container}>
                     <Trend/>
                     <HotRoom/>

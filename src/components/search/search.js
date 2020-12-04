@@ -3,52 +3,79 @@ import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import CupertinoSearchBarBasic from "./CupertinoSearchBarBasic";
 import * as Colors from '../../styles/colors'
 import { SliderBox } from "react-native-image-slider-box";
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import DistricSearch from "./DistricSearch";
+import 'react-native-gesture-handler';
 const images = [
   require('../../data/img/intro1.jpg'),
   require('../../data/img/intro2.png'),          // Local image
 ];
-function Search(props) {
-  return (
-    <View style={styles.container}>
-      <View style={styles.sliderStack}>
-        <View style={styles.slider}>
-        <SliderBox
-          images={images}
-          sliderBoxHeight={300}
-          dotColor={Colors.blue}
-          inactiveDotColor={Colors.white}
-          paginationBoxVerticalPadding={20}
-          autoplay
-          circleLoop
-        />
-        </View>
-        
-          <View style={styles.wholeSearchBox}>
-            <View style={styles.searchBox}>
-              <View style={styles.topSearchBox}></View>
-              <View style={styles.bottomSearchBox}></View>
-              <CupertinoSearchBarBasic
-                style={styles.cupertinoSearchBarBasic}
-              ></CupertinoSearchBarBasic>
-              <TouchableOpacity style={styles.districSearch}>
-                <View style={styles.districtIcon}></View>
-                <Text style={styles.districText}>Tìm theo{"\n"}nhiều quận</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.nearYouSearch}>
-                <View style={styles.nearYou}></View>
-                <Text style={styles.nearYouText}>
-                Tìm gần nơi{"\n"}học &amp; làm
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.postRoom}>
-                <View style={styles.postRoomIcon}></View>
-                <Text style={styles.postRoomText}>Đăng{"\n"}phòng dễ</Text>
-              </TouchableOpacity>
-            </View>
+
+
+
+class Search extends Component {
+  constructor(props){
+    super(props)
+  }
+  render(){
+    return (
+      <View style={styles.container}>
+        <View style={styles.sliderStack}>
+          <View style={styles.slider}>
+          <SliderBox
+            images={images}
+            sliderBoxHeight={300}
+            dotColor={Colors.blue}
+            inactiveDotColor={Colors.white}
+            paginationBoxVerticalPadding={20}
+            autoplay
+            circleLoop
+          />
           </View>
-        
+          
+            <View style={styles.wholeSearchBox}>
+              <View style={styles.searchBox}>
+                <View style={styles.topSearchBox}></View>
+                <View style={styles.bottomSearchBox}></View>
+                <CupertinoSearchBarBasic
+                  style={styles.cupertinoSearchBarBasic}
+                ></CupertinoSearchBarBasic>
+
+              
+                <TouchableOpacity style={styles.districSearch} onPress={()=> this.props.navigation.navigate('DistricSearch')}>
+                  <View style={styles.districtIcon}></View>
+                  <Text style={styles.districText}>Tìm theo{"\n"}nhiều quận</Text>
+                </TouchableOpacity>
+            
+                
+                <TouchableOpacity style={styles.nearYouSearch}>
+                  <View style={styles.nearYou}></View>
+                  <Text style={styles.nearYouText}>
+                  Tìm gần nơi{"\n"}học &amp; làm
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.postRoom}>
+                  <View style={styles.postRoomIcon}></View>
+                  <Text style={styles.postRoomText}>Đăng{"\n"}phòng dễ</Text>
+                </TouchableOpacity>
+              
+
+              </View>
+            </View>
+          
+        </View>
       </View>
-    </View>
+    );
+  }
+}
+function SearchIndex({navigation}) {
+  return (
+    <SearchStack.Navigator initialRouteName='homeSearch'>
+      <SearchStack.Screen name="homeSearch" component={SearchIndex} />
+      <SearchStack.Screen name="DistricSearch" component={DistricSearchIndex} />
+    </SearchStack.Navigator>
   );
 }
 
