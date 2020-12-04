@@ -10,13 +10,92 @@ import { blue, grayBackground, grayLabel, white } from '../../../styles/colors';
 import DocumentPicker from 'react-native-document-picker';
 import { ActivityIndicator } from 'react-native';
 
+import { utils } from '@react-native-firebase/app';
+import storage from '@react-native-firebase/storage';
+import ImagePicker from 'react-native-image-picker';
+import * as Progress from 'react-native-progress';
 class CreateExtensionRoom extends Component {
     constructor(props){
         super(props);
         this.state = {
-            singleFileOBJ: [],
-            listExtChecked: []
+            listImageUrl: [],
+            listExtChecked: [],
+            image: null,
+            uploading: false,
+            transferred: 0,
           };
+    }
+
+   selectImage = () => {
+    const options = {
+      maxWidth: 2000,
+      maxHeight: 2000,
+      storageOptions: {
+        skipBackup: true,
+        path: 'images'
+      }
+    };
+    ImagePicker.showImagePicker(options, async response => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        const source = { uri: response.uri };
+        console.log(source);
+        await this.setState({
+          image: source
+        })
+        this.uploadImage()
+      }
+    });
+  };
+
+  uploadImage = async () => {
+    console.log("aaaa")
+    const { uri } = this.state.image;
+    const filename = uri.substring(uri.lastIndexOf('/') + 1);
+    const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
+    this.setState({
+      uploading: true,
+      transferred: 0
+    })
+    const task = storage()
+      .ref(filename)
+      .putFile(uploadUri);
+    // set progress state
+    task.on('state_changed', snapshot => {
+      this.setState({
+        transferred: Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 10000
+      });
+    });
+    try {
+      await task;
+    } catch (e) {
+      console.error(e);
+    }
+    console.log(filename);
+    const url = await storage()
+  .ref(filename)
+  .getDownloadURL();
+
+    console.log(url);
+    this.addImageUrl(this.props.extension.listImageUrl, url)
+    this.setState({
+      uploading: false,
+      image: null
+    });
+  };
+
+    addImageUrl = (array, value) => {
+      console.log(array)
+      console.log(value)
+      var index = array.indexOf(value)
+      if (index === -1) array.push(value);
+      else array.splice(index, 1);
+      this.props.setExtension(array,'image');
     }
     addExtChecked = (array, value) => {
       var index = array.indexOf(value)
@@ -35,6 +114,8 @@ class CreateExtensionRoom extends Component {
             });
             //this.setState({singleFileOBJ: results})
             this.props.setExtension(results,'image');
+            console.log(results);
+            this.uploadImageToStorage(results.uri, results.name);
           } catch (err) {
             if (DocumentPicker.isCancel(err)) {
               // User cancelled the picker, exit any dialogs or menus and move on
@@ -48,7 +129,7 @@ class CreateExtensionRoom extends Component {
           // don't put your key as index, choose other unique values as your key.
           return <Image
             key={index}
-            source={{uri: images.uri}}
+            source={{uri: images}}
             style={{width: 60, height: 60}} 
             PlaceholderContent={<ActivityIndicator />}
             />
@@ -61,15 +142,39 @@ class CreateExtensionRoom extends Component {
          
         return(
             <ThemeProvider>
+
+<TouchableOpacity onPress={this.selectImage}>
+        <Text>Pick an image</Text>
+      </TouchableOpacity>
+      <View>
+        {this.state.image !== null ? (
+          <Image source={{ uri: this.state.image.uri }}/>
+        ) : null}
+        
+          <TouchableOpacity onPress={this.uploadImage}>
+            <Text>Upload image</Text>
+          </TouchableOpacity>
+        
+      </View>
+
+
                 <Card>
                     <Card.Title><Text h5>{Language.ROOM_EXTENSION}</Text></Card.Title>
                     <Card.Divider/>
                     <Text style={styles.title}>{'Hình ảnh'}</Text>
                     <View style={{paddingHorizontal: 10, borderStyle:'dashed',borderColor: grayBackground, borderWidth: 1, flex: 1, flexDirection:'column'}}>
                         <View style={{flex: 1, flexDirection:'row', alignItems: 'center', justifyContent: 'center'}}>
-                        {this.showImagePicker(this.props.extension.singleFileOBJ)}
+                        {
+                          this.showImagePicker(this.props.extension.listImageUrl)
+                        }
                         </View>
-                        <TouchableOpacity onPress={this.SingleFilePicker.bind(this)} style={{alignItems: 'center', paddingVertical: 10, paddingHorizontal: 20}}>
+                        {this.state.uploading ? (
+                          <View style={styles.progressBarContainer}>
+                            <Progress.Bar progress={this.state.transferred} width={300} />
+                          </View>
+                        ) : null
+                        }
+                        <TouchableOpacity onPress={this.selectImage} style={{alignItems: 'center', paddingVertical: 10, paddingHorizontal: 20}}>
                             <Icon name='upload' color={Colors.primary} size={25}/>
                             <Text style={{justifyContent: 'center', color: Colors.primary}}>  Bấm vào đây để đăng hình ảnh từ thư viện nhé</Text>
                         </TouchableOpacity>

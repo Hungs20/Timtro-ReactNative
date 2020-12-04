@@ -12,6 +12,11 @@ import CreateInfoRoom from './CreateInfoRoom'
 import CreateAddressRoom from './CreateAddressRoom'
 import CreateExtensionRoom from './CreateExtensionRoom'
 import CreateConfirmRoom from './CreateConfirmRoom'
+
+import firebase from '@react-native-firebase/app'
+import '@react-native-firebase/auth'
+import firestore from '@react-native-firebase/firestore';
+
 class CreateRoom extends Component {
     
     constructor(props) {
@@ -19,7 +24,13 @@ class CreateRoom extends Component {
         this.state = {
             currentStep: 0,
             maxStep: 0,
+            currentUser: null,
             newRoom : {
+                id: Date.now(),
+                author: null,
+                date_create: new Date(),
+                vote: 0,
+                view: 0,
                 info: {
                     typeRoom: '',
                     numRoom : '',
@@ -41,7 +52,7 @@ class CreateRoom extends Component {
                     nameCity: ''
                 },
                 extension: {
-                    singleFileOBJ: [],
+                    listImageUrl: [],
                     listExtChecked: []
                 },
                 confirm: {
@@ -58,6 +69,16 @@ class CreateRoom extends Component {
         }
     }
 
+    componentDidMount() {
+        const { currentUser } = firebase.auth()
+        this.setState({ currentUser }) 
+        this.setState(prevState => ({
+            newRoom: {
+                ...prevState.newRoom,
+                author: currentUser.email
+              }
+          }))
+      }
     setConfirm = (value, type) => {
         switch (type) {
             case 'phone':
@@ -341,7 +362,7 @@ class CreateRoom extends Component {
                         ...prevState.newRoom,
                         extension: {
                             ...prevState.newRoom.extension,
-                            singleFileOBJ: value
+                            listImageUrl: value
                         }
                       }
                   }))
@@ -366,6 +387,21 @@ class CreateRoom extends Component {
         this.setState({
             currentStep: value < this.state.maxStep ? value : this.state.maxStep
         })
+    }
+    nextBtnPress = () => {
+        this.setState({
+            currentStep: this.state.currentStep + 1 < 3 ? this.state.currentStep + 1 : 3,
+            maxStep: this.state.currentStep + 1 < this.state.maxStep ? this.state.maxStep : this.state.currentStep + 1
+        })
+        if(this.state.currentStep  + 1 == 4){
+            console.log(this.state.newRoom)
+            firestore()
+            .collection('rooms')
+            .add(this.state.newRoom)
+            .then(() => {
+                console.log('Room added!');
+            });
+        }
     }
     renderSwitch(step){
         switch (step) {
@@ -392,21 +428,15 @@ class CreateRoom extends Component {
                         {this.renderSwitch(this.state.currentStep)}
                         <Text>{'\n'}</Text>
                         <Button
-                            title="Tiếp theo "
-                            type="clear"
+                            title={this.state.currentStep + 1 < 4 ? "Tiếp theo " : "Đăng phòng "}
+                            type={this.state.currentStep + 1 < 4 ? "clear" : "solid"}
                             iconRight
                             icon={
-                                <Icon name='chevron-right'color={Colors.primary} size={14}/>
+                                <Icon name='chevron-right'color={this.state.currentStep + 1 < 4 ? Colors.primary : Colors.white} size={14}/>
                             }
-                            titleStyle={{color: Colors.primary}}
+                            titleStyle={this.state.currentStep + 1 < 4 ? styles.btnNext : styles.btnDone}
                             containerStyle={{marginHorizontal: 35, borderColor: Colors.primary, borderWidth: 1, borderRadius: 10}}
-                            onPress={
-                                () => this.setState({
-                                    currentStep: this.state.currentStep + 1 < 3 ? this.state.currentStep + 1 : 3,
-                                    maxStep: this.state.currentStep + 1 < this.state.maxStep ? this.state.maxStep : this.state.currentStep + 1
-                                })
-                               
-                            }
+                            onPress={this.nextBtnPress}
                         />
                     </ScrollView>
                 </ThemeProvider>
@@ -415,4 +445,12 @@ class CreateRoom extends Component {
         
     }
 }
+const styles = StyleSheet.create({
+    btnNext: {
+        color: Colors.primary
+    },
+    btnDone: {
+        color: Colors.white
+    }
+})
 export default CreateRoom;
