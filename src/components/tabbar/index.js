@@ -93,7 +93,7 @@ const Tabbar = () => {
         }}>
         <Tab.Screen name="Tìm kiếm" component={HomeScreen} />
         <Tab.Screen name="Yêu thích" component={CreateRoomIndex} />
-        <Tab.Screen name="Ở ghép" component={DetailRoomIndex} />
+        <Tab.Screen name="Ở ghép" component={PartnerIndex} />
         <Tab.Screen name="Tin nhắn" component={MessageIndex} options={{ tabBarBadge: 3 }} />
         <Tab.Screen name="Tài khoản" component={AccountIndex} />
       </Tab.Navigator>
