@@ -453,8 +453,8 @@ const styles = StyleSheet.create({
     height: 1169,
     position: "absolute",
     backgroundColor: "rgba(236,236,236,1)",
-    borderBottomRightRadius: 2,
-    borderBottomLeftRadius: 2
+    //borderBottomRightRadius: 2,
+    //borderBottomLeftRadius: 2
   },
   part2: {
     width: "100%",
@@ -465,7 +465,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 126,
     backgroundColor: "rgba(255,255,255,1)",
-    borderRadius: 11,
+    //borderRadius: 11,
   },
   titlePart2: {
     fontFamily: "roboto-regular",
@@ -493,7 +493,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 135,
     backgroundColor: "rgba(255,255,255,1)",
-    borderRadius: 11
+    //borderRadius: 11
   },
   titlePart3: {
     fontFamily: "roboto-regular",
@@ -549,7 +549,7 @@ const styles = StyleSheet.create({
     width: "25%",
     height: 12,
     backgroundColor: "rgba(255,168,49,1)",
-    borderRadius: 11
+    //borderRadius: 11
   },
   recFit: {
      width: "25%",
@@ -558,6 +558,7 @@ const styles = StyleSheet.create({
     borderRadius: 11,
     marginHorizontal: 10
    // marginLeft: 3
+    
   },
   recWide: {
     width: "25%",
@@ -612,7 +613,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 154,
     backgroundColor: "rgba(255,255,255,1)",
-    borderRadius: 11
+    //borderRadius: 11
   },
   address: {
     fontFamily: "roboto-regular",
@@ -706,7 +707,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 106,
     backgroundColor: "rgba(255,255,255,1)",
-    borderRadius: 11
+    //borderRadius: 11
   },
   ngayDang: {
     fontFamily: "roboto-regular",
@@ -744,7 +745,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 206,
     backgroundColor: "rgba(255,255,255,1)",
-    borderRadius: 11
+    //borderRadius: 11
   },
   utility: {
     fontFamily: "roboto-regular",
@@ -834,7 +835,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 73,
     backgroundColor: "rgba(255,255,255,1)",
-    borderRadius: 11
+    //borderRadius: 11
   },
   avaHost: {
     width: 42,
@@ -873,7 +874,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 55,
     backgroundColor: "rgba(255,255,255,1)",
-    borderRadius: 11
+    //borderRadius: 11
   },
   reportText: {
     fontFamily: "roboto-regular",
@@ -893,8 +894,8 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 584,
     backgroundColor: "rgba(255,255,255,1)",
-    borderBottomRightRadius: 11,
-    borderBottomLeftRadius: 11
+    //borderBottomRightRadius: 11,
+    //borderBottomLeftRadius: 11
   },
   groupOfPicture: {
     width: "100%",
@@ -1138,8 +1139,7 @@ const styles = StyleSheet.create({
     height: 54,
     position: "relative",
     marginBottom: 25,
-    alignSelf: "center",
-    left: 8
+    alignSelf: "center"
   },
   rect2: {
     width: "100%",

@@ -31,10 +31,10 @@ const styles = StyleSheet.create({
     },
     title : {
         fontSize: 14,
-        color: Colors.white, 
+        color: 'black', 
         fontWeight:'bold',
-        textTransform: 'uppercase',
-        paddingVertical: 10
+        paddingVertical: 10,
+        paddingLeft: 8
     },
   })
 export default Trend;
