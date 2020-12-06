@@ -56,12 +56,10 @@ class Search extends Component {
                   </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.postRoom}>
+                <TouchableOpacity style={styles.postRoom} onPress={()=> this.props.navigation.navigate('CreateRoom')}>
                   <View style={styles.postRoomIcon}></View>
                   <Text style={styles.postRoomText}>Đăng{"\n"}phòng dễ</Text>
                 </TouchableOpacity>
-              
-
               </View>
             </View>
           
@@ -70,14 +68,7 @@ class Search extends Component {
     );
   }
 }
-function SearchIndex({navigation}) {
-  return (
-    <SearchStack.Navigator initialRouteName='homeSearch'>
-      <SearchStack.Screen name="homeSearch" component={SearchIndex} />
-      <SearchStack.Screen name="DistricSearch" component={DistricSearchIndex} />
-    </SearchStack.Navigator>
-  );
-}
+
 
 const styles = StyleSheet.create({
   container: {

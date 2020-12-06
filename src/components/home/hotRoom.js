@@ -10,7 +10,7 @@ class HotRoom extends Component {
     constructor(props){
         super(props)
         this.state = {
-            listRoom : []
+            listRoom : null
         }
     }
     _isMounted = false;
@@ -46,18 +46,20 @@ class HotRoom extends Component {
             <View style={{flex:1}}>
                 <Text style={styles.title}>Phòng nổi bật</Text>
                 {
-                    this.state.listRoom.map((room, index) => {
+                    this.state.listRoom ? this.state.listRoom.map((room, index) => {
                         if(index % 2 === 0) {
                             return (
                             <View style={{flex: 1, flexDirection: 'row'}}> 
-                                <CellTable key={index} room={this.state.listRoom[index]}/>
+                                <CellTable key={this.state.listRoom[index].key} room={this.state.listRoom[index]} navigation={this.props.navigation}/>
                                 {
-                                    index + 1 < this.state.listRoom.length ? <CellTable key={index+1} room={ this.state.listRoom[index+1]}/> : null
+                                    index + 1 < this.state.listRoom.length ? <CellTable key={this.state.listRoom[index+1].key} room={ this.state.listRoom[index+1]} navigation={this.props.navigation}/> : null
                                 }
                             </View>
                             )
                         }
-                    })
+                    }) : null
+                    
+                   
                 }
             </View>
         )

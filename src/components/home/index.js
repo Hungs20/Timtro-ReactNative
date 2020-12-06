@@ -40,8 +40,8 @@ class Home extends Component {
                 <Search navigation={this.props.navigation}/>
                 <View style={styles.container}>
                     <Trend/>
-                    <HotRoom/>
-                    <NewRoom/>
+                    <HotRoom navigation={this.props.navigation}/>
+                    <NewRoom navigation={this.props.navigation}/>
                 </View>
             </ScrollView>
             </ThemeProvider>
