@@ -18,14 +18,7 @@ class Home extends Component {
         super(props);
         this.state = {
             currentUser: null,
-            items: [
-                { name: 'Hai Bà Trưng', uri: require('../../data/haibatrung.png') },
-                { name: 'Cầu Giấy', uri: require('../../data/haibatrung.png') },
-                { name: 'Đống Đa', uri: require('../../data/haibatrung.png') },
-                { name: 'Nam Từ Liêm', uri: require('../../data/haibatrung.png') },
-                { name: 'Bắc Từ Liêm', uri: require('../../data/haibatrung.png') },
-                { name: 'Hoàng Mai', uri: require('../../data/haibatrung.png') },
-            ]
+
         }
     }
     componentDidMount() {
