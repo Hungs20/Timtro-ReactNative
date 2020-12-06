@@ -27,11 +27,7 @@ function HomeRoomIndex({ navigation }) {
       <Home navigation={navigation}/>
   );
 }
-function DetailRoomIndex({ navigation }) {
-  return (
-      <RoomDetail/>
-  );
-}
+
 function MessageIndex({ navigation }) {
   return (
       <Message/>
@@ -49,43 +45,49 @@ function PartnerIndex({ navigation }) {
 }
 
 const Tab = createBottomTabNavigator();
-function DetailsScreen() {
-  return (
-    <DistricSearch/>
-  );
-}
 
-function HomeScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home screen</Text>
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate('Details')}
-      />
-    </View>
-  );
-}
 
 const HomeStack = createStackNavigator();
 function DistricSearchIndex() {
   return (
       <DistricSearch/>
-
   );
+}
+function RoomDetailsIndex({ route, navigation }) {
+  return (
+    <RoomDetail room = {route.params.room}/>
+  )
 }
 function HomeStackScreen({navigation}) {
   return (
-    <HomeStack.Navigator>
-      <HomeStack.Screen name="Home" component={HomeRoomIndex} />
-      <HomeStack.Screen name="DistricSearch" component={DistricSearchIndex} />
+    <HomeStack.Navigator initialRouteName='Home' screenOptions={{
+        headerStyle: {
+          backgroundColor: Colors.pink,
+        },
+        headerTintColor: Colors.white,
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          fontSize: Fonts.headerFontSize
+        },
+    }}>
+      <HomeStack.Screen name="Home" component={HomeRoomIndex} options={{
+        headerShown: false
+      }} />
+      <HomeStack.Screen name="DistricSearch" component={DistricSearchIndex}  options={{
+          title: 'Tìm kiếm phòng', 
+        }} />
+      <HomeStack.Screen name="RoomDetails" component={RoomDetailsIndex} options={{
+          title: 'Thông tin chi tiết', 
+        }} />
+      <HomeStack.Screen name="CreateRoom" component={CreateRoomIndex} options={{
+        title: 'Đăng thông tin phòng', 
+      }} />
     </HomeStack.Navigator>
   );
 }
 
 const Tabbar = () => {
   return (
-    
       <NavigationContainer>
         <Tab.Navigator screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
@@ -120,8 +122,6 @@ const Tabbar = () => {
         <Tab.Screen name="Tin nhắn" component={MessageIndex} options={{ tabBarBadge: 3 }} />
         <Tab.Screen name="Tài khoản" component={AccountIndex} />
       </Tab.Navigator>
-
-        
     </NavigationContainer>
   );
 }

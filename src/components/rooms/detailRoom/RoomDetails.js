@@ -4,13 +4,34 @@ import {
   View,
   ScrollView,
   Text,
-  TouchableOpacity
+  TouchableOpacity, 
 } from "react-native";
+import { Image } from 'react-native-elements';
+import { ActivityIndicator } from 'react-native';
 import Svg, { Ellipse } from "react-native-svg";
 
-function RoomDetails(props) {
-  return (
-    
+class RoomDetails extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+
+    }
+  }
+  render(){
+    const dateCreate = new Date(this.props.room.date_create.seconds * 1000)
+    const days = ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bày"]
+    const day = days[dateCreate.getDay()]
+    var date = dateCreate.getDate()
+    var month = dateCreate.getMonth()
+    const year = dateCreate.getFullYear()
+    var hour = dateCreate.getHours()
+    var minutes = dateCreate.getMinutes()
+    if(hour < 10) hour = '0' + hour
+    if(minutes < 10) minutes = '0' + minutes
+    if(date < 10) date = '0' + date
+    if(month < 10) month = '0' + month
+    console.log(this.props.room.extension.listImageUrl[0])
+    return (
       <View style={styles.container}>
         <ScrollView style={styles.scrollArea}>
           <View style={styles.rectStack}>
@@ -32,9 +53,9 @@ function RoomDetails(props) {
                   <Text style={styles.detailPart3}>SỨC CHỨA</Text>
                   <View style={styles.sucChuaText_Num}>
                     <View style={styles.tightText_NumRow}>
-                      <Text style={styles.tightText_Num}>4 người +</Text>
-                      <Text style={styles.fitText_Num}>2 người</Text>
-                      <Text style={styles.wideText_Num}>1 người</Text>
+                      <Text style={styles.tightText_Num}>{parseInt(this.props.room.info.numPersonOfRoom) + 1} người +</Text>
+                      <Text style={styles.fitText_Num}>{this.props.room.info.numPersonOfRoom} người</Text>
+                      <Text style={styles.wideText_Num}>{parseInt(this.props.room.info.numPersonOfRoom) - 1} người</Text>
                     </View>
                   </View>
                   <View style={styles.sucChua}>
@@ -53,6 +74,16 @@ function RoomDetails(props) {
                   </View>
                 </View>
               </View>
+
+              <View style={styles.part5}>
+                <View style={styles.backgroundPart5}>
+                  <Text style={styles.ngayDang}>Chi tiết</Text>
+                  <Text style={styles.detailPart2}>
+                    {this.props.room.confirm.description}
+                  </Text>
+                </View>
+              </View>
+
               <View style={styles.part4}>
                 <View style={styles.backgroundPart4}>
                   <Text style={styles.address}>Địa chỉ</Text>
@@ -70,8 +101,7 @@ function RoomDetails(props) {
                     </Svg>
                     <View style={styles.addressDetailsStack}>
                       <Text style={styles.addressDetails}>
-                        số 37 ngõ 61 Lê Văn Lương, Phường Trung Hòa, Quận Cầu
-                        Giấy, Hà Nội
+                        {this.props.room.address.nameNha}, {this.props.room.address.nameDuong}, {this.props.room.address.namePhuong}, {this.props.room.address.nameQuan}, {this.props.room.address.nameCity}
                       </Text>
                       <TouchableOpacity style={styles.button}>
                         <View style={styles.mapbuttonStack}>
@@ -96,7 +126,7 @@ function RoomDetails(props) {
                       ></Ellipse>
                     </Svg>
                     <Text style={styles.contactDetails}>
-                      Số điện thoại: 0123456789
+                      Số điện thoại: {this.props.room.confirm.phone}
                     </Text>
                   </View>
                 </View>
@@ -117,7 +147,7 @@ function RoomDetails(props) {
                       ></Ellipse>
                     </Svg>
                     <Text style={styles.homNay08112020}>
-                      Hôm nay - 08/11/2020
+                      {day}, {date}/{month}/{year} {hour}:{minutes}
                     </Text>
                   </View>
                 </View>
@@ -280,8 +310,8 @@ function RoomDetails(props) {
                       ></Ellipse>
                     </Svg>
                     <View style={styles.hostNameColumn}>
-                      <Text style={styles.hostName}>Sugary Pham</Text>
-                      <Text style={styles.numberOfRooms}>1 phòng</Text>
+                      <Text style={styles.hostName}>{this.props.room.author}</Text>
+                      <Text style={styles.numberOfRooms}>{this.props.room.info.numRoom} phòng</Text>
                     </View>
                   </View>
                 </View>
@@ -298,33 +328,56 @@ function RoomDetails(props) {
                   <View style={styles.picture1Row}>
                     <TouchableOpacity
                       style={styles.picture1}
-                    ></TouchableOpacity>
-                    <TouchableOpacity
+                    >
+                      <Image style={{width: "100%", height: "100%"}} 
+                      source={{uri: this.props.room.extension.listImageUrl[0]}}
+                      PlaceholderContent={<ActivityIndicator />}
+                      />
+                    </TouchableOpacity>
+                   <TouchableOpacity
                       style={styles.picture2}
-                    ></TouchableOpacity>
+                    >
+                      <Image style={{width: "100%", height: "100%"}} 
+                      source={{uri: this.props.room.extension.listImageUrl[1]}}
+                      PlaceholderContent={<ActivityIndicator />}
+                      />
+                    </TouchableOpacity>
                   </View>
                   <View style={styles.picture3Row}>
                     <TouchableOpacity
                       style={styles.picture3}
-                    ></TouchableOpacity>
+                    >                      
+                    <Image style={{width: "100%", height: "100%"}} 
+                    source={{uri: this.props.room.extension.listImageUrl[2]}}
+                    PlaceholderContent={<ActivityIndicator />}
+                    /></TouchableOpacity>
                     <TouchableOpacity
                       style={styles.picture4}
-                    ></TouchableOpacity>
+                    >                      
+                    <Image style={{width: "100%", height: "100%"}} 
+                    source={{uri: this.props.room.extension.listImageUrl[3]}}
+                    PlaceholderContent={<ActivityIndicator />}
+                    /></TouchableOpacity>
                     <TouchableOpacity
                       style={styles.picture5}
-                    ></TouchableOpacity>
+                    >
+                    <Image style={{width: "100%", height: "100%"}} 
+                      source={{uri: this.props.room.extension.listImageUrl[4]}}
+                      PlaceholderContent={<ActivityIndicator />}
+                      />
+                    </TouchableOpacity>
                   </View>
                 </View>
-                <Text style={styles.timNguoiThue}>TÌM NGƯỜI THUÊ .</Text>
+                <Text style={styles.timNguoiThue}>{this.props.room.info.typeRoom} .</Text>
                 <Text style={styles.nameOfRoom}>
-                  Phòng cho thuê Đường Đồng me, Quận Nam Từ Liêm
+                {this.props.room.confirm.title}
                 </Text>
                 <View style={styles.priceGroup}>
                   <View style={styles.giaTrenUngDungRow}>
                     <Text style={styles.giaTrenUngDung}>
                       Giá trên ứng dụng:
                     </Text>
-                    <Text style={styles.giaPhong}>1.500.000đ</Text>
+                    <Text style={styles.giaPhong}>{this.props.room.info.giathue}đ</Text>
                   </View>
                 </View>
                 <View style={styles.tongQuan}>
@@ -336,8 +389,8 @@ function RoomDetails(props) {
                   <View style={styles.changeable}>
                     <View style={styles.tinhTrangPhongRow}>
                       <Text style={styles.tinhTrangPhong}>Còn</Text>
-                      <Text style={styles.dienTichPhong}>35m2</Text>
-                      <Text style={styles.tienDatCoc}>500.000đ</Text>
+                      <Text style={styles.dienTichPhong}>{this.props.room.info.area}m2</Text>
+                      <Text style={styles.tienDatCoc}>{this.props.room.info.giacoc}đ</Text>
                     </View>
                   </View>
                 </View>
@@ -427,8 +480,8 @@ function RoomDetails(props) {
               </View>
             </View>
           </View>
-      
   );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -453,8 +506,8 @@ const styles = StyleSheet.create({
     height: 1169,
     position: "absolute",
     backgroundColor: "rgba(236,236,236,1)",
-    //borderBottomRightRadius: 2,
-    //borderBottomLeftRadius: 2
+    borderBottomRightRadius: 2,
+    borderBottomLeftRadius: 2
   },
   part2: {
     width: "100%",
@@ -465,7 +518,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 126,
     backgroundColor: "rgba(255,255,255,1)",
-    //borderRadius: 11,
+    borderRadius: 11,
   },
   titlePart2: {
     fontFamily: "roboto-regular",
@@ -486,14 +539,15 @@ const styles = StyleSheet.create({
   },
   part3: {
     width: "100%",
-    height: 126,
+    height: 135,
     marginTop: 4
   },
   backgroundPart3: {
     width: "100%",
-    height: 135,
+    height: "100%",
+   // height: 135,
     backgroundColor: "rgba(255,255,255,1)",
-    //borderRadius: 11
+    borderRadius: 11
   },
   titlePart3: {
     fontFamily: "roboto-regular",
@@ -511,10 +565,11 @@ const styles = StyleSheet.create({
   },
   sucChuaText_Num: {
     width: "100%",
-    height: 12,
+    //height: 12,
     flexDirection: "row",
     marginTop: 8,
-    marginLeft: 25
+    justifyContent: "center",
+    //marginHorizontal: 10
   },
   tightText_Num: {
     fontFamily: "roboto-regular",
@@ -525,40 +580,43 @@ const styles = StyleSheet.create({
     fontFamily: "roboto-regular",
     color: "rgba(0,214,131,1)",
     fontSize: 10,
-    marginLeft: 96
+    
+    marginHorizontal: 70 
   },
   wideText_Num: {
     fontFamily: "roboto-regular",
     color: "rgba(0,198,192,1)",
     fontSize: 10,
-    marginLeft: 102
+    //marginLeft: 102
   },
   tightText_NumRow: {
-    height: 12,
+    //height: 12,
     flexDirection: "row",
     flex: 1,
+    
+    justifyContent: "center",
+   // marginHorizontal: 10
   },
   sucChua: {
     width: "100%",
     height: 12,
     flexDirection: "row",
     marginTop: 3,
-    marginHorizontal: 10,
+   // marginHorizontal: 10,
   },
   recTight: {
     width: "25%",
     height: 12,
     backgroundColor: "rgba(255,168,49,1)",
-    //borderRadius: 11
+    borderRadius: 11
   },
   recFit: {
      width: "25%",
     height: 12,
     backgroundColor: "rgba(0,214,131,1)",
     borderRadius: 11,
-    marginHorizontal: 10
+    marginHorizontal: 10 
    // marginLeft: 3
-    
   },
   recWide: {
     width: "25%",
@@ -576,10 +634,12 @@ const styles = StyleSheet.create({
   },
   sucChuaText: {
     width: "100%",
-    height: 12,
+   // height: 12,
     flexDirection: "row",
     marginTop: 5,
-    marginLeft: 25
+   // marginLeft: 25,
+   justifyContent: "center",
+  // marginHorizontal: 10,
   },
   tight: {
     fontFamily: "roboto-regular",
@@ -590,19 +650,23 @@ const styles = StyleSheet.create({
     fontFamily: "roboto-regular",
     color: "#121212",
     fontSize: 10,
-    marginLeft: 127
+    //marginLeft: 127
+    
+    marginHorizontal: 90
   },
   wide: {
     fontFamily: "roboto-regular",
     color: "#121212",
     fontSize: 10,
-    marginLeft: 124
+   // marginLeft: 124
   },
   tightRow: {
-    height: 12,
+   // height: 12,
     flexDirection: "row",
     flex: 1,
-    marginRight: 1
+    marginRight: 1,
+    //marginHorizontal: 10,
+    justifyContent: "center"
   },
   part4: {
     width: "100%",
@@ -613,7 +677,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 154,
     backgroundColor: "rgba(255,255,255,1)",
-    //borderRadius: 11
+    borderRadius: 11
   },
   address: {
     fontFamily: "roboto-regular",
@@ -707,7 +771,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 106,
     backgroundColor: "rgba(255,255,255,1)",
-    //borderRadius: 11
+    borderRadius: 11
   },
   ngayDang: {
     fontFamily: "roboto-regular",
@@ -745,7 +809,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 206,
     backgroundColor: "rgba(255,255,255,1)",
-    //borderRadius: 11
+    borderRadius: 11
   },
   utility: {
     fontFamily: "roboto-regular",
@@ -835,7 +899,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 73,
     backgroundColor: "rgba(255,255,255,1)",
-    //borderRadius: 11
+    borderRadius: 11
   },
   avaHost: {
     width: 42,
@@ -874,7 +938,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 55,
     backgroundColor: "rgba(255,255,255,1)",
-    //borderRadius: 11
+    borderRadius: 11
   },
   reportText: {
     fontFamily: "roboto-regular",
@@ -894,8 +958,8 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 584,
     backgroundColor: "rgba(255,255,255,1)",
-    //borderBottomRightRadius: 11,
-    //borderBottomLeftRadius: 11
+    borderBottomRightRadius: 11,
+    borderBottomLeftRadius: 11
   },
   groupOfPicture: {
     width: "100%",
@@ -946,7 +1010,8 @@ const styles = StyleSheet.create({
     width: 116,
     fontSize: 12,
     marginTop: 25,
-    marginLeft: 21
+    marginLeft: 21,
+    textTransform: "uppercase"
   },
   nameOfRoom: {
     fontFamily: "roboto-regular",
@@ -1139,7 +1204,8 @@ const styles = StyleSheet.create({
     height: 54,
     position: "relative",
     marginBottom: 25,
-    alignSelf: "center"
+    alignSelf: "center",
+    left: 8
   },
   rect2: {
     width: "100%",
