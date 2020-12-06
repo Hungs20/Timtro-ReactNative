@@ -42,6 +42,7 @@ class HotRoom extends Component {
         this._isMounted = false;
       }
     render(){
+        console.log(this.state.listRoom)
         return(
             <View style={{flex:1}}>
                 <Text style={styles.title}>Phòng nổi bật</Text>
