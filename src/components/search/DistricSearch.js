@@ -7,8 +7,13 @@ import {
   TouchableOpacity
 } from "react-native";
 import EntypoIcon from "react-native-vector-icons/Entypo";
+import CalendarPicker from 'react-native-calendar-picker';
 
-function DistricSearch(props) {
+class DistricSearch extends Component {
+  constructor(props){
+    super(props);
+  }
+  render(){
   return (
     <View style={styles.container}>
       <View style={styles.background}>
@@ -23,6 +28,7 @@ function DistricSearch(props) {
 
           <ScrollView style={styles.scrollArea}>
               <View style={styles.whiteBackground}>
+
                 <TouchableOpacity style={styles.chonNgay}>
                   <Text style={styles.canPhongTruocNgay}>
                     BẠN CẦN PHÒNG TRƯỚC NGÀY NÀO
@@ -37,6 +43,7 @@ function DistricSearch(props) {
                   </View>
                   <View style={styles.chonNgayLine}></View>
                 </TouchableOpacity>
+
                 <TouchableOpacity style={styles.loaiPhong}>
                   <Text style={styles._LoaiPhong}>LOẠI PHÒNG</Text>
                   <View style={styles.chonLoaiPhongRow}>
@@ -165,6 +172,7 @@ function DistricSearch(props) {
       </View>
     </View>
   );
+}
 }
 
 const styles = StyleSheet.create({
