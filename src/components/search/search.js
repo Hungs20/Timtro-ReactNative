@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Text, Image } from "react-native";
 import CupertinoSearchBarBasic from "./CupertinoSearchBarBasic";
 import * as Colors from '../../styles/colors'
 import { SliderBox } from "react-native-image-slider-box";
@@ -44,24 +44,30 @@ class Search extends Component {
 
               
                 <TouchableOpacity style={styles.districSearch} onPress={()=> this.props.navigation.navigate('DistricSearch')}>
-                  <View style={styles.districtIcon}></View>
+                  <View style={styles.districtIcon}>
+                    <Image style={styles.districtIcon} source={require('../../data/icon/TimTheoQuan.png')} />
+                  </View>
                   <Text style={styles.districText}>Tìm theo{"\n"}nhiều quận</Text>
                 </TouchableOpacity>
             
                 
                 <TouchableOpacity style={styles.nearYouSearch}>
-                  <View style={styles.nearYou}></View>
+                  <View style={styles.nearYou}>
+                  <Image style={styles.nearYou} source={require('../../data/icon/TimGanBan.png')} />
+                  
+                  </View>
                   <Text style={styles.nearYouText}>
                   Tìm gần nơi{"\n"}học &amp; làm
                   </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.postRoom}>
-                  <View style={styles.postRoomIcon}></View>
+                <TouchableOpacity style={styles.postRoom} onPress={()=> this.props.navigation.navigate('CreateRoom')}>
+                  <View style={styles.postRoomIcon}>
+                  <Image style={styles.postRoomIcon} source={require('../../data/icon/DangPhong.png')} />
+                  
+                  </View>
                   <Text style={styles.postRoomText}>Đăng{"\n"}phòng dễ</Text>
                 </TouchableOpacity>
-              
-
               </View>
             </View>
           
@@ -70,14 +76,7 @@ class Search extends Component {
     );
   }
 }
-function SearchIndex({navigation}) {
-  return (
-    <SearchStack.Navigator initialRouteName='homeSearch'>
-      <SearchStack.Screen name="homeSearch" component={SearchIndex} />
-      <SearchStack.Screen name="DistricSearch" component={DistricSearchIndex} />
-    </SearchStack.Navigator>
-  );
-}
+
 
 const styles = StyleSheet.create({
   container: {

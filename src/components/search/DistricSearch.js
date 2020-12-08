@@ -7,34 +7,31 @@ import {
   TouchableOpacity
 } from "react-native";
 import EntypoIcon from "react-native-vector-icons/Entypo";
-import CalendarPicker from 'react-native-calendar-picker';
+import { Calendar } from 'react-native-calendars';
+
 
 class DistricSearch extends Component {
   constructor(props){
     super(props);
   }
+
   render(){
+    
   return (
     <View style={styles.container}>
       <View style={styles.background}>
         <View style={styles.headerStack}>
 
-          <View style={styles.header}>
-            <View style={styles.headerRec}>
-              <Text style={styles.headerText}>Tìm theo nhiều quận</Text>
-            </View>
-            <View style={styles.headerLine}></View>
-          </View>
-
           <ScrollView style={styles.scrollArea}>
               <View style={styles.whiteBackground}>
-
+                
                 <TouchableOpacity style={styles.chonNgay}>
                   <Text style={styles.canPhongTruocNgay}>
                     BẠN CẦN PHÒNG TRƯỚC NGÀY NÀO
                   </Text>
                   <View style={styles.chonNgayTextRow}>
                     <Text style={styles.chonNgayText}>Nhấp để chọn ngày</Text>
+                    
                     <View style={styles.chonNgayTextFiller}></View>
                     <EntypoIcon
                       name="chevron-thin-down"
@@ -84,9 +81,11 @@ class DistricSearch extends Component {
                   </View>
                   <View style={styles.mucGiaLine}></View>
                 </TouchableOpacity>
+
                 <View style={styles.khuVucStack}>
                   <View style={styles.khuVuc}>
                     <Text style={styles.khuVucText}>KHU VỰC</Text>
+
                     <View style={styles.buttonRow}>
                       <TouchableOpacity style={styles.button}>
                         <View style={styles.quan}>
@@ -107,7 +106,7 @@ class DistricSearch extends Component {
                       </TouchableOpacity>
                       <TouchableOpacity style={styles.button4}>
                         <View style={styles.quan3}>
-                          <Text style={styles.haiBaTrưng}>Hai Bà Trưng</Text>
+                          <Text style={styles.HaiBaTrung}>Hai Bà Trưng</Text>
                         </View>
                       </TouchableOpacity>
                     </View>
@@ -152,7 +151,13 @@ class DistricSearch extends Component {
               </View>
           </ScrollView>
           
-
+          <View style={styles.header}>
+            <View style={styles.headerRec}>
+              <Text style={styles.headerText}>Tìm theo nhiều quận</Text>
+            </View>
+            <View style={styles.headerLine}></View>
+          </View>
+          
           <View style={styles.footer}>
             <View style={styles.footerRec}>
               <TouchableOpacity style={styles.tim}>
@@ -178,11 +183,11 @@ class DistricSearch extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignSelf: "center"
+    //alignSelf: "center"
   },
   background: {
-    width: 740,
-    height: 740,
+    width: "100%",
+    height: "100%",
     backgroundColor: "rgba(230,230,230,0.6)",
     position: "relative",
     alignSelf: "center",
@@ -190,14 +195,15 @@ const styles = StyleSheet.create({
   header: {
     top: 0,
     height: 51,
-    position: "absolute",
-    width: 314,
+    position: "relative",
+    width: "100%",
     left: 0
   },
   headerRec: {
-    width: 314,
+    width: "100%",
     height: 50,
     backgroundColor: "rgba(255,255,255,1)",
+    position: "relative"
     //borderTopLeftRadius: 11,
     //borderTopRightRadius: 11
   },
@@ -205,36 +211,38 @@ const styles = StyleSheet.create({
     fontFamily: "roboto-regular",
     color: "#121212",
     fontSize: 20,
-    marginTop: 15,
-    marginLeft: 68
+    marginTop: 10,
+    textAlign: "center",
   },
   headerLine: {
-    width: 314,
+    width: "100%",
     height: 1,
     backgroundColor: "rgba(0,0,0,1)"
   },
   scrollArea: {
     top: 0,
-    width: 314,
+    width: "100%",
     height: 672,
     position: "absolute",
     left: 0
   },
   scrollArea_contentContainerStyle: {
     height: 672,
-    width: 314
+    width: "100%"
   },
   whiteBackground: {
-    width: 314,
-    height: 621,
+    width: "100%",
+    height: "100%",
     backgroundColor: "rgba(255,255,255,1)",
     borderRadius: 11,
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
-    marginTop: 51
+    marginTop: 51,
+    marginBottom: 100
+
   },
   chonNgay: {
-    width: 287,
+    width: "100%",
     height: 46,
     marginTop: 20,
     marginLeft: 14
@@ -256,7 +264,9 @@ const styles = StyleSheet.create({
   chonNgayIcon: {
     color: "rgba(128,128,128,1)",
     fontSize: 14,
-    marginTop: 2
+    marginTop: 2,
+    marginRight: 30
+    
   },
   chonNgayTextRow: {
     height: 17,
@@ -265,13 +275,14 @@ const styles = StyleSheet.create({
     marginRight: 2
   },
   chonNgayLine: {
-    width: 287,
+    width: "100%",
     height: 1,
     backgroundColor: "#E6E6E6",
-    marginTop: 2
+    marginTop: 2,
+    
   },
   loaiPhong: {
-    width: 287,
+    width: "100%",
     height: 42,
     marginTop: 17,
     marginLeft: 14
@@ -293,7 +304,8 @@ const styles = StyleSheet.create({
   loaiPhongIcon: {
     color: "rgba(128,128,128,1)",
     fontSize: 14,
-    marginTop: 1
+    marginTop: 1,
+    marginRight: 30
   },
   chonLoaiPhongRow: {
     height: 16,
@@ -302,13 +314,13 @@ const styles = StyleSheet.create({
     marginRight: 2
   },
   loaiPhongLine: {
-    width: 287,
+    width: "100%",
     height: 1,
     backgroundColor: "#E6E6E6",
     marginTop: 3
   },
   gioiTinh: {
-    width: 287,
+    width: "100%",
     height: 39,
     marginTop: 21,
     marginLeft: 14
@@ -329,7 +341,8 @@ const styles = StyleSheet.create({
   },
   gioiTinhIcon: {
     color: "rgba(128,128,128,1)",
-    fontSize: 14
+    fontSize: 14,
+    marginRight: 30
   },
   chonGioiTinhRow: {
     height: 15,
@@ -338,13 +351,13 @@ const styles = StyleSheet.create({
     marginRight: 2
   },
   gioiTinhLine: {
-    width: 287,
+    width: "100%",
     height: 1,
     backgroundColor: "#E6E6E6",
     marginTop: 3
   },
   mucGia: {
-    width: 287,
+    width: "100%",
     height: 39,
     marginTop: 21,
     marginLeft: 14
@@ -365,7 +378,8 @@ const styles = StyleSheet.create({
   },
   mucGiaIcon: {
     color: "rgba(128,128,128,1)",
-    fontSize: 14
+    fontSize: 14,
+    marginRight: 30
   },
   chonMucGiaRow: {
     height: 15,
@@ -374,22 +388,23 @@ const styles = StyleSheet.create({
     marginRight: 2
   },
   mucGiaLine: {
-    width: 287,
+    width: "100%",
     height: 1,
     backgroundColor: "#E6E6E6",
     marginTop: 3
   },
+
   khuVuc: {
     top: 0,
-    left: 14,
-    width: 271,
+    width: "100%",
     height: 254,
     position: "absolute"
   },
   khuVucText: {
     fontFamily: "roboto-300",
     color: "rgba(133,134,136,1)",
-    fontSize: 12
+    fontSize: 12,
+    marginLeft: 14
   },
   button: {
     width: 127,
@@ -427,7 +442,9 @@ const styles = StyleSheet.create({
   buttonRow: {
     height: 37,
     flexDirection: "row",
-    marginTop: 12
+    marginTop: 12,
+    
+    alignSelf: "center",
   },
   button3: {
     width: 127,
@@ -456,7 +473,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(236,236,236,1)",
     borderRadius: 8
   },
-  haiBaTrưng: {
+  HaiBaTrung: {
     fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     marginTop: 10,
@@ -466,7 +483,7 @@ const styles = StyleSheet.create({
     height: 37,
     flexDirection: "row",
     marginTop: 11,
-    marginRight: 1
+    alignSelf: "center"
   },
   button5: {
     width: 127,
@@ -504,7 +521,8 @@ const styles = StyleSheet.create({
   button5Row: {
     height: 37,
     flexDirection: "row",
-    marginTop: 11
+    marginTop: 11,
+    alignSelf: "center"
   },
   button7: {
     width: 127,
@@ -542,7 +560,9 @@ const styles = StyleSheet.create({
   button7Row: {
     height: 37,
     flexDirection: "row",
-    marginTop: 11
+    marginTop: 11,
+    alignSelf: "center",
+
   },
   button10: {
     width: 127,
@@ -580,32 +600,33 @@ const styles = StyleSheet.create({
   button10Row: {
     height: 37,
     flexDirection: "row",
-    marginTop: 10
+    marginTop: 10,
+    alignSelf: "center"
   },
   footer: {
-    top: 500,
-    width: 314,
+    width: "100%",
     height: 112,
-    position: "relative",
+    position: "absolute",
     alignSelf: "center",
+    bottom: 0,
+    marginBottom: 50,
     
   },
   footerRec: {
-    width: 314,
+    width: "100%",
     height: 112,
     backgroundColor: "rgba(255,255,255,1)",
     borderRadius: 11,
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 0
   },
   tim: {
-    width: 287,
+    width: "80%",
     height: 44,
     marginTop: 14,
-    marginLeft: 13
+    alignSelf: "center",
+    
   },
   timPhongButton: {
-    width: 287,
+    width: "100%",
     height: 44,
     backgroundColor: "rgba(40,126,243,1)",
     borderRadius: 11
@@ -615,16 +636,16 @@ const styles = StyleSheet.create({
     color: "rgba(255,255,255,1)",
     fontSize: 18,
     marginTop: 11,
-    marginLeft: 102
+    textAlign: "center",
   },
   huy: {
-    width: 287,
+    width: "80%",
     height: 44,
     marginTop: 6,
-    marginLeft: 13
+    alignSelf: "center",
   },
   huyButton: {
-    width: 287,
+    width: "100%",
     height: 44,
     backgroundColor: "rgba(255,255,255,1)",
     borderRadius: 11
@@ -633,17 +654,18 @@ const styles = StyleSheet.create({
     fontFamily: "roboto-regular",
     color: "rgba(40,126,243,1)",
     fontSize: 18,
-    marginTop: 11,
-    marginLeft: 128
+    marginTop: 8,
+    textAlign: "center",
   },
   khuVucStack: {
-    width: 314,
+    width: "100%",
     height: 358,
-    marginTop: 18
+    marginTop: 18,
+    alignSelf: "center",
   },
   headerStack: {
     top: 0,
-    width: 314,
+    width: "100%",
     height: 672,
     alignSelf:"center",
   }
