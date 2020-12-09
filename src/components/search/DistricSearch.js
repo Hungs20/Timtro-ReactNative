@@ -4,19 +4,92 @@ import {
   View,
   Text,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
+  TouchableHighlight
 } from "react-native";
 import EntypoIcon from "react-native-vector-icons/Entypo";
 import { Calendar } from 'react-native-calendars';
-
+import * as Colors from '../../styles/colors';
+import { Card, ListItem, Button, CheckBox, Divider, ThemeProvider, Input, Overlay, Avatar , Image, ButtonGroup, colors } from 'react-native-elements';
+import DocumentPicker from 'react-native-document-picker';
+import { color } from "react-native-reanimated";
 
 class DistricSearch extends Component {
   constructor(props){
     super(props);
+    this.state = {
+
+      isToggleRoom: false,
+      TypeOfRoomSelected: 0,
+      listTypeOfRoom: 
+      [{name: "Ký túc xá/Homestay", value: "Ký túc xá/Homestay"}, {name: "Phòng cho thuê", value: "Phòng cho thuê"}, 
+      {name: "Phòng ở ghép", value: "Phòng ở ghép"},{name: "Nhà nguyên căn", value: "Nhà nguyên căn"},
+      {name: "Căn hộ", value: "Căn hộ"}],
+
+      isToggleSex: false,
+      TypeOfSex: 0,
+      listOfSex: [{name:"Nam", value: "Nam"}, {name: "Nữ", value: "Nữ"}, {name: "Khác", value: "Khác"}],
+
+      isTogglePrice: false,
+      TypeOfPrice: 0,
+      listOfPrice: [{name:"Dưới 1.000.000VNĐ", value: "Dưới 1.000.000VNĐ"}, {name: "1.000.000 - 2.000.000VNĐ", value: "1.000.000 - 2.000.000VNĐ"}, 
+      {name: "2.000.000 - 3.000.000VNĐ", value: "2.000.000-3.000.000VNĐ"},{name: "3.000.000 - 5.000.000VNĐ", value: "3.000.000 - 5.000.000VNĐ"},{name: "Trên 5.000.000VNĐ", value: "Trên 5.000.000VNĐ"}],
+      listDistrictSelected: [],
+      //isPress: false,
+
+      //touchProps : {
+      //  activeOpacity: 1,
+      //  underlayColor: 'blue',                               // <-- "backgroundColor" will be always overwritten by "underlayColor"
+      //  style: this.state.isPress ? styles.btnPress : styles.btnNormal, // <-- but you can still apply other style changes
+      //  onHideUnderlay: () => this.setState({isPress: false}),
+      //  onShowUnderlay: () => this.setState({isPress: true}),
+      //  onPress: () => console.log('HELLO'),                 // <-- "onPress" is apparently required
+      //}
+      
+
+    }
+  }
+  
+  selectDistrict = (array, value) => {
+    const indexVl = array.indexOf(value);
+    if(indexVl === -1) {
+      array.push(value);
+    } else {
+      array.splice(indexVl, 1);
+    }
+    this.setState({
+      listDistrictSelected: array
+    })
+  }
+  isSelectedDistrict = (array, value) => {
+    const indexVl = array.indexOf(value);
+    if(indexVl === -1) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
+
+  toggleOverlayRoom = () => {
+    console.log("toggle")
+      this.setState({isToggleRoom: !this.state.isToggleRoom})
+  }
+
+  toggleOverlaySex = () => {
+    console.log("toggle")
+      this.setState({isToggleSex: !this.state.isToggleSex})
+  }
+
+  toggleOverlayPrice = () => {
+    console.log("toggle")
+      this.setState({isTogglePrice: !this.state.isTogglePrice})
+  }
+  
   render(){
-    
+      //const District1 = [{name: "Đống Đa"},{name: "Thanh Xuân"}, {name: "Long Biên"}, {name:"Ba Đình"}, {name:"Hà Đông"}]
+      //const District2 = [{name: "Cầu Giấy"},{name: "Hai Bà Trưng"}, {name: "Hoàn Kiếm"}, {name:"Hoàng Mai"}, {name:"Tây Hồ"}]
+      
   return (
     <View style={styles.container}>
       <View style={styles.background}>
@@ -41,12 +114,12 @@ class DistricSearch extends Component {
                   <View style={styles.chonNgayLine}></View>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.loaiPhong}>
+
+
+                <TouchableOpacity style={styles.loaiPhong} onPress={this.toggleOverlayRoom}>
                   <Text style={styles._LoaiPhong}>LOẠI PHÒNG</Text>
                   <View style={styles.chonLoaiPhongRow}>
-                    <Text style={styles.chonLoaiPhong}>
-                      Kí túc xá, phòng cho thuê...
-                    </Text>
+                    <Text style={styles.chonLoaiPhong}>{this.state.listTypeOfRoom[this.state.TypeOfRoomSelected].value}</Text>
                     <View style={styles.chonLoaiPhongFiller}></View>
                     <EntypoIcon
                       name="chevron-thin-down"
@@ -55,12 +128,43 @@ class DistricSearch extends Component {
                   </View>
                   <View style={styles.loaiPhongLine}></View>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.gioiTinh}>
+
+
+                <Overlay isVisible={this.state.isToggleRoom} onBackdropPress={()=>this.toggleOverlayRoom}>
+                    <View style={{width: 300, maxHeight: 400}}>
+                        <Text style={styles.title}>Chọn loại phòng</Text>
+                            <ScrollView>
+                                {this.state.listTypeOfRoom.map((data,index) => {
+                                    return(
+                                        <CheckBox
+                                            left
+                                            key={index}
+                                            title={data.name}
+                                            checkedIcon='dot-circle-o'
+                                            uncheckedIcon='circle-o'
+                                            checked={this.state.TypeOfRoomSelected == index}
+                                            onPress = {() => this.setState({
+                                              TypeOfRoomSelected: index,
+                                              isToggleRoom: !this.state.isToggleRoom
+                                            })}
+                                            containerStyle={styles.radioBackground}
+                                            textStyle={styles.radioLabel}
+                                            checkedColor={Colors.primary}
+                                        />
+                                    )
+                                })}
+                            </ScrollView>
+                    </View>
+                  </Overlay>
+
+
+
+
+
+                <TouchableOpacity style={styles.gioiTinh} onPress={this.toggleOverlaySex}>
                   <Text style={styles._GioiTinh}>GIỚI TÍNH</Text>
                   <View style={styles.chonGioiTinhRow}>
-                    <Text style={styles.chonGioiTinh}>
-                      Nhấp để chọn giới tính
-                    </Text>
+                  <Text style={styles.chonGioiTinh}>{this.state.listOfSex[this.state.TypeOfSex].value}</Text>
                     <View style={styles.chonGioiTinhFiller}></View>
                     <EntypoIcon
                       name="chevron-thin-down"
@@ -69,10 +173,42 @@ class DistricSearch extends Component {
                   </View>
                   <View style={styles.gioiTinhLine}></View>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.mucGia}>
+
+
+                <Overlay isVisible={this.state.isToggleSex} onBackdropPress={()=>this.toggleOverlaySex}>
+                    <View style={{width: 300, maxHeight: 400}}>
+                        <Text style={styles.title}>Chọn giới tính</Text>
+                            <ScrollView>
+                                {this.state.listOfSex.map((data,index) => {
+                                    return(
+                                        <CheckBox
+                                            left
+                                            key={index}
+                                            title={data.name}
+                                            checkedIcon='dot-circle-o'
+                                            uncheckedIcon='circle-o'
+                                            checked={this.state.TypeOfSex == index}
+                                            onPress = {() => this.setState({
+                                              TypeOfSex: index,
+                                              isToggleSex: !this.state.isToggleSex
+                                            })}
+                                            containerStyle={styles.radioBackground}
+                                            textStyle={styles.radioLabel}
+                                            checkedColor={Colors.primary}
+                                        />
+                                    )
+                                })}
+                            </ScrollView>
+                    </View>
+                  </Overlay>
+
+
+
+
+                <TouchableOpacity style={styles.mucGia} onPress={this.toggleOverlayPrice}>
                   <Text style={styles._MucGia}>MỨC GIÁ</Text>
                   <View style={styles.chonMucGiaRow}>
-                    <Text style={styles.chonMucGia}>Nhấp để chọn mức giá</Text>
+                  <Text style={styles.chonMucGia}>{this.state.listOfPrice[this.state.TypeOfPrice].value}</Text>
                     <View style={styles.chonMucGiaFiller}></View>
                     <EntypoIcon
                       name="chevron-thin-down"
@@ -81,71 +217,104 @@ class DistricSearch extends Component {
                   </View>
                   <View style={styles.mucGiaLine}></View>
                 </TouchableOpacity>
+                
+                <Overlay isVisible={this.state.isTogglePrice} onBackdropPress={()=>this.toggleOverlayPrice}>
+                    <View style={{width: 300, maxHeight: 400}}>
+                        <Text style={styles.title}>Chọn mức giá</Text>
+                            <ScrollView>
+                                {this.state.listOfPrice.map((data,index) => {
+                                    return(
+                                        <CheckBox
+                                            left
+                                            key={index}
+                                            title={data.name}
+                                            checkedIcon='dot-circle-o'
+                                            uncheckedIcon='circle-o'
+                                            checked={this.state.TypeOfPrice == index}
+                                            onPress = {() => this.setState({
+                                              TypeOfPrice: index,
+                                              isTogglePrice: !this.state.isTogglePrice
+                                            })}
+                                            containerStyle={styles.radioBackground}
+                                            textStyle={styles.radioLabel}
+                                            checkedColor={Colors.primary}
+                                        />
+                                    )
+                                })}
+                            </ScrollView>
+                    </View>
+                  </Overlay>
+
+
 
                 <View style={styles.khuVucStack}>
                   <View style={styles.khuVuc}>
                     <Text style={styles.khuVucText}>KHU VỰC</Text>
 
                     <View style={styles.buttonRow}>
-                      <TouchableOpacity style={styles.button}>
-                        <View style={styles.quan}>
-                          <Text style={styles.quanText}>Đống Đa</Text>
+
+                      <TouchableOpacity style={styles.button} onPress={()=>this.selectDistrict(this.state.listDistrictSelected, "Đống Đa")}>
+                        <View style={ this.isSelectedDistrict(this.state.listDistrictSelected, "Đống Đa") ? styles.quanSelected : styles.quan}>
+                          <Text style={this.isSelectedDistrict(this.state.listDistrictSelected, "Đống Đa") ? styles.quanTextSelected : styles.quanText}>Đống Đa</Text>
                         </View>
                       </TouchableOpacity>
-                      <TouchableOpacity style={styles.button2}>
-                        <View style={styles.quan1}>
-                          <Text style={styles.cauGiay}>Cầu Giấy</Text>
+
+                      <TouchableOpacity style={styles.button2} onPress={()=>this.selectDistrict(this.state.listDistrictSelected, "Cầu Giấy")}>
+                        <View style={this.isSelectedDistrict(this.state.listDistrictSelected, "Cầu Giấy") ? styles.quanSelected : styles.quan}>
+                          <Text style={this.isSelectedDistrict(this.state.listDistrictSelected, "Cầu Giấy") ? styles.quanTextSelected : styles.quanText}>Cầu Giấy</Text>
                         </View>
                       </TouchableOpacity>
                     </View>
+
                     <View style={styles.button3Row}>
-                      <TouchableOpacity style={styles.button3}>
-                        <View style={styles.quan2}>
-                          <Text style={styles.thanhXuan}>Thanh Xuân</Text>
+                      <TouchableOpacity style={styles.button3} onPress={()=>this.selectDistrict(this.state.listDistrictSelected, "Thanh Xuân")}>
+                        <View style={this.isSelectedDistrict(this.state.listDistrictSelected, "Thanh Xuân") ? styles.quanSelected : styles.quan}>
+                          <Text style={this.isSelectedDistrict(this.state.listDistrictSelected, "Thanh Xuân") ? styles.quanTextSelected : styles.quanText}>Thanh Xuân</Text>
                         </View>
                       </TouchableOpacity>
-                      <TouchableOpacity style={styles.button4}>
-                        <View style={styles.quan3}>
-                          <Text style={styles.HaiBaTrung}>Hai Bà Trưng</Text>
+                      <TouchableOpacity style={styles.button4} onPress={()=>this.selectDistrict(this.state.listDistrictSelected, "Hai Bà Trưng")}>
+                        <View style={this.isSelectedDistrict(this.state.listDistrictSelected, "Hai Bà Trưng") ? styles.quanSelected : styles.quan}>
+                          <Text style={this.isSelectedDistrict(this.state.listDistrictSelected, "Hai Bà Trưng") ? styles.quanTextSelected : styles.quanText}>Hai Bà Trưng</Text>
                         </View>
                       </TouchableOpacity>
                     </View>
                     <View style={styles.button5Row}>
-                      <TouchableOpacity style={styles.button5}>
-                        <View style={styles.quan4}>
-                          <Text style={styles.longBien}>Long Biên</Text>
+                      <TouchableOpacity style={styles.button5} onPress={()=>this.selectDistrict(this.state.listDistrictSelected, "Long Biên")}>
+                        <View style={this.isSelectedDistrict(this.state.listDistrictSelected, "Long Biên") ? styles.quanSelected : styles.quan}>
+                          <Text style={this.isSelectedDistrict(this.state.listDistrictSelected, "Long Biên") ? styles.quanTextSelected : styles.quanText}>Long Biên</Text>
                         </View>
                       </TouchableOpacity>
-                      <TouchableOpacity style={styles.button6}>
-                        <View style={styles.quan5}>
-                          <Text style={styles.hoanKiem}>Hoàn Kiếm</Text>
+                      <TouchableOpacity style={styles.button6} onPress={()=>this.selectDistrict(this.state.listDistrictSelected, "Hoàn Kiếm")}>
+                        <View style={this.isSelectedDistrict(this.state.listDistrictSelected, "Hoàn Kiếm") ? styles.quanSelected : styles.quan}>
+                          <Text style={this.isSelectedDistrict(this.state.listDistrictSelected, "Hoàn Kiếm") ? styles.quanTextSelected : styles.quanText}>Hoàn Kiếm</Text>
                         </View>
                       </TouchableOpacity>
                     </View>
                     <View style={styles.button7Row}>
-                      <TouchableOpacity style={styles.button7}>
-                        <View style={styles.quan6}>
-                          <Text style={styles.baDinh}>Ba Đình</Text>
+                      <TouchableOpacity style={styles.button7} onPress={()=>this.selectDistrict(this.state.listDistrictSelected, "Ba Đình")}>
+                        <View style={this.isSelectedDistrict(this.state.listDistrictSelected, "Ba Đình") ? styles.quanSelected : styles.quan}>
+                          <Text style={this.isSelectedDistrict(this.state.listDistrictSelected, "Ba Đình") ? styles.quanTextSelected : styles.quanText}>Ba Đình</Text>
                         </View>
                       </TouchableOpacity>
-                      <TouchableOpacity style={styles.button8}>
-                        <View style={styles.quan7}>
-                          <Text style={styles.hoangMai}>Hoàng Mai</Text>
+                      <TouchableOpacity style={styles.button8} onPress={()=>this.selectDistrict(this.state.listDistrictSelected, "Hoàng Mai")}>
+                        <View style={this.isSelectedDistrict(this.state.listDistrictSelected, "Hoàng Mai") ? styles.quanSelected : styles.quan}>
+                          <Text style={this.isSelectedDistrict(this.state.listDistrictSelected, "Hoàng Mai") ? styles.quanTextSelected : styles.quanText}>Hoàng Mai</Text>
                         </View>
                       </TouchableOpacity>
                     </View>
                     <View style={styles.button10Row}>
-                      <TouchableOpacity style={styles.button10}>
-                        <View style={styles.quan8}>
-                          <Text style={styles.haDong}>Hà Đông</Text>
+                      <TouchableOpacity style={styles.button10} onPress={()=>this.selectDistrict(this.state.listDistrictSelected, "Hà Đông")}>
+                        <View style={this.isSelectedDistrict(this.state.listDistrictSelected, "Hà Đông") ? styles.quanSelected : styles.quan}>
+                          <Text style={this.isSelectedDistrict(this.state.listDistrictSelected, "Hà Đông") ? styles.quanTextSelected : styles.quanText}>Hà Đông</Text>
                         </View>
                       </TouchableOpacity>
-                      <TouchableOpacity style={styles.button9}>
-                        <View style={styles.quan9}>
-                          <Text style={styles.tayHo}>Tây Hồ</Text>
+                      <TouchableOpacity style={styles.button9} onPress={()=>this.selectDistrict(this.state.listDistrictSelected, "Tây Hồ")}>
+                        <View style={this.isSelectedDistrict(this.state.listDistrictSelected, "Tây Hồ") ? styles.quanSelected : styles.quan}>
+                          <Text style={this.isSelectedDistrict(this.state.listDistrictSelected, "Tây Hồ") ? styles.quanTextSelected : styles.quanText}>Tây Hồ</Text>
                         </View>
                       </TouchableOpacity>
                     </View>
+                    
                   </View>
                 </View>
               </View>
@@ -410,6 +579,20 @@ const styles = StyleSheet.create({
     width: 127,
     height: 37
   },
+  quanSelected: {
+    width: 127,
+    height: 37,
+    backgroundColor: "rgba(236,236,236,1)",
+    borderRadius: 8,
+    borderColor: Colors.primary,
+    borderWidth: 1
+  },
+  quanTextSelected: {
+    fontFamily: "roboto-regular",
+    color: colors.primary,
+    marginTop: 10,
+    textAlign: "center"
+  },
   quan: {
     width: 127,
     height: 37,
@@ -420,7 +603,7 @@ const styles = StyleSheet.create({
     fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     marginTop: 10,
-    marginLeft: 37
+    textAlign: "center"
   },
   button2: {
     width: 127,
@@ -668,6 +851,39 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 672,
     alignSelf:"center",
+  },
+  title : {
+    fontSize: 13,
+    color: Colors.grayLabel, 
+    fontWeight:'bold',
+    textTransform: 'uppercase',
+    paddingVertical: 10,
+    textAlign: "center",
+  },
+  radioLabel: {
+    color: Colors.grayLabel, 
+    fontWeight: 'normal',
+    fontSize: 14
+  },
+  radioBackground: {
+    backgroundColor: Colors.white, 
+    borderColor: Colors.white, 
+    marginVertical: 0, 
+    borderBottomColor: Colors.grayBackground,
+    fontSize: 14
+  },
+  btnNormal: {
+    borderColor: 'blue',
+    borderWidth: 1,
+    borderRadius: 10,
+    height: 30,
+    width: 100,
+  },
+  btnPress: {
+    borderColor: 'blue',
+    borderWidth: 1,
+    height: 30,
+    width: 100,
   }
 });
 
