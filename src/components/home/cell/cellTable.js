@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 15,
-        color: Colors.white,
+        //color: Colors.white,
         fontWeight: 'bold'
     },
     cost: {
