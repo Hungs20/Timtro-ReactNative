@@ -8,6 +8,7 @@ import Message from '../../components/message'
 import Account from '../../components/account'
 import Partner from '../../components/partner'
 import DistricSearch from '../../components/search/DistricSearch'
+import Chat from '../../components/message/chat'
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -28,11 +29,6 @@ function HomeRoomIndex({ navigation }) {
   );
 }
 
-function MessageIndex({ navigation }) {
-  return (
-      <Message/>
-  );
-}
 function AccountIndex({ navigation }) {
   return (
       <Account/>
@@ -48,6 +44,7 @@ const Tab = createBottomTabNavigator();
 
 
 const HomeStack = createStackNavigator();
+const MessageStack = createStackNavigator();
 function DistricSearchIndex() {
   return (
       <DistricSearch/>
@@ -56,6 +53,37 @@ function DistricSearchIndex() {
 function RoomDetailsIndex({ route, navigation }) {
   return (
     <RoomDetail room = {route.params.room}/>
+  )
+}
+function HomeMessageIndex({route, navigation}) {
+  return (
+    <Message navigation={navigation}/>
+  )
+}
+function ChatMessageIndex({ route, navigation }) {
+  return (
+    <Chat/>
+  )
+}
+function MessageStackScreen({navigation}) {
+  return (
+    <MessageStack.Navigator initialRouteName='HomeMessage' screenOptions={{
+      headerStyle: {
+        backgroundColor: Colors.pink,
+      },
+      headerTintColor: Colors.white,
+      headerTitleStyle: {
+        fontWeight: 'bold',
+        fontSize: Fonts.headerFontSize
+      },
+  }}>
+    <MessageStack.Screen name="HomeMessage" component={HomeMessageIndex} options={{
+        headerShown: false
+      }} />
+      <MessageStack.Screen name="ChatMessage" component={ChatMessageIndex}  options={{
+          title: 'Tin nhắn riêng', 
+        }} />
+        </MessageStack.Navigator>
   )
 }
 function HomeStackScreen({navigation}) {
@@ -119,7 +147,7 @@ const Tabbar = () => {
         <Tab.Screen name="Tìm kiếm" component={HomeStackScreen} />
         <Tab.Screen name="Yêu thích" component={CreateRoomIndex} />
         <Tab.Screen name="Ở ghép" component={PartnerIndex} />
-        <Tab.Screen name="Tin nhắn" component={MessageIndex} options={{ tabBarBadge: 3 }} />
+        <Tab.Screen name="Tin nhắn" component={MessageStackScreen} options={{ tabBarBadge: 3 }} />
         <Tab.Screen name="Tài khoản" component={AccountIndex} />
       </Tab.Navigator>
     </NavigationContainer>

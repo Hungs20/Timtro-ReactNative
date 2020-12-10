@@ -14,6 +14,9 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Entypo from "react-native-vector-icons/Entypo";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import firebase from '@react-native-firebase/app'
+import '@react-native-firebase/auth'
+import firestore from '@react-native-firebase/firestore';
 
 
 class Message extends Component {
@@ -21,6 +24,8 @@ class Message extends Component {
         super(props);
         this.state={
             searchValue: "",
+            listMessage: null,
+            currentUser: null,
             data_messages: [
                 {
                     id:'rwBa06nqlR',
@@ -58,10 +63,41 @@ class Message extends Component {
             ]
         }
     }
+    _isMounted = false;
+    componentDidMount() {
+        this._isMounted = true;
+        const { currentUser } = firebase.auth()
+        this.setState({ currentUser })
 
+        const subscriber = firestore()
+        .collection('messages').where('user', '==', /*currentUser.email*/ 'hung@gmail.com')
+        //.orderBy('date_update', "desc")
+        .onSnapshot(querySnapshot => {
+        const messagesData = [];
+
+        querySnapshot.forEach(documentSnapshot => {
+            console.log(documentSnapshot)
+            messagesData.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+            });
+        });
+
+        if (this._isMounted) {
+            this.setState({listMessage: messagesData})
+          }
+        });
+
+    // Unsubscribe from events when no longer in use
+    () => subscriber();
+
+    }
+    componentWillUnmount() {
+        this._isMounted = false;
+      }
     renderItem =({item}) => {
         return (
-            <TouchableOpacity style = {styles.item_container}>
+            <TouchableOpacity style = {styles.item_container} onPress={()=> this.props.navigation.navigate('ChatMessage'/*, {room: this.props.room}*/)}>
                 <Image 
                     source = {{uri: item.user_avatar}}
                     style = {{width:50, height:50}}
@@ -123,6 +159,7 @@ class Message extends Component {
     }
 
     render(){
+        //console.log(this.state.listMessage)
         return (
             <View style={styles.container}>
                 <StatusBar barStyle="light-content" />

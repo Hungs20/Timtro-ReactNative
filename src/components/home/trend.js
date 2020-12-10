@@ -25,20 +25,20 @@ class Trend extends Component {
                     this.state.items.map((item, index) => {
                         if(index % 3 === 0){
                             return (
-                                <View style={{flex: 1, flexDirection: 'row'}}> 
-                                    <ImageBackground source={this.state.items[index].uri} style={styles.image}>
+                                <View key={index} style={{flex: 1, flexDirection: 'row'}}> 
+                                    <ImageBackground key={this.state.items[index].name} source={this.state.items[index].uri} style={styles.image}>
                                         <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'flex-end', alignItems: 'center'}}>
                                             <Text style={{fontWeight: 'bold'}}>{this.state.items[index].name}</Text>
                                         </View>
                                     </ImageBackground>
                                     
-                                    <ImageBackground source={this.state.items[index+1].uri} style={styles.image}>
+                                    <ImageBackground key={this.state.items[index+1].name} source={this.state.items[index+1].uri} style={styles.image}>
                                         <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'flex-end', alignItems: 'center'}}>
                                             <Text style={{fontWeight: 'bold'}}>{this.state.items[index+1].name}</Text>
                                         </View>
                                     </ImageBackground>
 
-                                    <ImageBackground source={this.state.items[index+2].uri} style={styles.image}>
+                                    <ImageBackground key={this.state.items[index+2].name} source={this.state.items[index+2].uri} style={styles.image}>
                                         <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'flex-end', alignItems: 'center'}}>
                                             <Text style={{fontWeight: 'bold'}}>{this.state.items[index+2].name}</Text>
                                         </View>

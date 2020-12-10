@@ -64,7 +64,7 @@ renderItem = ({ item }) => (
 
             {this.state.data.map((item, i) => (
             <ListItem bottomDivider containerStyle={{backgroundColor: Colors.grayBackground}}>
-                <Avatar rounded size="medium" source={{uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg'}} />
+                <Avatar rounded size="medium" source={{uri: item.avatar}} />
                 <ListItem.Content>
                 <ListItem.Title style={{fontWeight: 'bold'}}>{this.state.currentUser && this.state.currentUser.email}</ListItem.Title>
                 <ListItem.Subtitle>{item.location}</ListItem.Subtitle>

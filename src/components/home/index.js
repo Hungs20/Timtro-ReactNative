@@ -34,6 +34,7 @@ class Home extends Component {
                 <View style={styles.container}>
                     <Trend/>
                     <HotRoom navigation={this.props.navigation}/>
+                    
                     <NewRoom navigation={this.props.navigation}/>
                 </View>
             </ScrollView>
