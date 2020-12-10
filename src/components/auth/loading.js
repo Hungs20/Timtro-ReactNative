@@ -9,7 +9,7 @@ export default class Loading extends React.Component {
   // .signOut()
   // .then(() => console.log('User signed out!'));
         firebase.auth().onAuthStateChanged(user => {
-          this.props.navigation.navigate(user ? 'Main' : 'Main')
+          this.props.navigation.navigate(user ? 'Main' : 'Login')
         })
       }
     
