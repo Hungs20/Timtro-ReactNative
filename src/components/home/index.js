@@ -10,6 +10,7 @@ import { SectionGrid } from 'react-native-super-grid';
 import Trend from './trend'
 import HotRoom from './hotRoom'
 import NewRoom from './newRoom'
+import MoreRoom from './moreRoom'
 import firebase from '@react-native-firebase/app'
 import '@react-native-firebase/auth'
 
@@ -36,6 +37,7 @@ class Home extends Component {
                     <HotRoom navigation={this.props.navigation}/>
                     
                     <NewRoom navigation={this.props.navigation}/>
+                    <MoreRoom navigation={this.props.navigation}/>
                 </View>
             </ScrollView>
             </ThemeProvider>

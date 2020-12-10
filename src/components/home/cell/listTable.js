@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
-import {View, StyleSheet, Image, Text, TouchableOpacity} from 'react-native'
+import {View, StyleSheet, Image, Text, TouchableOpacity, ImageBackground, Button} from 'react-native'
 import * as Colors from '../../../styles/colors'
+import { IconButton } from 'react-native-paper'
 class ListTable extends Component {
     constructor(props){
         super(props)
@@ -11,7 +12,15 @@ class ListTable extends Component {
         return(
               <TouchableOpacity style={{flex: 1, margin: 5, flexDirection: 'row'}} onPress={()=> this.props.navigation.navigate('RoomDetails', {room: this.props.room})}>
                     <View style={{flex: 1, marginRight: 15}}>
-                        <Image source={{uri: this.props.room.extension.listImageUrl[0]}} style={{height: 100, borderRadius: 10, width: '100%'}}/>
+                        <ImageBackground source={{uri: this.props.room.extension.listImageUrl[0]}} style={{height: 100, borderRadius: 10, width: '100%'}}>
+                        <IconButton
+                            style={{position: 'absolute', right: 0}}
+                            icon="heart-outline"
+                            color={Colors.white}
+                            size={20}
+                            onPress={() => console.log('Pressed')}
+                        />
+                        </ImageBackground>
                     </View>
                     <View style={{flex: 2, flexDirection: 'column', marginVertical: 10}}>
                         <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -35,7 +44,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 15,
-        color: Colors.white,
+        //color: Colors.white,
         fontWeight: 'bold'
     },
     cost: {

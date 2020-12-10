@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
-import {View, StyleSheet, Image, Text, TouchableOpacity} from 'react-native'
+import {View, StyleSheet, Image, Text, TouchableOpacity, ImageBackground} from 'react-native'
 import * as Colors from '../../../styles/colors'
+import { IconButton } from 'react-native-paper'
 class CellTable extends Component {
     constructor(props){
         super(props)
@@ -10,7 +11,15 @@ class CellTable extends Component {
     render(){
         return(
             <TouchableOpacity style={{flex: 1, margin: 5}} onPress={()=> this.props.navigation.navigate('RoomDetails', {room: this.props.room})}>
-                <Image source={{uri: this.props.room.extension.listImageUrl[0]}} style={{height: 100, borderRadius: 10, marginBottom: 5, width: '100%'}}/>
+                <ImageBackground source={{uri: this.props.room.extension.listImageUrl[0]}} style={{height: 100, borderRadius: 10, width: '100%', marginBottom: 5}}>
+                    <IconButton
+                        style={{position: 'absolute', right: 0}}
+                        icon="heart-outline"
+                        color={Colors.white}
+                        size={20}
+                        onPress={() => console.log('Pressed')}
+                    />
+                </ImageBackground>
                 <Text numberOfLines={1} style={styles.type}>{this.props.room.info.typeRoom}</Text>
                 <Text numberOfLines={2} style={styles.title}>{this.props.room.confirm.title}</Text>
                 <Text style={styles.cost}>{this.props.room.info.giathue}</Text>
@@ -29,7 +38,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 15,
-        color: Colors.white,
+        //color: Colors.white,
         fontWeight: 'bold'
     },
     cost: {
