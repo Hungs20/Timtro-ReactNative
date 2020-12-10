@@ -49,7 +49,7 @@ class MoreRoom extends Component {
                     this.state.listRoom ? this.state.listRoom.map((room, index) => {
                         if(index % 2 === 0) {
                             return (
-                            <View style={{flex: 1, flexDirection: 'row'}}> 
+                            <View key={index} style={{flex: 1, flexDirection: 'row'}}> 
                                 <CellTable key={this.state.listRoom[index].key} room={this.state.listRoom[index]} navigation={this.props.navigation}/>
                                 {
                                     index + 1 < this.state.listRoom.length ? <CellTable key={this.state.listRoom[index+1].key} room={ this.state.listRoom[index+1]} navigation={this.props.navigation}/> : null
