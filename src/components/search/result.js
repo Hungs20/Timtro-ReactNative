@@ -39,10 +39,9 @@ class Result extends Component {
             listRoom:[],
         }
     }
-    doSearch = () => {
-        
-
-
+    _isMounted = false;
+    componentDidMount() {
+        this._isMounted = true;
         var subscriber = firestore().collection('rooms')
         if(this.state.isFilterExtension == true && this.state.listExtChecked.length > 0)
         {
@@ -70,7 +69,7 @@ class Result extends Component {
             subscriber = subscriber.orderBy('info.giathue', "asc")
            } 
         }
-        subscriber.get().then(querySnapshot => {
+        /*subscriber.get().then(querySnapshot => {
             var rooms = [];
             querySnapshot.forEach(doc => {
                //console.log(doc.data());
@@ -81,8 +80,8 @@ class Result extends Component {
           }).catch(err => {
              console.log('Error getting documents', err);
           });
-        
-        /*subscriber.onSnapshot(querySnapshot => {
+        */
+        subscriber.onSnapshot(querySnapshot => {
         var rooms = [];
 
         querySnapshot.forEach(documentSnapshot => {
@@ -90,12 +89,79 @@ class Result extends Component {
             ...documentSnapshot.data(),
             key: documentSnapshot.id,
             });
-        });
-        console.log('aa')
+        })
         console.log(rooms)
+        if(this._isMounted){
+            this.setState({listRoom: rooms, isToggleFilter: null,})
+        }
+        },error => {
+            console.log(error)
+        });
+    // Unsubscribe from events when no longer in use
+    () => subscriber();
+
+
+    }
+    componentWillUnmount() {
+        this._isMounted = false;
+      }
+
+    doSearch = () => {
+        var subscriber = firestore().collection('rooms')
+        if(this.state.isFilterExtension == true && this.state.listExtChecked.length > 0)
+        {
+            subscriber = subscriber.where('extension.listExtChecked', 'array-contains-any',this.state.listExtChecked)
+        }
+        if(this.state.isFilterTypeRoom == true && this.state.filterTypeRoom != null) {
+            subscriber = subscriber.where('info.typeRoom', '==', this.state.filterTypeRoom)
+        }
+        if(this.state.isFilterNumRoom == true && this.state.filterNumRoom != null) {
+            subscriber = subscriber.where('info.numPersonOfRoom', '==', this.state.filterNumRoom)
+            subscriber = subscriber.where('info.gender', '==', this.state.genderButtons[this.state.filterGender])
+        }
+        if(this.state.isFilterCost){
+            subscriber = subscriber.where('info.giathue', '>=', this.state.filterCost[0]*1000000)
+            subscriber = subscriber.where('info.giathue', '<=', this.state.filterCost[1]*1000000)
+        }
+        if(this.state.isFilterSort){
+           if(this.state.filterSort === 'Mới nhất'){
+                subscriber = subscriber.orderBy('date_create')
+           }
+           else if(this.state.filterSort === 'Giá thấp đến cao'){
+            subscriber = subscriber.orderBy('info.giathue', "desc")
+           }
+           else {
+            subscriber = subscriber.orderBy('info.giathue', "asc")
+           } 
+        }
+        
+        /*subscriber.get().then(querySnapshot => {
+            var rooms = [];
+            querySnapshot.forEach(doc => {
+               //console.log(doc.data());
+               rooms.push(doc.data())
+            });
             this.setState({listRoom: rooms, isToggleFilter: null,})
         
-        });*/
+          }).catch(err => {
+             console.log('Error getting documents', err);
+          });
+        */
+        subscriber.onSnapshot(querySnapshot => {
+        var rooms = [];
+
+        querySnapshot.forEach(documentSnapshot => {
+            rooms.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+            });
+        })
+        console.log(rooms)
+        this.setState({listRoom: rooms, isToggleFilter: null,})
+        
+        },error => {
+            console.log(error)
+        });
     // Unsubscribe from events when no longer in use
     () => subscriber();
 
@@ -106,14 +172,19 @@ class Result extends Component {
     }
     showResultFilter = () => {
         return(
-            <View style={{flex:1}}>
-                <View style={{flex: 1, flexDirection: 'column'}}> 
-                {
-                    this.state.listRoom.map((room, index) => (
-                        <ListTable key={room.id} room={room} navigation={this.props.navigation}/>
-                    ))
-                }
-                </View>
+            <View>
+                <Text style={{fontSize: 18, marginVertical: 10, marginHorizontal: 10}}>{this.state.listRoom.length} Kết quả</Text>
+                <ScrollView>
+                    <View style={{flex:1, marginHorizontal: 10}}>
+                        <View style={{flex: 1, flexDirection: 'column'}}> 
+                        {
+                            this.state.listRoom.map((room, index) => (
+                                <ListTable key={room.key} room={room} navigation={this.props.navigation}/>
+                            ))
+                        }
+                        </View>
+                    </View>
+                </ScrollView>
             </View>
         )
     }
@@ -175,9 +246,6 @@ class Result extends Component {
         var index = array.indexOf(value)
         if (index === -1) array.push(value);
         else array.splice(index, 1);
-        /*this.setState({
-          listExtChecked: array
-        })*/
         this.setState({listExtChecked: array})
         if(array.length > 0) {
             this.setState({isFilterExtension: true})
@@ -305,7 +373,7 @@ class Result extends Component {
                       )
                   })}
                 </View>
-                </View>
+            </View>
         )
     }
     showCostIndex = () => {
@@ -319,7 +387,8 @@ class Result extends Component {
     showButtonSearch = () => {
         return(
             <View>
-                <Button title="Áp dụng" onPress={()=>this.doSearch()} />
+                <Button title="Áp dụng" onPress={()=>this.doSearch()} containerStyle={{marginHorizontal: 35, borderColor: Colors.primary, borderWidth: 1, borderRadius: 10, marginVertical: 20}}/>
+                <Text style={{fontSize: 15, fontWeight: 'bold', color: Colors.grayLabel, alignItems: "center", textAlign: "center", marginHorizontal: 20}}>Vui lòng chọn yêu cầu, sau đó bấm áp dụng để tìm kiếm!</Text>
             </View>
         )
     }
@@ -343,7 +412,7 @@ class Result extends Component {
                 break;
         }
         listView.push(this.showButtonSearch())
-        return listView
+        return (<ScrollView>{listView}</ScrollView>)
     }
     setToggle = (value) => {
         if(this.state.isToggleFilter === value){
@@ -352,6 +421,65 @@ class Result extends Component {
         else {
             this.setState({isToggleFilter: value})
         }
+    }
+    showChip = () => {
+        return(
+            <View style={{flexDirection:"row", alignItems:"center", justifyContent: "space-between"}}>
+            {
+                (this.state.isFilterCost || this.state.isFilterExtension || this.state.isFilterNumRoom || this.state.isFilterTypeRoom || this.state.isFilterSort) ? 
+                    <IconButton icon="close"
+                        color={Colors.grayLabel}
+                        size={20}
+                        animated={true}
+                        style={{ borderColor: Colors.primary, borderWidth: 1}}
+                        onPress={() => {
+                            this.setState({
+                            isFilterCost: false,
+                            isFilterExtension: false,
+                            isFilterNumRoom: false,
+                            isFilterTypeRoom: false,
+                            isFilterSort: false,
+                            listExtChecked: []
+                        });
+                        if(this.state.isToggleFilter == null){
+                            this.doSearch()
+                        }
+                    }
+                    }/>
+                : null
+            }
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                {
+                    this.state.isFilterCost ? <Chip mode='outlined' onClose={async()=>{await this.setState({isFilterCost: false});if(this.state.isToggleFilter == null){
+                        this.doSearch()
+                    }}}>{this.state.filterCost[0]} triệu VND - {this.state.filterCost[1]} triệu VND</Chip> : null
+                }
+                {
+                    this.state.isFilterExtension ? this.state.listExtChecked.map((value, index) => {
+                        return(<Chip mode='outlined' onClose={async()=>{await this.addExtChecked(this.state.listExtChecked, value);if(this.state.isToggleFilter == null){
+                            this.doSearch()
+                        }}}>{value}</Chip>)
+                    }) : null
+                }
+                {
+                    this.state.isFilterTypeRoom ? <Chip mode='outlined' onClose={async()=>{await this.setState({isFilterTypeRoom: false});if(this.state.isToggleFilter == null){
+                        this.doSearch()
+                    }}}>{this.state.filterTypeRoom}</Chip> : null
+                }
+                {
+                    this.state.isFilterNumRoom ? <Chip mode='outlined' onClose={async()=>{await this.setState({isFilterNumRoom: false});if(this.state.isToggleFilter == null){
+                        this.doSearch()
+                    }}}>{this.state.filterNumRoom} {this.state.genderButtons[this.state.filterGender]}</Chip> : null
+                }
+                {
+                    this.state.isFilterSort ? <Chip mode='outlined' onClose={async()=>{await this.setState({isFilterSort: false});if(this.state.isToggleFilter == null){
+                        this.doSearch()
+                    }}}>{this.state.filterSort}</Chip> : null
+                }
+                
+            </ScrollView>
+            </View>
+            )
     }
     render(){
         //console.log(this.state.listRoom)
@@ -371,17 +499,10 @@ class Result extends Component {
                     inputContainerStyle={{height: 35}}
                    />
                 <View>{this.showViewFilter()}</View>
-                
-                <ScrollView>
+                <View>{this.showChip()}</View>
                 {
-                    this.state.isToggleFilter != null ? this.showToggle() : /*<Chip mode="outlined"
-                    style={{width: 300}}
-                >
-                    3 triệu VND - 15 triệu+ VND
-                </Chip>*/
-                    this.showResultFilter()
+                    this.state.isToggleFilter !== null ? this.showToggle() : this.showResultFilter()
                 }
-                </ScrollView>
                 
             </ThemeProvider>
         )

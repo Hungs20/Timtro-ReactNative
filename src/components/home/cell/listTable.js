@@ -12,7 +12,7 @@ class ListTable extends Component {
         return(
               <TouchableOpacity style={{flex: 1, margin: 5, flexDirection: 'row'}} onPress={()=> this.props.navigation.navigate('RoomDetails', {room: this.props.room})}>
                     <View style={{flex: 1, marginRight: 15}}>
-                        <ImageBackground source={{uri: this.props.room.extension.listImageUrl[0]}} style={{height: 100, borderRadius: 10, width: '100%'}}>
+                        <ImageBackground source={{uri: this.props.room.extension.listImageUrl[0]}} style={{height: 100, borderRadius: 0, width: '100%'}} imageStyle={{ borderRadius: 10 }}>
                         <IconButton
                             style={{position: 'absolute', right: 0}}
                             icon="heart-outline"

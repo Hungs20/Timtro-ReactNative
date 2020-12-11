@@ -11,7 +11,7 @@ class CellTable extends Component {
     render(){
         return(
             <TouchableOpacity style={{flex: 1, margin: 5}} onPress={()=> this.props.navigation.navigate('RoomDetails', {room: this.props.room})}>
-                <ImageBackground source={{uri: this.props.room.extension.listImageUrl[0]}} style={{height: 100, borderRadius: 10, width: '100%', marginBottom: 5}}>
+                <ImageBackground source={{uri: this.props.room.extension.listImageUrl[0]}} style={{height: 100, borderRadius: 0, width: '100%', marginBottom: 5}} imageStyle={{ borderRadius: 10 }}>
                     <IconButton
                         style={{position: 'absolute', right: 0}}
                         icon="heart-outline"
