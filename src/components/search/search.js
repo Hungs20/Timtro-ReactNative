@@ -40,6 +40,7 @@ class Search extends Component {
                 <View style={styles.bottomSearchBox}></View>
                 <CupertinoSearchBarBasic
                   style={styles.cupertinoSearchBarBasic}
+                  navigation={this.props.navigation}
                 ></CupertinoSearchBarBasic>
 
               

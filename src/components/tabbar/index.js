@@ -8,6 +8,7 @@ import Message from '../../components/message'
 import Account from '../../components/account'
 import Partner from '../../components/partner'
 import DistricSearch from '../../components/search/DistricSearch'
+import Result from '../search/result'
 import Chat from '../../components/message/chat'
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -53,6 +54,11 @@ function DistricSearchIndex() {
 function RoomDetailsIndex({ route, navigation }) {
   return (
     <RoomDetail room = {route.params.room}/>
+  )
+}
+function SearchResultIndex({route, navigation}) {
+  return (
+    <Result navigation={navigation}/>
   )
 }
 function HomeMessageIndex({route, navigation}) {
@@ -109,6 +115,9 @@ function HomeStackScreen({navigation}) {
         }} />
       <HomeStack.Screen name="CreateRoom" component={CreateRoomIndex} options={{
         title: 'Đăng thông tin phòng', 
+      }} />
+      <HomeStack.Screen name="SearchResult" component={SearchResultIndex} options={{
+        title: 'Tìm kiếm phòng', 
       }} />
     </HomeStack.Navigator>
   );

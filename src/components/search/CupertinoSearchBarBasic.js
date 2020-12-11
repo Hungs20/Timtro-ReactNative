@@ -20,12 +20,12 @@ class CupertinoSearchBarBasic extends Component {
   render(){
     return (
       <View style={[styles.container, this.props.style]}>
-        <View style={styles.inputBox}>
+        <TouchableOpacity style={styles.inputBox} onPress={()=>this.props.navigation.navigate('SearchResult')}>
           <TouchableOpacity style={{flex: 0.5, flexDirection: "row", }} onPress={this.toggleOverlay}>
             <Icon name="magnify" style={styles.inputLeftIcon}></Icon><Text style={{color: Colors.pink, fontSize: 13}}>{this.state.listAddress[this.state.addressIdSelected].value}</Text>
           </TouchableOpacity>
-          <TextInput placeholder="Tìm theo quận, tên đường, địa điểm" style={styles.inputStyle}></TextInput>
-        </View>
+          <View style={styles.inputStyle}><Text style={{color:"gray", textAlign: "center", justifyContent: "center", fontSize: 13}}>Tìm theo quận, tên đường, địa điểm</Text></View>
+        </TouchableOpacity>
         <Overlay isVisible={this.state.isToggle} onBackdropPress={()=>this.toggleOverlay}>
             <View style={{width: 300, maxHeight: 400}}>
                 <Text style={styles.title}>Chọn địa điểm</Text>
