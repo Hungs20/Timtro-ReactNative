@@ -49,7 +49,7 @@ class NewRoom extends Component {
                 <View style={{flex: 1, flexDirection: 'column'}}> 
                 {
                     this.state.listRoom.map((room, index) => (
-                        <ListTable key={room.id} room={room} navigation={this.props.navigation}/>
+                        <ListTable key={room.key} room={room} navigation={this.props.navigation}/>
                     ))
                 }
                 </View>

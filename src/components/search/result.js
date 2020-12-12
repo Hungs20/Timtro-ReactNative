@@ -60,13 +60,14 @@ class Result extends Component {
         }
         if(this.state.isFilterSort){
            if(this.state.filterSort === 'Mới nhất'){
-                subscriber = subscriber.orderBy('date_create')
+                subscriber = subscriber.orderBy('date_create', "desc")
            }
            else if(this.state.filterSort === 'Giá thấp đến cao'){
-            subscriber = subscriber.orderBy('info.giathue', "desc")
-           }
-           else {
             subscriber = subscriber.orderBy('info.giathue', "asc")
+               
+            }
+           else {
+            subscriber = subscriber.orderBy('info.giathue', "desc")
            } 
         }
         /*subscriber.get().then(querySnapshot => {
@@ -90,7 +91,7 @@ class Result extends Component {
             key: documentSnapshot.id,
             });
         })
-        console.log(rooms)
+       // console.log(rooms)
         if(this._isMounted){
             this.setState({listRoom: rooms, isToggleFilter: null,})
         }
@@ -106,32 +107,34 @@ class Result extends Component {
         this._isMounted = false;
       }
 
-    doSearch = () => {
-        var subscriber = firestore().collection('rooms')
+     doSearch = async () => {
+        var subscriber = await firestore().collection('rooms')
+
         if(this.state.isFilterExtension == true && this.state.listExtChecked.length > 0)
         {
-            subscriber = subscriber.where('extension.listExtChecked', 'array-contains-any',this.state.listExtChecked)
+            subscriber = await subscriber.where('extension.listExtChecked', 'array-contains-any',this.state.listExtChecked)
         }
         if(this.state.isFilterTypeRoom == true && this.state.filterTypeRoom != null) {
-            subscriber = subscriber.where('info.typeRoom', '==', this.state.filterTypeRoom)
+            subscriber = await subscriber.where('info.typeRoom', '==', this.state.filterTypeRoom)
         }
         if(this.state.isFilterNumRoom == true && this.state.filterNumRoom != null) {
-            subscriber = subscriber.where('info.numPersonOfRoom', '==', this.state.filterNumRoom)
-            subscriber = subscriber.where('info.gender', '==', this.state.genderButtons[this.state.filterGender])
+            subscriber = await subscriber.where('info.numPersonOfRoom', '==', this.state.filterNumRoom)
+            subscriber = await subscriber.where('info.gender', '==', this.state.genderButtons[this.state.filterGender])
         }
         if(this.state.isFilterCost){
-            subscriber = subscriber.where('info.giathue', '>=', this.state.filterCost[0]*1000000)
-            subscriber = subscriber.where('info.giathue', '<=', this.state.filterCost[1]*1000000)
+            subscriber = await subscriber.where('info.giathue', '>=', this.state.filterCost[0]*1000000)
+            subscriber = await subscriber.where('info.giathue', '<=', this.state.filterCost[1]*1000000)
         }
         if(this.state.isFilterSort){
            if(this.state.filterSort === 'Mới nhất'){
-                subscriber = subscriber.orderBy('date_create')
+                subscriber = await subscriber.orderBy('date_create', 'desc')
            }
            else if(this.state.filterSort === 'Giá thấp đến cao'){
-            subscriber = subscriber.orderBy('info.giathue', "desc")
-           }
+            subscriber = await subscriber.orderBy('info.giathue', "asc")
+            
+        }
            else {
-            subscriber = subscriber.orderBy('info.giathue', "asc")
+            subscriber = await subscriber.orderBy('info.giathue', "desc")
            } 
         }
         
@@ -147,14 +150,27 @@ class Result extends Component {
              console.log('Error getting documents', err);
           });
         */
-        subscriber.onSnapshot(querySnapshot => {
+        await subscriber.onSnapshot(querySnapshot => {
         var rooms = [];
 
         querySnapshot.forEach(documentSnapshot => {
-            rooms.push({
+            roomData = {
+                ...documentSnapshot.data(),
+                key: documentSnapshot.id,
+            }
+            if(this.state.searchQuery != ''){
+                if(roomData.address.namePhuong.toLowerCase().includes(this.state.searchQuery.toLowerCase()) ||
+                roomData.address.nameQuan.toLowerCase().includes(this.state.searchQuery.toLowerCase()) ||
+                roomData.address.nameCity.toLowerCase().includes(this.state.searchQuery.toLowerCase()) ||
+                roomData.confirm.title.toLowerCase().includes(this.state.searchQuery.toLowerCase())
+                ){
+                    rooms.push(roomData)
+                }
+            }
+            /*rooms.push({
             ...documentSnapshot.data(),
             key: documentSnapshot.id,
-            });
+            });*/
         })
         console.log(rooms)
         this.setState({listRoom: rooms, isToggleFilter: null,})
@@ -169,6 +185,7 @@ class Result extends Component {
 
     onChangeSearch = (query) => {
         this.setState({searchQuery: query});
+        this.doSearch()
     }
     showResultFilter = () => {
         return(
@@ -295,7 +312,7 @@ class Result extends Component {
                 return(
                     <CheckBox
                         left
-                        key={data}
+                        key={index}
                         title={data}
                         checkedIcon='dot-circle-o'
                         uncheckedIcon='circle-o'
