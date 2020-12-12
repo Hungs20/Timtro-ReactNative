@@ -155,10 +155,10 @@ const styles = StyleSheet.create({
   },
   nearYouSearch: {
     top: 91,
-    left: 140,
     width: 60,
     height: 81,
-    position: "absolute"
+    position: "absolute",
+    alignSelf: "center"
   },
   nearYou: {
     width: 49,
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
   },
   postRoom: {
     top: 91,
-    left: 258,
+    right: 33,
     width: 49,
     height: 81,
     position: "absolute"
