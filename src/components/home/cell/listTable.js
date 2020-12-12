@@ -2,10 +2,59 @@ import React, {Component} from 'react'
 import {View, StyleSheet, Image, Text, TouchableOpacity, ImageBackground, Button} from 'react-native'
 import * as Colors from '../../../styles/colors'
 import { IconButton } from 'react-native-paper'
+
+import firebase from '@react-native-firebase/app'
+import '@react-native-firebase/auth'
+import firestore from '@react-native-firebase/firestore';
+
 class ListTable extends Component {
     constructor(props){
         super(props)
         this.state = {
+            isLoveRoom: false,
+            currentUser: null,
+        }
+    }
+    async componentDidMount() {
+        const { currentUser } = await firebase.auth()
+        this.setState({ currentUser }) 
+        const roomLoveRef = await firestore().collection('loveRooms')
+        var snapshot = roomLoveRef.where('roomId', '==', this.props.room.key).where('user', '==', this.state.currentUser ? this.state.currentUser.email : "").onSnapshot(querySnapshot => {
+            //console.log(`Received query snapshot of size ${querySnapshot.size}`);
+            if(querySnapshot.size === 0){
+                this.setState({isLoveRoom: false})
+            } else {
+                this.setState({isLoveRoom: true})
+            }
+        });
+      }
+    doLoveRoom = async () => {
+        if(this.state.currentUser == null){
+            return
+        }
+        const obj = {
+            roomId: this.props.room.key,
+            user: this.state.currentUser.email
+        }
+
+        const roomLoveRef = await firestore().collection('loveRooms')
+        var snapshot = await roomLoveRef.where('roomId', '==', this.props.room.key);
+
+       snapshot = await snapshot.where('user', '==', this.state.currentUser ? this.state.currentUser.email : "").get();
+        if(snapshot.empty){
+            roomLoveRef.add(obj).then(() => {
+                console.log('Loved')
+                this.setState({isLoveRoom: true})
+            });
+        } else {
+            const batch = firestore().batch();
+            snapshot.docs.forEach((doc) => {
+                batch.delete(doc.ref)
+              });
+             batch.commit().then(() => {
+                console.log("Remove love")
+                this.setState({isLoveRoom: false})
+            });
         }
     }
     render(){
@@ -15,10 +64,10 @@ class ListTable extends Component {
                         <ImageBackground source={{uri: this.props.room.extension.listImageUrl[0]}} style={{height: 100, borderRadius: 0, width: '100%'}} imageStyle={{ borderRadius: 10 }}>
                         <IconButton
                             style={{position: 'absolute', right: 0}}
-                            icon="heart-outline"
-                            color={Colors.white}
+                            icon={this.state.isLoveRoom ? "heart" : "heart-outline"}
+                            color={this.state.isLoveRoom ? "red": Colors.white}
                             size={20}
-                            onPress={() => console.log('Pressed')}
+                            onPress={() => this.doLoveRoom()}
                         />
                         </ImageBackground>
                     </View>

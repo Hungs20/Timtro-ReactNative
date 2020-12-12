@@ -10,6 +10,7 @@ import Partner from '../../components/partner'
 import DistricSearch from '../../components/search/DistricSearch'
 import Result from '../search/result'
 import Chat from '../../components/message/chat'
+import LoveRoom from '../loveRoom/index'
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -29,7 +30,11 @@ function HomeRoomIndex({ navigation }) {
       <Home navigation={navigation}/>
   );
 }
-
+function LoveRoomIndex({ navigation }) {
+  return (
+      <LoveRoom navigation={navigation}/>
+  );
+}
 function AccountIndex({ navigation }) {
   return (
       <Account/>
@@ -154,7 +159,7 @@ const Tabbar = () => {
           inactiveTintColor: 'gray',
         }}>
         <Tab.Screen name="Tìm kiếm" component={HomeStackScreen} />
-        <Tab.Screen name="Yêu thích" component={CreateRoomIndex} />
+        <Tab.Screen name="Yêu thích" component={LoveRoomIndex} />
         <Tab.Screen name="Ở ghép" component={PartnerIndex} />
         <Tab.Screen name="Tin nhắn" component={MessageStackScreen} options={{ tabBarBadge: 3 }} />
         <Tab.Screen name="Tài khoản" component={AccountIndex} />
