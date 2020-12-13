@@ -20,7 +20,7 @@ class CupertinoSearchBarBasic extends Component {
   render(){
     return (
       <View style={[styles.container, this.props.style]}>
-        <TouchableOpacity style={styles.inputBox} onPress={()=>this.props.navigation.navigate('SearchResult')}>
+        <TouchableOpacity style={styles.inputBox} onPress={()=>this.props.navigation.navigate('SearchResult', {querySearch: ''})}>
           <TouchableOpacity style={{flex: 0.5, flexDirection: "row", }} onPress={this.toggleOverlay}>
             <Icon name="magnify" style={styles.inputLeftIcon}></Icon><Text style={{color: Colors.pink, fontSize: 13}}>{this.state.listAddress[this.state.addressIdSelected].value}</Text>
           </TouchableOpacity>

@@ -33,7 +33,7 @@ class Home extends Component {
             <ScrollView>
                 <Search navigation={this.props.navigation}/>
                 <View style={styles.container}>
-                    <Trend/>
+                    <Trend navigation={this.props.navigation}/>
                     <HotRoom navigation={this.props.navigation}/>
                     
                     <NewRoom navigation={this.props.navigation}/>

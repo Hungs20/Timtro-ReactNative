@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { ScrollView } from 'react-native-gesture-handler'
 import * as Colors from '../../styles/colors'
-import CellTable from '../home/cell/cellTable'
+import CellLoveRoom from './cellLoveRoom'
 import firebase from '@react-native-firebase/app'
 import '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore';
-
+import { View, Text } from 'react-native'
+import { ThemeProvider } from 'react-native-elements'
 class LoveRoom extends Component {
     constructor(props){
         super(props)
@@ -44,24 +45,28 @@ class LoveRoom extends Component {
         });
 
     // Unsubscribe from events when no longer in use
-    async () => await subscriber();
+     () => subscriber();
 
     }
     componentWillUnmount() {
         this._isMounted = false;
       }
     render() {
-        console.log(this._isMounted)
         return(
-            <ScrollView>
-              {
-                this.state.listRoom.map((room, index) => {
-                    return (
-                        <CellTable key={this.state.listRoom[index].key} room={this.state.listRoom[index]} navigation={this.props.navigation}/>
-                    )
-                })
-                }  
-            </ScrollView>
+            <ThemeProvider style={{flex: 1}}>
+                <View style={{backgroundColor: 'white', height: 60}}>
+                <Text style={{fontSize: 24, fontWeight: 'bold', textAlign: 'center',textAlignVertical: 'center', paddingVertical: 10}}>Yêu thích</Text>
+                </View>
+                <ScrollView style={{marginHorizontal: 10}}>
+                {
+                    this.state.listRoom.map((room, index) => {
+                        return (
+                            <CellLoveRoom key={this.state.listRoom[index].key} height={200} room={this.state.listRoom[index]} navigation={this.props.navigation}/>
+                        )
+                    })
+                    }  
+                </ScrollView>
+            </ThemeProvider>
         )
     }
 }

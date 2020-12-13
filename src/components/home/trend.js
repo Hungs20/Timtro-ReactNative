@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, StyleSheet, Text, Image, ImageBackground} from 'react-native'
+import {View, StyleSheet, Text, Image, ImageBackground, TouchableOpacity} from 'react-native'
 import * as Colors from '../../styles/colors'
 
 class Trend extends Component {
@@ -26,23 +26,29 @@ class Trend extends Component {
                         if(index % 3 === 0){
                             return (
                                 <View key={index} style={{flex: 1, flexDirection: 'row'}}> 
-                                    <ImageBackground key={this.state.items[index].name} source={this.state.items[index].uri} style={styles.image}>
+                                    <TouchableOpacity style={styles.image} onPress={()=>this.props.navigation.navigate('SearchResult', {querySearch: this.state.items[index].name})}>
+                                    <ImageBackground key={this.state.items[index].name} source={this.state.items[index].uri} style={{width: "100%", height:"100%"}} imageStyle={{borderRadius: 10}}>
                                         <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'flex-end', alignItems: 'center'}}>
                                             <Text style={{fontWeight: 'bold', color: "white"}}>{this.state.items[index].name}</Text>
                                         </View>
                                     </ImageBackground>
+                                    </TouchableOpacity>
                                     
-                                    <ImageBackground key={this.state.items[index+1].name} source={this.state.items[index+1].uri} style={styles.image}>
+                                    <TouchableOpacity style={styles.image} onPress={()=>this.props.navigation.navigate('SearchResult', {querySearch: this.state.items[index+1].name})}>
+                                    <ImageBackground key={this.state.items[index+1].name} source={this.state.items[index+1].uri} style={{width: "100%", height:"100%"}} imageStyle={{borderRadius: 10}}>
                                         <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'flex-end', alignItems: 'center'}}>
                                             <Text style={{fontWeight: 'bold', color: "white"}}>{this.state.items[index+1].name}</Text>
                                         </View>
                                     </ImageBackground>
+                                    </TouchableOpacity>
 
-                                    <ImageBackground key={this.state.items[index+2].name} source={this.state.items[index+2].uri} style={styles.image}>
+                                    <TouchableOpacity style={styles.image} onPress={()=>this.props.navigation.navigate('SearchResult', {querySearch: this.state.items[index+2].name})}>
+                                    <ImageBackground key={this.state.items[index+2].name} source={this.state.items[index+2].uri} style={{width: "100%", height:"100%"}} imageStyle={{borderRadius: 10}}>
                                         <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'flex-end', alignItems: 'center'}}>
                                             <Text style={{fontWeight: 'bold', color: "white"}}>{this.state.items[index+2].name}</Text>
                                         </View>
                                     </ImageBackground>
+                                    </TouchableOpacity>
                                 </View>
                             )
                         }

@@ -21,7 +21,7 @@ class Result extends Component {
                 {'label': 'Nhà nguyên căn', 'value' : 'Nhà nguyên căn'}, 
                 {'label': 'Căn hộ', 'value' : 'Căn hộ'}
             ],
-            searchQuery: '',
+            searchQuery: this.props.querySearch ?? '',
             isFilterCost: false,
             isFilterExtension: false,
             isFilterTypeRoom: false,
@@ -86,10 +86,21 @@ class Result extends Component {
         var rooms = [];
 
         querySnapshot.forEach(documentSnapshot => {
-            rooms.push({
-            ...documentSnapshot.data(),
-            key: documentSnapshot.id,
-            });
+            const roomData = {
+                ...documentSnapshot.data(),
+                key: documentSnapshot.id,
+            }
+            if(this.state.searchQuery != ''){
+                if(roomData.address.namePhuong.toLowerCase().includes(this.state.searchQuery.toLowerCase()) ||
+                roomData.address.nameQuan.toLowerCase().includes(this.state.searchQuery.toLowerCase()) ||
+                roomData.address.nameCity.toLowerCase().includes(this.state.searchQuery.toLowerCase()) ||
+                roomData.confirm.title.toLowerCase().includes(this.state.searchQuery.toLowerCase())
+                ){
+                    rooms.push(roomData)
+                }
+            } else {
+                rooms.push(roomData)
+            }
         })
        // console.log(rooms)
         if(this._isMounted){
@@ -154,7 +165,7 @@ class Result extends Component {
         var rooms = [];
 
         querySnapshot.forEach(documentSnapshot => {
-            roomData = {
+            const roomData = {
                 ...documentSnapshot.data(),
                 key: documentSnapshot.id,
             }
@@ -167,12 +178,7 @@ class Result extends Component {
                     rooms.push(roomData)
                 }
             }
-            /*rooms.push({
-            ...documentSnapshot.data(),
-            key: documentSnapshot.id,
-            });*/
         })
-        console.log(rooms)
         this.setState({listRoom: rooms, isToggleFilter: null,})
         
         },error => {
@@ -499,7 +505,6 @@ class Result extends Component {
             )
     }
     render(){
-        //console.log(this.state.listRoom)
         return(
             <ThemeProvider>
                 <SearchBar

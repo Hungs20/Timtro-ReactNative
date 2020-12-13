@@ -51,6 +51,7 @@ const Tab = createBottomTabNavigator();
 
 const HomeStack = createStackNavigator();
 const MessageStack = createStackNavigator();
+const LoveRoomStack = createStackNavigator();
 function DistricSearchIndex() {
   return (
       <DistricSearch/>
@@ -63,7 +64,7 @@ function RoomDetailsIndex({ route, navigation }) {
 }
 function SearchResultIndex({route, navigation}) {
   return (
-    <Result navigation={navigation}/>
+    <Result querySearch = {route.params.querySearch} navigation={navigation}/>
   )
 }
 function HomeMessageIndex({route, navigation}) {
@@ -74,6 +75,27 @@ function HomeMessageIndex({route, navigation}) {
 function ChatMessageIndex({ route, navigation }) {
   return (
     <Chat/>
+  )
+}
+function LoveRoomStackScreen({navigation}) {
+  return (
+    <LoveRoomStack.Navigator initialRouteName='HomeLoveRoom' screenOptions={{
+      headerStyle: {
+        backgroundColor: Colors.pink,
+      },
+      headerTintColor: Colors.white,
+      headerTitleStyle: {
+        fontWeight: 'bold',
+        fontSize: Fonts.headerFontSize
+      },
+  }}>
+    <LoveRoomStack.Screen name="HomeLoveRoom" component={LoveRoomIndex} options={{
+        headerShown: false
+      }} />
+      <LoveRoomStack.Screen name="RoomDetails" component={RoomDetailsIndex}  options={{
+          title: 'Thông tin phòng', 
+        }} />
+        </LoveRoomStack.Navigator>
   )
 }
 function MessageStackScreen({navigation}) {
@@ -159,7 +181,7 @@ const Tabbar = () => {
           inactiveTintColor: 'gray',
         }}>
         <Tab.Screen name="Tìm kiếm" component={HomeStackScreen} />
-        <Tab.Screen name="Yêu thích" component={LoveRoomIndex} />
+        <Tab.Screen name="Yêu thích" component={LoveRoomStackScreen} />
         <Tab.Screen name="Ở ghép" component={PartnerIndex} />
         <Tab.Screen name="Tin nhắn" component={MessageStackScreen} options={{ tabBarBadge: 3 }} />
         <Tab.Screen name="Tài khoản" component={AccountIndex} />
