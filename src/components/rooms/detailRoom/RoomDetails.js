@@ -10,7 +10,7 @@ import {
 import { ActivityIndicator } from 'react-native';
 import { Icon } from "react-native-elements";
 import Svg, { Ellipse } from "react-native-svg";
-
+import {Linking} from 'react-native'
 class RoomDetails extends Component {
   constructor(props){
     super(props)
@@ -277,7 +277,9 @@ class RoomDetails extends Component {
                     </TouchableOpacity>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.callGroup}>
-                    <TouchableOpacity style={styles.callButton}>
+                    <TouchableOpacity style={styles.callButton} onPress={()=>{
+                      Linking.openURL(`tel:${this.props.room.confirm.phone}`)
+                    }}>
                       <Text style={styles.call}>Gọi</Text>
                     </TouchableOpacity>
                   </TouchableOpacity>
