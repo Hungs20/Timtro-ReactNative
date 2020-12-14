@@ -4,15 +4,38 @@ import {
   View,
   ScrollView,
   Text,
-  TouchableOpacity,
-  Image
+  TouchableOpacity, Image
 } from "react-native";
+//import { Image } from 'react-native-elements';
+import { ActivityIndicator } from 'react-native';
+import { Icon } from "react-native-elements";
 import Svg, { Ellipse } from "react-native-svg";
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import {Colors, Fonts} from '../../../styles'
-function RoomDetails(props) {
-  return (
+
+class RoomDetails extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+
+    }
+  }
+  render(){
+    const dateCreate = new Date(this.props.room.date_create.seconds * 1000)
+    const days = ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bày"]
+    const day = days[dateCreate.getDay()]
+    var date = dateCreate.getDate()
+    var month = dateCreate.getMonth()
+    const year = dateCreate.getFullYear()
+    var hour = dateCreate.getHours()
+    var minutes = dateCreate.getMinutes()
+    if(hour < 10) hour = '0' + hour
+    if(minutes < 10) minutes = '0' + minutes
+    if(date < 10) date = '0' + date
+    if(month < 10) month = '0' + month
+    //console.log(this.props.room.extension.listImageUrl[0])
     
+    const exts = [{name: 'WC riêng',icon: 'toilet'},{name: 'Cửa sổ', icon: 'window-open-variant'}, {name: 'Wifi', icon: 'wifi'}, {name:'Chủ riêng',icon:'account-key-outline'}, {name:'Máy nước nóng',icon:'water-boiler'}, {name:'Tủ lạnh',icon:'fridge-outline'}, {name:'Gác lửng',icon:'stairs'}, {name:'Tủ đồ',icon:'locker'}, {name:'Thú cưng', icon:'dog'}, {name: 'Chỗ để xe',icon: 'motorbike'},{name: 'An ninh', icon: 'security'}, {name: 'Tự do', icon: 'clock-outline'}, {name:'Máy lạnh',icon:'air-conditioner'}, {name:'Nhà bếp',icon:'chef-hat'}, {name:'Máy giặt',icon:'washing-machine'}, {name:'Giường',icon:'bed-outline'}, {name:'Tivi',icon:'television'}, {name:'Ban công', icon:'window-shutter'}]
+      var cntExt = 0;
+    return (
       <View style={styles.container}>
         <ScrollView style={styles.scrollArea}>
           <View style={styles.rectStack}>
@@ -34,9 +57,9 @@ function RoomDetails(props) {
                   <Text style={styles.detailPart3}>SỨC CHỨA</Text>
                   <View style={styles.sucChuaText_Num}>
                     <View style={styles.tightText_NumRow}>
-                      <Text style={styles.tightText_Num}>4 người +</Text>
-                      <Text style={styles.fitText_Num}>2 người</Text>
-                      <Text style={styles.wideText_Num}>1 người</Text>
+                      <Text style={styles.tightText_Num}>{parseInt(this.props.room.info.numPersonOfRoom) + 1} người +</Text>
+                      <Text style={styles.fitText_Num}>{this.props.room.info.numPersonOfRoom} người</Text>
+                      <Text style={styles.wideText_Num}>{parseInt(this.props.room.info.numPersonOfRoom) - 1} người</Text>
                     </View>
                   </View>
                   <View style={styles.sucChua}>
@@ -55,15 +78,24 @@ function RoomDetails(props) {
                   </View>
                 </View>
               </View>
+
+              <View style={styles.part5}>
+                <View style={styles.backgroundPart5}>
+                  <Text style={styles.ngayDang}>Chi tiết</Text>
+                  <Text style={styles.detailPart2}>
+                    {this.props.room.confirm.description}
+                  </Text>
+                </View>
+              </View>
+
               <View style={styles.part4}>
                 <View style={styles.backgroundPart4}>
                   <Text style={styles.address}>Địa chỉ</Text>
                   <View style={styles.addressIconRow}>
-                    <Image style={styles.addressIcon} source ={require('../../../data/icon/address.png')}/>
+                  <Icon name="location-arrow" type='font-awesome-5' size={20}/>
                     <View style={styles.addressDetailsStack}>
                       <Text style={styles.addressDetails}>
-                        số 37 ngõ 61 Lê Văn Lương, Phường Trung Hòa, Quận Cầu
-                        Giấy, Hà Nội
+                        {this.props.room.address.nameNha}, {this.props.room.address.nameDuong}, {this.props.room.address.namePhuong}, {this.props.room.address.nameQuan}, {this.props.room.address.nameCity}
                       </Text>
                       <TouchableOpacity style={styles.button}>
                         <View style={styles.mapbuttonStack}>
@@ -76,9 +108,9 @@ function RoomDetails(props) {
                     </View>
                   </View>
                   <View style={styles.contactIconRow}>
-                  <Image style={styles.contactIcon} source ={require('../../../data/icon/call.png')}/>
+                  <Icon name="mobile-alt" type='font-awesome-5' size={20}/>
                     <Text style={styles.contactDetails}>
-                      Số điện thoại: 0123456789
+                      Số điện thoại: {this.props.room.confirm.phone}
                     </Text>
                   </View>
                 </View>
@@ -87,9 +119,9 @@ function RoomDetails(props) {
                 <View style={styles.backgroundPart5}>
                   <Text style={styles.ngayDang}>Ngày đăng</Text>
                   <View style={styles.calendarIconRow}>
-                    <Image style={styles.calendarIcon} source ={require('../../../data/icon/calendar.png')}/>
+                    <Icon name="calendar-alt" type='font-awesome-5' size={20}/>
                     <Text style={styles.homNay08112020}>
-                      Hôm nay - 08/11/2020
+                      {day}, {date}/{month}/{year} {hour}:{minutes}
                     </Text>
                   </View>
                 </View>
@@ -121,10 +153,10 @@ function RoomDetails(props) {
               <TouchableOpacity style={styles.part7}>
                 <View style={styles.backgroundPart7}>
                   <View style={styles.avaHostRow}>
-                    <Image style={styles.avaHost} source ={require('../../../data/defaultAva.jpg')}/>
+                    <Image style={styles.avaHost} source={{uri: this.props.room.author.photoURL}} />
                     <View style={styles.hostNameColumn}>
-                      <Text style={styles.hostName}>Sugary Pham</Text>
-                      <Text style={styles.numberOfRooms}>1 phòng</Text>
+                      <Text style={styles.hostName}>{this.props.room.author.displayName}</Text>
+                      <Text style={styles.numberOfRooms}>{this.props.room.info.numRoom} phòng</Text>
                     </View>
                   </View>
                 </View>
@@ -141,33 +173,56 @@ function RoomDetails(props) {
                   <View style={styles.picture1Row}>
                     <TouchableOpacity
                       style={styles.picture1}
-                    ></TouchableOpacity>
-                    <TouchableOpacity
+                    >
+                      <Image style={{width: "100%", height: "100%"}} 
+                      source={{uri: this.props.room.extension.listImageUrl[0]}}
+                      PlaceholderContent={<ActivityIndicator />}
+                      />
+                    </TouchableOpacity>
+                   <TouchableOpacity
                       style={styles.picture2}
-                    ></TouchableOpacity>
+                    >
+                      <Image style={{width: "100%", height: "100%"}} 
+                      source={{uri: this.props.room.extension.listImageUrl[1]}}
+                      PlaceholderContent={<ActivityIndicator />}
+                      />
+                    </TouchableOpacity>
                   </View>
                   <View style={styles.picture3Row}>
                     <TouchableOpacity
                       style={styles.picture3}
-                    ></TouchableOpacity>
+                    >                      
+                    <Image style={{width: "100%", height: "100%"}} 
+                    source={{uri: this.props.room.extension.listImageUrl[2]}}
+                    PlaceholderContent={<ActivityIndicator />}
+                    /></TouchableOpacity>
                     <TouchableOpacity
                       style={styles.picture4}
-                    ></TouchableOpacity>
+                    >                      
+                    <Image style={{width: "100%", height: "100%"}} 
+                    source={{uri: this.props.room.extension.listImageUrl[3]}}
+                    PlaceholderContent={<ActivityIndicator />}
+                    /></TouchableOpacity>
                     <TouchableOpacity
                       style={styles.picture5}
-                    ></TouchableOpacity>
+                    >
+                    <Image style={{width: "100%", height: "100%"}} 
+                      source={{uri: this.props.room.extension.listImageUrl[4]}}
+                      PlaceholderContent={<ActivityIndicator />}
+                      />
+                    </TouchableOpacity>
                   </View>
                 </View>
-                <Text style={styles.timNguoiThue}>TÌM NGƯỜI THUÊ .</Text>
+                <Text style={styles.timNguoiThue}>{this.props.room.info.typeRoom} . {this.props.room.info.numPersonOfRoom} {this.props.room.info.gender}</Text>
                 <Text style={styles.nameOfRoom}>
-                  Phòng cho thuê Đường Đồng me, Quận Nam Từ Liêm
+                {this.props.room.confirm.title}
                 </Text>
                 <View style={styles.priceGroup}>
                   <View style={styles.giaTrenUngDungRow}>
                     <Text style={styles.giaTrenUngDung}>
                       Giá trên ứng dụng:
                     </Text>
-                    <Text style={styles.giaPhong}>1.500.000đ</Text>
+                    <Text style={styles.giaPhong}>{this.props.room.info.giathue}đ</Text>
                   </View>
                 </View>
                 <View style={styles.tongQuan}>
@@ -179,25 +234,25 @@ function RoomDetails(props) {
                   <View style={styles.changeable}>
                     <View style={styles.tinhTrangPhongRow}>
                       <Text style={styles.tinhTrangPhong}>Còn</Text>
-                      <Text style={styles.dienTichPhong}>35m2</Text>
-                      <Text style={styles.tienDatCoc}>500.000đ</Text>
+                      <Text style={styles.dienTichPhong}>{this.props.room.info.area}m2</Text>
+                      <Text style={styles.tienDatCoc}>{this.props.room.info.giacoc}đ</Text>
                     </View>
                   </View>
                 </View>
                 <View style={styles.line1}></View>
                 <View style={styles.groupMark}>
                   <View style={styles.groupMarkIcon}>
-                    <Image style={styles.markIcon1} source ={require('../../../data/icon/bulb.png')}/>
-                    <Image style={styles.markIcon1} source ={require('../../../data/icon/water.png')}/>
-                    <Image style={styles.markIcon1} source ={require('../../../data/icon/motor.png')}/>
-                    <Image style={styles.markIcon1} source ={require('../../../data/icon/wifi.png')}/>
+                  <Icon name='lightbulb' type='font-awesome-5' size={20} />
+                  <Icon name='tint' type='font-awesome-5' size={20} />
+                  <Icon name='wifi' type='font-awesome-5' size={20} />
+                    
                   </View>
                   <View style={styles.group3}>
                     <View style={styles.mark1Row}>
-                      <Text style={styles.mark1}>0.3</Text>
-                      <Text style={styles.mark2}>1.29</Text>
-                      <Text style={styles.mark3}>2.59</Text>
-                      <Text style={styles.mark4}>2.59</Text>
+                      <Text style={styles.mark1}>{this.props.room.info.tiendien/1000}k</Text>
+                      <Text style={styles.mark2}>{this.props.room.info.tiennuoc/1000}k</Text>
+                      <Text style={styles.mark3}>{this.props.room.info.tienmang/1000}k</Text>
+                      
                     </View>
                   </View>
                 </View>
@@ -205,13 +260,12 @@ function RoomDetails(props) {
             </View>
             </View>
         </ScrollView>
-        
         <View style={styles.footer}>
               <View style={styles.rect2}>
                 <View style={styles.chatGroupRow}>
                   <TouchableOpacity style={styles.chatGroup}>
                     <TouchableOpacity
-                      onPress={() => props.navigation.navigate("Untitled")}
+                      onPress={() => this.props.navigation.navigate('ChatMessage', {authUser: this.props.room.author})}
                       style={styles.chatButton}
                     >
                       <Text style={styles.chat}>Chat</Text>
@@ -231,8 +285,8 @@ function RoomDetails(props) {
               </View>
             </View>
           </View>
-      
   );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -241,35 +295,35 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff"
   },
   scrollArea: {
-    width: 360,
+    width: "100%",
     height: 1548,
     alignSelf: "center"
   },
   scrollArea_contentContainerStyle: {
     height: 1548,
-    width: 360,
+    width: "100%",
     overflow: "visible"
   },
   rect: {
     top: 345,
     left: 0,
-    width: 360,
+    width: "100%",
     height: 1169,
     position: "absolute",
     backgroundColor: "rgba(236,236,236,1)",
-    //borderBottomRightRadius: 2,
-    //borderBottomLeftRadius: 2
+    borderBottomRightRadius: 2,
+    borderBottomLeftRadius: 2
   },
   part2: {
-    width: 360,
+    width: "100%",
     height: 126,
     marginTop: 243
   },
   backgroundPart2: {
-    width: 360,
+    width: "100%",
     height: 126,
     backgroundColor: "rgba(255,255,255,1)",
-    //borderRadius: 11,
+    borderRadius: 11,
   },
   titlePart2: {
     fontFamily: "roboto-regular",
@@ -282,22 +336,23 @@ const styles = StyleSheet.create({
     fontFamily: "roboto-regular",
     color: "#121212",
     height: 69,
-    width: 318,
+    width: "80%",
     textAlign: "justify",
     fontSize: 12,
     marginTop: 10,
     marginLeft: 21
   },
   part3: {
-    width: 360,
-    height: 126,
+    width: "100%",
+    height: 135,
     marginTop: 4
   },
   backgroundPart3: {
-    width: 360,
-    height: 135,
+    width: "100%",
+    height: "100%",
+   // height: 135,
     backgroundColor: "rgba(255,255,255,1)",
-    //borderRadius: 11
+    borderRadius: 11
   },
   titlePart3: {
     fontFamily: "roboto-regular",
@@ -314,11 +369,12 @@ const styles = StyleSheet.create({
     marginLeft: 25
   },
   sucChuaText_Num: {
-    width: 308,
-    height: 12,
+    width: "100%",
+    //height: 12,
     flexDirection: "row",
     marginTop: 8,
-    marginLeft: 25
+    justifyContent: "center",
+    //marginHorizontal: 10
   },
   tightText_Num: {
     fontFamily: "roboto-regular",
@@ -329,57 +385,66 @@ const styles = StyleSheet.create({
     fontFamily: "roboto-regular",
     color: "rgba(0,214,131,1)",
     fontSize: 10,
-    marginLeft: 96
+    
+    marginHorizontal: 70 
   },
   wideText_Num: {
     fontFamily: "roboto-regular",
     color: "rgba(0,198,192,1)",
     fontSize: 10,
-    marginLeft: 102
+    //marginLeft: 102
   },
   tightText_NumRow: {
-    height: 12,
+    //height: 12,
     flexDirection: "row",
-    flex: 1
+    flex: 1,
+    
+    justifyContent: "center",
+   // marginHorizontal: 10
   },
   sucChua: {
-    width: 309,
+    width: "100%",
     height: 12,
     flexDirection: "row",
     marginTop: 3,
-    marginLeft: 25
+   // marginHorizontal: 10,
   },
   recTight: {
-    width: 101,
+    width: "25%",
     height: 12,
     backgroundColor: "rgba(255,168,49,1)",
-    //borderRadius: 11
+    borderRadius: 11
   },
   recFit: {
-    width: 101,
+     width: "25%",
     height: 12,
     backgroundColor: "rgba(0,214,131,1)",
-    //borderRadius: 11,
-    marginLeft: 3
+    borderRadius: 11,
+    marginHorizontal: 10 
+   // marginLeft: 3
   },
   recWide: {
-    width: 101,
+    width: "25%",
     height: 12,
     backgroundColor: "rgba(0,198,192,1)",
-    //borderRadius: 11,
-    marginLeft: 3
+    borderRadius: 11,
+   // marginLeft: 3
   },
   recTightRow: {
     height: 12,
     flexDirection: "row",
-    flex: 1
+    flex: 1,
+    //marginHorizontal: 10,
+    justifyContent: "center"
   },
   sucChuaText: {
-    width: 308,
-    height: 12,
+    width: "100%",
+   // height: 12,
     flexDirection: "row",
     marginTop: 5,
-    marginLeft: 25
+   // marginLeft: 25,
+   justifyContent: "center",
+  // marginHorizontal: 10,
   },
   tight: {
     fontFamily: "roboto-regular",
@@ -390,30 +455,34 @@ const styles = StyleSheet.create({
     fontFamily: "roboto-regular",
     color: "#121212",
     fontSize: 10,
-    marginLeft: 127
+    //marginLeft: 127
+    
+    marginHorizontal: 90
   },
   wide: {
     fontFamily: "roboto-regular",
     color: "#121212",
     fontSize: 10,
-    marginLeft: 124
+   // marginLeft: 124
   },
   tightRow: {
-    height: 12,
+   // height: 12,
     flexDirection: "row",
     flex: 1,
-    marginRight: 1
+    marginRight: 1,
+    //marginHorizontal: 10,
+    justifyContent: "center"
   },
   part4: {
-    width: 360,
+    width: "100%",
     height: 154,
     marginTop: 13
   },
   backgroundPart4: {
-    width: 360,
+    width: "100%",
     height: 154,
     backgroundColor: "rgba(255,255,255,1)",
-    //borderRadius: 11
+    borderRadius: 11
   },
   address: {
     fontFamily: "roboto-regular",
@@ -436,7 +505,7 @@ const styles = StyleSheet.create({
     fontFamily: "roboto-regular",
     color: "#121212",
     height: 37,
-    width: 288,
+    width: "80%",
     fontSize: 12
   },
   button: {
@@ -499,15 +568,15 @@ const styles = StyleSheet.create({
     marginRight: 48
   },
   part5: {
-    width: 360,
+    width: "100%",
     height: 106,
     marginTop: 4
   },
   backgroundPart5: {
-    width: 360,
+    width: "100%",
     height: 106,
     backgroundColor: "rgba(255,255,255,1)",
-    //borderRadius: 11
+    borderRadius: 11
   },
   ngayDang: {
     fontFamily: "roboto-regular",
@@ -537,15 +606,15 @@ const styles = StyleSheet.create({
     marginRight: 19
   },
   part6: {
-    width: 360,
+    width: "100%",
     height: 206,
     marginTop: 4
   },
   backgroundPart6: {
-    width: 360,
+    width: "100%",
     height: 206,
     backgroundColor: "rgba(255,255,255,1)",
-    //borderRadius: 11
+    borderRadius: 11
   },
   utility: {
     fontFamily: "roboto-regular",
@@ -559,12 +628,12 @@ const styles = StyleSheet.create({
     height: 21,
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 15,
+    marginTop: 23,
     marginLeft: 41
   },
   utilityIcon1: {
-    width: 30,
-    height: 30
+    width: 21,
+    height: 21
   },
   utilityIcon2: {
     width: 21,
@@ -627,19 +696,20 @@ const styles = StyleSheet.create({
     height: 21
   },
   part7: {
-    width: 360,
+    width: "100%",
     height: 71,
     marginTop: 4
   },
   backgroundPart7: {
-    width: 360,
+    width: "100%",
     height: 73,
     backgroundColor: "rgba(255,255,255,1)",
-    //borderRadius: 11
+    borderRadius: 11
   },
   avaHost: {
     width: 42,
-    height: 42
+    height: 42,
+    borderRadius: 21
   },
   hostName: {
     fontFamily: "roboto-regular",
@@ -666,15 +736,15 @@ const styles = StyleSheet.create({
     marginRight: 197
   },
   part8: {
-    width: 360,
+    width: "100%",
     height: 49,
     marginTop: 6
   },
   backgroundPart8: {
-    width: 360,
+    width: "100%",
     height: 55,
     backgroundColor: "rgba(255,255,255,1)",
-    //borderRadius: 11
+    borderRadius: 11
   },
   reportText: {
     fontFamily: "roboto-regular",
@@ -685,30 +755,30 @@ const styles = StyleSheet.create({
   },
   part1: {
     top: 0,
-    width: 360,
+    width: "100%",
     height: 584,
     position: "absolute",
     left: 0
   },
   backgroundPart1: {
-    width: 360,
+    width: "100%",
     height: 584,
     backgroundColor: "rgba(255,255,255,1)",
-    //borderBottomRightRadius: 11,
-    //borderBottomLeftRadius: 11
+    borderBottomRightRadius: 11,
+    borderBottomLeftRadius: 11
   },
   groupOfPicture: {
-    width: 357,
+    width: "100%",
     height: 298,
     marginLeft: 2
   },
   picture1: {
-    width: 178,
+    width: "50%",
     height: 178,
     backgroundColor: "#E6E6E6"
   },
   picture2: {
-    width: 178,
+    width: "50%",
     height: 178,
     backgroundColor: "#E6E6E6",
     marginLeft: 1
@@ -718,18 +788,18 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   picture3: {
-    width: 118,
+    width: "33%",
     height: 118,
     backgroundColor: "#E6E6E6"
   },
   picture4: {
-    width: 118,
+    width: "33%",
     height: 118,
     backgroundColor: "#E6E6E6",
     marginLeft: 1
   },
   picture5: {
-    width: 118,
+    width: "33%",
     height: 118,
     backgroundColor: "#E6E6E6",
     marginLeft: 2
@@ -746,7 +816,8 @@ const styles = StyleSheet.create({
     width: 116,
     fontSize: 12,
     marginTop: 25,
-    marginLeft: 21
+    marginLeft: 21,
+    textTransform: "uppercase"
   },
   nameOfRoom: {
     fontFamily: "roboto-regular",
@@ -758,8 +829,8 @@ const styles = StyleSheet.create({
     marginLeft: 20
   },
   priceGroup: {
-    width: 359,
-    height: 27,
+    width: "100%",
+   // height: 27,
     flexDirection: "row",
     marginTop: 10,
     marginLeft: 1
@@ -767,7 +838,7 @@ const styles = StyleSheet.create({
   giaTrenUngDung: {
     fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
-    height: 16,
+    //height: 16,
     width: 184,
     fontSize: 14,
     textAlign: "right"
@@ -775,114 +846,132 @@ const styles = StyleSheet.create({
   giaPhong: {
     fontFamily: "roboto-700",
     color: "rgba(255,49,128,1)",
-    height: 16,
+    //height: 16,
     width: 167,
     fontSize: 14,
     textAlign: "left",
     marginLeft: 8
   },
   giaTrenUngDungRow: {
-    height: 16,
+    //height: 16,
     flexDirection: "row",
     flex: 1
   },
   tongQuan: {
-    width: 287,
     height: 45,
     marginTop: 10,
-    marginLeft: 37
+    //marginLeft: 37
   },
   nochange: {
-    width: 266,
-    height: 16,
+    width: "100%",
+    //height: 16,
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "center"
   },
   conPhong: {
     fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
-    height: 16,
-    width: 72,
+   // height: 16,
+    width: "33%",
     fontSize: 12,
-    textAlign: "right"
+    textAlign: "center", 
   },
   dienTich: {
     fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
-    height: 16,
-    width: 62,
+   // height: 16,
+    width: "33%",
     fontSize: 12,
-    textAlign: "right"
+    textAlign: "center",
+    //marginHorizontal: 50
   },
   datCoc: {
     fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
-    height: 16,
-    width: 58,
+   // height: 16,
+    width: "33%",
     fontSize: 12,
-    textAlign: "right"
+    textAlign: "center",
   },
   changeable: {
-    width: 271,
+    width: "100%",
     height: 24,
     flexDirection: "row",
     marginTop: 5,
-    marginLeft: 16
   },
   tinhTrangPhong: {
     fontFamily: "roboto-regular",
     color: "rgba(255,49,128,1)",
-    height: 24,
-    width: 37,
-    fontSize: 18
+   // height: 24,
+    width: "33%",
+    fontSize: 18,
+    textAlign: "center",
+   // backgroundColor: "red"
   },
   dienTichPhong: {
     fontFamily: "roboto-regular",
     color: "rgba(255,49,128,1)",
-    height: 24,
-    width: 56,
+   // height: 24,
+    width: "33%",
     fontSize: 18,
-    marginLeft: 65
+   // marginLeft: 32
+   textAlign: "center",
+   //marginHorizontal: 50,
+  // backgroundColor: "green"
   },
   tienDatCoc: {
     fontFamily: "roboto-regular",
     color: "rgba(255,49,128,1)",
-    height: 24,
-    width: 88,
+    //height: 24,
+    width: "33%",
     fontSize: 18,
-    marginLeft: 32
+    textAlign: "center",
+   // backgroundColor: "blue"
+   // marginLeft: 32
   },
   tinhTrangPhongRow: {
     height: 24,
     flexDirection: "row",
     flex: 1,
-    marginRight: -7
+    justifyContent: "center"
+    //marginRight: -7
   },
   line1: {
-    width: 340,
     height: 1,
     backgroundColor: "rgba(200,200,200,1)",
     marginTop: 14,
-    marginLeft: 9
+    marginHorizontal: 10
   },
   groupMark: {
-    width: 284,
+   // width: 284,
     height: 43,
     marginTop: 10,
-    marginLeft: 38
+    marginHorizontal: 50
   },
   groupMarkIcon: {
-    width: 283,
+   // width: 283,
     height: 29,
     flexDirection: "row",
     justifyContent: "space-between"
   },
   markIcon1: {
-    width: 30,
-    height: 30,
+    width: 24,
+    height: 24, 
+  },
+  markIcon2: {
+    width: 24,
+    height: 24
+  },
+  markIcon3: {
+    width: 24,
+    height: 24
+  },
+  markIcon4: {
+    width: 24,
+    height: 24
   },
   group3: {
-    width: 280,
+   // width: 280,
     height: 14,
     flexDirection: "row",
     marginLeft: 4
@@ -890,41 +979,42 @@ const styles = StyleSheet.create({
   mark1: {
     fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
-    fontSize: 12,
-    marginLeft: 3
+    fontSize: 12
   },
   mark2: {
     fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     fontSize: 12,
-    marginLeft: 63
+  //  marginLeft: 66
   },
   mark3: {
     fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     fontSize: 12,
-    marginLeft: 63
+  //  marginLeft: 64
   },
   mark4: {
     fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     fontSize: 12,
-    marginLeft: 62
+  //  marginLeft: 62
   },
   mark1Row: {
     height: 14,
     flexDirection: "row",
-    flex: 1
+    flex: 1,
+    justifyContent: "space-between"
   },
   footer: {
     width: 343,
     height: 54,
     position: "relative",
     marginBottom: 25,
-    alignSelf: "center"
+    alignSelf: "center",
+    left: 8
   },
   rect2: {
-    width: 360,
+    width: "100%",
     height: 80,
     backgroundColor: "rgba(255,255,255,1)",
     flexDirection: "row",
@@ -996,7 +1086,7 @@ const styles = StyleSheet.create({
     marginTop: 13
   },
   rectStack: {
-    width: 360,
+    width: "100%",
     height: 1516
   }
 });

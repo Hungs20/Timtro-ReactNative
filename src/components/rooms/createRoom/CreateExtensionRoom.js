@@ -1,6 +1,6 @@
 import React from 'react'
 import {Colors, Fonts} from '../../../styles'
-import {StyleSheet, View, TouchableOpacity, Alert} from 'react-native'
+import {StyleSheet, View, TouchableOpacity, Alert, ImageBackground} from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Card, ListItem, Button, Text, CheckBox, Divider, ThemeProvider, Input, Overlay, Avatar , Image, ButtonGroup } from 'react-native-elements'
 import { Component } from 'react'
@@ -9,6 +9,8 @@ import * as Language from '../../language'
 import { blue, grayBackground, grayLabel, white } from '../../../styles/colors';
 import DocumentPicker from 'react-native-document-picker';
 import { ActivityIndicator } from 'react-native';
+
+import { IconButton } from 'react-native-paper'
 
 import { utils } from '@react-native-firebase/app';
 import storage from '@react-native-firebase/storage';
@@ -125,14 +127,27 @@ class CreateExtensionRoom extends Component {
           }
       }
       showImagePicker = (array) => {
-        return array.map(function(images, index) {
+        
+        return array.map((images, index) => {
           // don't put your key as index, choose other unique values as your key.
-          return <Image
+          return <ImageBackground
             key={index}
             source={{uri: images}}
-            style={{width: 60, height: 60}} 
+            style={{width: 60, height: 60, marginHorizontal: 5}} 
             PlaceholderContent={<ActivityIndicator />}
+            >
+              <IconButton
+                style={{position: 'absolute', alignSelf: 'flex-end',
+                marginTop: -5}}
+                icon="close"
+                //color={this.state.isLoveRoom ? "red": Colors.white}
+                size={20}
+               onPress={() => {
+                array.splice(index, 1);
+                this.props.setExtension(array,'image');
+               }}
             />
+          </ImageBackground>
         })
       }
       
@@ -142,35 +157,19 @@ class CreateExtensionRoom extends Component {
          
         return(
             <ThemeProvider>
-
-<TouchableOpacity onPress={this.selectImage}>
-        <Text>Pick an image</Text>
-      </TouchableOpacity>
-      <View>
-        {this.state.image !== null ? (
-          <Image source={{ uri: this.state.image.uri }}/>
-        ) : null}
-        
-          <TouchableOpacity onPress={this.uploadImage}>
-            <Text>Upload image</Text>
-          </TouchableOpacity>
-        
-      </View>
-
-
                 <Card>
                     <Card.Title><Text h5>{Language.ROOM_EXTENSION}</Text></Card.Title>
                     <Card.Divider/>
                     <Text style={styles.title}>{'Hình ảnh'}</Text>
                     <View style={{paddingHorizontal: 10, borderStyle:'dashed',borderColor: grayBackground, borderWidth: 1, flex: 1, flexDirection:'column'}}>
                         <View style={{flex: 1, flexDirection:'row', alignItems: 'center', justifyContent: 'center'}}>
-                        {
+                        <ScrollView horizontal showsHorizontalScrollIndicator={false}>{
                           this.showImagePicker(this.props.extension.listImageUrl)
-                        }
+                        }</ScrollView>
                         </View>
                         {this.state.uploading ? (
-                          <View style={styles.progressBarContainer}>
-                            <Progress.Bar progress={this.state.transferred} width={300} />
+                          <View style={{marginHorizontal: 20, marginVertical: 5, alignItems: "center"}}>
+                            <Progress.Bar progress={this.state.transferred} width={200} />
                           </View>
                         ) : null
                         }
@@ -180,20 +179,7 @@ class CreateExtensionRoom extends Component {
                         </TouchableOpacity>
                     </View>
                     <Text>{'\n'}</Text>
-                    <Button
-                    title=" Chụp hình"
-                    titleStyle={{color:Colors.primary,fontSize: 15}}
-                    icon={
-                        <Icon
-                          name="camera"
-                          size={15}
-                          color="#0275D8"
-                        />
-                      }
-                    type="outline"
-                    buttonStyle={{borderRadius: 10, width: 150}}
-                    containerStyle={{alignItems: 'center'}}
-                    />
+                    
 
                 <Text style={styles.title}>{'Tiện ích'}</Text>
                 <View style={{flex: 1, flexDirection: 'row'}}>

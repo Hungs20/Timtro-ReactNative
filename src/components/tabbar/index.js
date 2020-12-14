@@ -22,7 +22,7 @@ import CreateAddressRoom from '../../components/rooms/createRoom/CreateAddressRo
 
 function CreateRoomIndex({ navigation }) {
   return (
-      <CreateRoom/>
+      <CreateRoom navigation={navigation}/>
   );
 }
 function HomeRoomIndex({ navigation }) {
@@ -59,7 +59,7 @@ function DistricSearchIndex() {
 }
 function RoomDetailsIndex({ route, navigation }) {
   return (
-    <RoomDetail room = {route.params.room}/>
+    <RoomDetail room = {route.params.room} navigation={navigation}/>
   )
 }
 function SearchResultIndex({route, navigation}) {
@@ -74,7 +74,7 @@ function HomeMessageIndex({route, navigation}) {
 }
 function ChatMessageIndex({ route, navigation }) {
   return (
-    <Chat/>
+    <Chat authUser={route.params.authUser} navigation={navigation}/>
   )
 }
 function LoveRoomStackScreen({navigation}) {
@@ -146,6 +146,9 @@ function HomeStackScreen({navigation}) {
       <HomeStack.Screen name="SearchResult" component={SearchResultIndex} options={{
         title: 'Tìm kiếm phòng', 
       }} />
+      <HomeStack.Screen name="ChatMessage" component={ChatMessageIndex}  options={{
+          title: 'Tin nhắn riêng', 
+        }} />
     </HomeStack.Navigator>
   );
 }
@@ -183,7 +186,7 @@ const Tabbar = () => {
         <Tab.Screen name="Tìm kiếm" component={HomeStackScreen} />
         <Tab.Screen name="Yêu thích" component={LoveRoomStackScreen} />
         <Tab.Screen name="Ở ghép" component={PartnerIndex} />
-        <Tab.Screen name="Tin nhắn" component={MessageStackScreen} options={{ tabBarBadge: 3 }} />
+        <Tab.Screen name="Tin nhắn" component={MessageStackScreen} /*options={{ tabBarBadge: 3 }} *//>
         <Tab.Screen name="Tài khoản" component={AccountIndex} />
       </Tab.Navigator>
     </NavigationContainer>

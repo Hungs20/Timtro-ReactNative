@@ -14,13 +14,13 @@ class Account extends Component {
         
     }
     
-  componentDidMount() {
-    const { currentUser } = firebase.auth()
+   async componentDidMount() {
+    const { currentUser } = await firebase.auth()
 
-    this.setState({ currentUser })
-
+    await this.setState({ currentUser })
+    console.log(this.state.currentUser)
     const subscriber = firestore()
-    .collection('users').where('email','==', currentUser.email)
+    .collection('users').where('uid','==', currentUser.uid)
     .onSnapshot(querySnapshot => {
       const users = [];
 
@@ -53,26 +53,28 @@ renderItem = ({ item }) => (
   </ListItem>
 )
 
+logout = () => {
+  firebase.auth()
+  .signOut()
+  .then(() => console.log('User signed out!'));
+}
 
     render(){
-         
         return (
         <View>
             <View style={{backgroundColor: 'white', height: 60}}>
                 <Text style={{fontSize: 24, fontWeight: 'bold', textAlign: 'center',textAlignVertical: 'center', paddingVertical: 10}}>Tài khoản</Text>
             </View>
-
-            {this.state.data.map((item, i) => (
             <ListItem bottomDivider containerStyle={{backgroundColor: Colors.grayBackground}}>
-                <Avatar rounded size="medium" source={{uri: item.avatar}} />
+                <Avatar rounded size="medium" source={{uri: this.state.currentUser && this.state.currentUser.photoURL}} />
                 <ListItem.Content>
-                <ListItem.Title style={{fontWeight: 'bold'}}>{this.state.currentUser && this.state.currentUser.email}</ListItem.Title>
-                <ListItem.Subtitle>{item.location}</ListItem.Subtitle>
+                <ListItem.Title style={{fontWeight: 'bold'}}>{this.state.currentUser && this.state.currentUser.displayName}</ListItem.Title>
+                
+            {this.state.data.map((item, i) => (<ListItem.Subtitle>{item.location}</ListItem.Subtitle>
+          ))}
                 </ListItem.Content>
                 <ListItem.Chevron />
             </ListItem>
-            ))}
-
         {this.state.data.map((item, i) => (
             <ListItem key={i} bottomDivider  containerStyle={{backgroundColor: Colors.grayBackground}}>
                 <ListItem.Content>
@@ -97,6 +99,14 @@ renderItem = ({ item }) => (
             </ListItem>
         ))}
 
+          <ListItem bottomDivider  containerStyle={{backgroundColor: Colors.grayBackground}} onPress={()=>this.logout()}>
+                <ListItem.Content>
+                <ListItem.Title>Thoát tài khoản</ListItem.Title>
+                
+                </ListItem.Content>
+                
+                <ListItem.Chevron />
+            </ListItem>
 
         </View>
         )

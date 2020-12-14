@@ -16,8 +16,8 @@ import Entypo from "react-native-vector-icons/Entypo";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import firebase from '@react-native-firebase/app'
 import '@react-native-firebase/auth'
+import '@react-native-firebase/database';
 import firestore from '@react-native-firebase/firestore';
-
 
 class Message extends Component {
     constructor(props){
@@ -26,100 +26,98 @@ class Message extends Component {
             searchValue: "",
             listMessage: null,
             currentUser: null,
-            data_messages: [
-                {
-                    id:'rwBa06nqlR',
-                    user_id: 'trongtinh_Rc0LjZ54yj',
-                    user_name: 'Admin',
-                    user_avatar: "https://i.pinimg.com/736x/60/74/ea/6074eaf8f2bcd5d9e0074f0dcf2065f7.jpg",
-                    sender_id: 'trongtinh_Rc0LjZ54yj',
-                    messages: 'Welcome to TRO',
-                    readed: false,
-                    num_messages_readed:6,
-                    created_at: 'Few seconds',
-                },
-                {
-                    id:'qKwgXmIoN0',
-                    user_id: 'huynhnhu_R3J4WUoWXJ',
-                    user_name: 'Huynh Nhu',
-                    user_avatar: "https://www.dungplus.com/wp-content/uploads/2019/12/girl-xinh-600x600.jpg",
-                    sender_id: 'trongthanh_O7xyqYRvo1',
-                    messages: 'What are you doing?',
-                    readed: true,
-                    num_messages_readed:0,
-                    created_at: '1 minute',
-                },
-                {
-                    id:'ucPA0NXweB',
-                    user_id: 'trongthat_IlpBApYmye',
-                    user_name: 'Lan Phuong',
-                    user_avatar: "https://mcnewsmd1.keeng.net/netnews/archive/images/2020011614/tinngan_020034_994856215_1wap_320.jpg",
-                    sender_id: 'trongthat_IlpBApYmye',
-                    messages: 'Sup?',
-                    readed: false,
-                    num_messages_readed:3,
-                    created_at: '1 day ago',
-                }
-            ]
+            listMessage : [],
         }
+        this.user = firebase.auth().currentUser;
+        console.log("User:" + this.user.uid);
+        this.chatRef = this.getRef().child("chatGroup/" + this.user.uid);
+        this.chatRefData = this.chatRef.orderByChild("createAt");
     }
-    _isMounted = false;
+    getRef() {
+        return firebase.database().ref();
+      }
+    
     componentDidMount() {
-        this._isMounted = true;
-        const { currentUser } = firebase.auth()
-        this.setState({ currentUser })
-
-        const subscriber = firestore()
-        .collection('messages').where('user', '==', /*currentUser.email*/ 'hung@gmail.com')
-        //.orderBy('date_update', "desc")
-        .onSnapshot(querySnapshot => {
-        const messagesData = [];
-
-        querySnapshot.forEach(documentSnapshot => {
-            console.log(documentSnapshot)
-            messagesData.push({
-            ...documentSnapshot.data(),
-            key: documentSnapshot.id,
-            });
-        });
-
-        if (this._isMounted) {
-            this.setState({listMessage: messagesData})
-          }
-        });
-
-    // Unsubscribe from events when no longer in use
-    () => subscriber();
-
+        this.chatRef.on("value", snap => {
+            var items = [];
+            snap.forEach(child => {
+                items.push({
+                    _id: child.val().createdAt,
+                    user_id: child.key,
+                    lastText: child.val().lastText,
+                    isRead: child.val().isRead,
+                    createdAt: new Date(child.val().createdAt).toString(),
+                    user: child.val().user ?? {
+                        photoURL: "",
+                    }
+                })
+            })
+            this.setState({
+                listMessage: items
+            })
+        })
     }
     componentWillUnmount() {
-        this._isMounted = false;
+        this.chatRefData.off();
+      }
+       timeSince(date) {
+
+        var seconds = Math.floor((new Date() - date) / 1000);
+      
+        var interval = seconds / 31536000;
+      
+        if (interval > 1) {
+          return Math.floor(interval) + " years";
+        }
+        interval = seconds / 2592000;
+        if (interval > 1) {
+          return Math.floor(interval) + " months";
+        }
+        interval = seconds / 86400;
+        if (interval > 1) {
+          return Math.floor(interval) + " days";
+        }
+        interval = seconds / 3600;
+        if (interval > 1) {
+          return Math.floor(interval) + " hours";
+        }
+        interval = seconds / 60;
+        if (interval > 1) {
+          return Math.floor(interval) + " minutes";
+        }
+        return Math.floor(seconds) + " seconds";
       }
     renderItem =({item}) => {
         return (
-            <TouchableOpacity style = {styles.item_container} onPress={()=> this.props.navigation.navigate('ChatMessage'/*, {room: this.props.room}*/)}>
-                <Image 
-                    source = {{uri: item.user_avatar}}
+            <TouchableOpacity style = {styles.item_container} onPress={()=> this.props.navigation.navigate('ChatMessage', {authUser: item.user})}>
+                {
+                    item.user.photoURL ?
+                    <Image 
+                    source = {{uri: item.user.photoURL}}
                     style = {{width:50, height:50}}
                     resizeMode={"stretch"}
-                />
+                /> : <Image 
+                source = {require('../../data/defaultAva.jpg')}
+                style = {{width:50, height:50}}
+                resizeMode={"stretch"} />
+                }
                 <View style = {styles.item_message}>
                     <View style={{flex:1}}>
                         <Text
                         style={{
                             color: 'black',
-                            fontWeight: item.readed ? null : 'bold'
+                            fontWeight: item.isRead ? null : 'bold'
                         }}>
-                            {item.user_name}
+                            {item.user.displayName}
                         </Text>
                         <Text 
                         style={{
                             color: 'black',
                             fontSize:12,
-                            fontWeight: item.readed ? null : 'bold',
+                            fontWeight: item.isRead ? null : 'bold',
                             marginTop:3
                         }}>
-                            {item.messages}
+                            {item.lastText.text}
                         </Text>
                     </View>
                     <View style={{alignItems: 'flex-end'}}>
@@ -127,19 +125,20 @@ class Message extends Component {
                             color: 'black',
                             fontSize: 12,
                             fontStyle: 'italic',
-                            fontWeight: item.readed ? null : 'bold',
+                            fontWeight: item.isRead ? null : 'bold',
                             textAlign: 'right'
                         }}>
-                            {item.created_at}
+                            {this.timeSince(new Date(item.createdAt))
+                            }
                         </Text>
-                        {item.readed ? null : 
+                        {item.isRead ? null : 
                             <View style={styles.num_readed}>  
                                 <Text style={{
                                     color: 'white',
                                     fontWeight: 'bold',
                                     fontSize: 12
                                 }}>
-                                    {item.num_messages_readed > 5 ? "5+" : item.num_messages_readed}
+                                   {item.isRead > 5 ? "5+" : item.isRead}
                                 </Text>
                             </View>
                         }
@@ -159,7 +158,7 @@ class Message extends Component {
     }
 
     render(){
-        //console.log(this.state.listMessage)
+        console.log(this.state.listMessage)
         return (
             <View style={styles.container}>
                 <StatusBar barStyle="light-content" />
@@ -218,9 +217,9 @@ class Message extends Component {
                 </View> }
                 <View style={styles.footer}>
                     <FlatList 
-                        data = {this.state.data_messages}
+                        data = {this.state.listMessage}
                         renderItem = {this.renderItem}
-                        keyExtractor = {(item) => item.id}
+                        keyExtractor = {(item) => item._id}
                         ItemSeparatorComponent = {this.ItemSeparatorComponent}
                     />
                 </View>

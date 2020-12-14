@@ -91,10 +91,10 @@ class Result extends Component {
                 key: documentSnapshot.id,
             }
             if(this.state.searchQuery != ''){
-                if(roomData.address.namePhuong.toLowerCase().includes(this.state.searchQuery.toLowerCase()) ||
-                roomData.address.nameQuan.toLowerCase().includes(this.state.searchQuery.toLowerCase()) ||
-                roomData.address.nameCity.toLowerCase().includes(this.state.searchQuery.toLowerCase()) ||
-                roomData.confirm.title.toLowerCase().includes(this.state.searchQuery.toLowerCase())
+                if((roomData.address.namePhuong != null && roomData.address.namePhuong.toLowerCase().includes(this.state.searchQuery.toLowerCase())) ||
+                (roomData.address.nameQuan != null && roomData.address.nameQuan.toLowerCase().includes(this.state.searchQuery.toLowerCase())) ||
+                (roomData.address.nameCity != null && roomData.address.nameCity.toLowerCase().includes(this.state.searchQuery.toLowerCase())) ||
+                (roomData.confirm.title != null && roomData.confirm.title.toLowerCase().includes(this.state.searchQuery.toLowerCase()))
                 ){
                     rooms.push(roomData)
                 }
@@ -170,10 +170,10 @@ class Result extends Component {
                 key: documentSnapshot.id,
             }
             if(this.state.searchQuery != ''){
-                if(roomData.address.namePhuong.toLowerCase().includes(this.state.searchQuery.toLowerCase()) ||
-                roomData.address.nameQuan.toLowerCase().includes(this.state.searchQuery.toLowerCase()) ||
-                roomData.address.nameCity.toLowerCase().includes(this.state.searchQuery.toLowerCase()) ||
-                roomData.confirm.title.toLowerCase().includes(this.state.searchQuery.toLowerCase())
+                if((roomData.address.namePhuong != null && roomData.address.namePhuong.toLowerCase().includes(this.state.searchQuery.toLowerCase())) ||
+                (roomData.address.nameQuan != null && roomData.address.nameQuan.toLowerCase().includes(this.state.searchQuery.toLowerCase())) ||
+                (roomData.address.nameCity != null && roomData.address.nameCity.toLowerCase().includes(this.state.searchQuery.toLowerCase())) ||
+                (roomData.confirm.title != null && roomData.confirm.title.toLowerCase().includes(this.state.searchQuery.toLowerCase()))
                 ){
                     rooms.push(roomData)
                 }

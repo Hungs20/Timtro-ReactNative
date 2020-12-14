@@ -1,6 +1,6 @@
 import React from 'react'
 import {Colors, Fonts} from '../../../styles'
-import {StyleSheet, View, TouchableOpacity} from 'react-native'
+import {StyleSheet, View, TouchableOpacity, Alert} from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Card, ListItem, Button, Text, CheckBox, Divider, ThemeProvider, Input } from 'react-native-elements'
 import { Component } from 'react'
@@ -27,38 +27,43 @@ class CreateRoom extends Component {
             currentUser: null,
             newRoom : {
                 id: Date.now(),
-                author: null,
+                author: {
+                    displayName: '',
+                    email: '',
+                    photoURL: '',
+                    uid: ''
+                },
                 date_create: new Date(),
                 vote: 0,
                 view: 0,
                 info: {
-                    typeRoom: '',
-                    numRoom : '',
-                    numPersonOfRoom : '',
-                    gender : '',
-                    area : '',
-                    giathue: '',
-                    giacoc: '',
-                    tiendien: '',
-                    tiennuoc: '',
-                    tienmang: '',
+                    typeRoom: null,
+                    numRoom : null,
+                    numPersonOfRoom : null,
+                    gender : null,
+                    area : null,
+                    giathue: null,
+                    giacoc: null,
+                    tiendien: null,
+                    tiennuoc: null,
+                    tienmang: null,
                     dexe: false,
                 },
                 address: {
-                    nameQuan: '',
-                    namePhuong: '',
-                    nameDuong: '',
-                    nameNha: '',
-                    nameCity: ''
+                    nameQuan: null,
+                    namePhuong: null,
+                    nameDuong: null,
+                    nameNha: null,
+                    nameCity: null
                 },
                 extension: {
                     listImageUrl: [],
                     listExtChecked: []
                 },
                 confirm: {
-                    phone: '',
-                    title: '',
-                    description: '',
+                    phone: null,
+                    title: null,
+                    description: null,
                     timeOpen: new Date(),
                     timeClose: new Date(),
                     isTimeOpen: false,
@@ -72,10 +77,17 @@ class CreateRoom extends Component {
     componentDidMount() {
         const { currentUser } = firebase.auth()
         this.setState({ currentUser }) 
+       // console.log(currentUser)
         this.setState(prevState => ({
             newRoom: {
                 ...prevState.newRoom,
-                author: currentUser.email
+                author: {
+                    ...prevState.newRoom.author,
+                    displayName: currentUser.displayName,
+                    email: currentUser.email,
+                    photoURL: currentUser.photoURL,
+                    uid: currentUser.uid
+                }
               }
           }))
       }
@@ -383,24 +395,90 @@ class CreateRoom extends Component {
         }
     }
 
+
     setCurrentStep = (value) => {
         this.setState({
             currentStep: value < this.state.maxStep ? value : this.state.maxStep
         })
     }
+     addNewRoom = async (newRoom) => {
+        const addQuery = await firestore().collection("rooms").add(newRoom)
+        const newRoomAdded = await addQuery.get();
+        //console.log("the new room:", newRoomAdded.data())
+        this.props.navigation.navigate('RoomDetails', {room: newRoomAdded.data()})
+      }
     nextBtnPress = () => {
+        var validate1 = true
+        for(var key in this.state.newRoom.info) {
+            if(this.state.newRoom.info[key] === "" || this.state.newRoom.info[key] === null) {
+               validate1 = false
+            }
+        }
+
+        var validate2 = true
+        for(var key in this.state.newRoom.address) {
+            if(this.state.newRoom.address[key] === "" || this.state.newRoom.address[key] === null) {
+               validate2 = false
+            }
+        }
+
+        var validate3 = true
+        for(var key in this.state.newRoom.extension) {
+            if(this.state.newRoom.extension[key] === "" || this.state.newRoom.extension[key] === null) {
+               validate3 = false
+            }
+        }
+
+        var validate4 = true
+        for(var key in this.state.newRoom.confirm) {
+            if(this.state.newRoom.confirm[key] === "" || this.state.newRoom.confirm[key] === null) {
+               validate4 = false
+            }
+        }
+
+        if(this.state.currentStep === 2 && this.state.newRoom.extension["listImageUrl"].length < 5) {
+            Alert.alert("Lỗi", "Bạn phải đăng tối thiểu 5 ảnh", [
+                {
+                  text: "Đồng ý",
+                  style: "cancel"
+                }
+              ], {cancelable: false})
+            return
+         }
+        
+        
+        if((this.state.currentStep === 0 && validate1 === false) || 
+        (this.state.currentStep === 1 && validate2 === false) ||
+        (this.state.currentStep === 2 && validate3 === false) ||
+        (this.state.currentStep === 3 && validate4 === false) 
+        ){
+            Alert.alert("Lỗi", "Bạn chưa nhập đủ thông tin", [
+                {
+                  text: "Đồng ý",
+                  style: "cancel"
+                }
+              ], {cancelable: false})
+            return
+        }
+
         this.setState({
             currentStep: this.state.currentStep + 1 < 3 ? this.state.currentStep + 1 : 3,
             maxStep: this.state.currentStep + 1 < this.state.maxStep ? this.state.maxStep : this.state.currentStep + 1
         })
+       // console.log(this.state.newRoom)
         if(this.state.currentStep  + 1 == 4){
-            console.log(this.state.newRoom)
-            firestore()
-            .collection('rooms')
-            .add(this.state.newRoom)
-            .then(() => {
-                console.log('Room added!');
-            });
+           // console.log(this.state.newRoom)
+            var _newRoom = this.state.newRoom;
+            _newRoom.info.area = parseInt(_newRoom.info.area)
+            _newRoom.info.giathue = parseInt(_newRoom.info.giathue)
+            _newRoom.info.giacoc = parseInt(_newRoom.info.giacoc)
+            _newRoom.info.tiendien = parseInt(_newRoom.info.tiendien)
+            _newRoom.info.tiennuoc = parseInt(_newRoom.info.tiennuoc)
+            _newRoom.info.tienmang = parseInt(_newRoom.info.tienmang)
+            _newRoom.info.numRoom = parseInt(_newRoom.info.numRoom)
+            _newRoom.info.numPersonOfRoom = parseInt(_newRoom.info.numPersonOfRoom)
+           // console.log(_newRoom)
+           this.addNewRoom(_newRoom)
         }
     }
     renderSwitch(step){

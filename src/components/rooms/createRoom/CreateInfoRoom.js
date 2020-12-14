@@ -55,10 +55,10 @@ class CreateInfoRoom extends Component {
                                     title={data.label}
                                     checkedIcon='dot-circle-o'
                                     uncheckedIcon='circle-o'
-                                    checked={this.props.info.typeRoom == data.value}
+                                    checked={this.props.info.typeRoom === data.value}
                                     onPress = {() => this.props.setInfo(data.value, 'typeRoom')}
                                     containerStyle={styles.radioBackground}
-                                    textStyle={this.props.info.typeRoom == data.value ? styles.radioLabelSelected : styles.radioLabel}
+                                    textStyle={this.props.info.typeRoom === data.value ? styles.radioLabelSelected : styles.radioLabel}
                                     checkedColor={Colors.primary}
                                 />
                             )
@@ -103,10 +103,10 @@ class CreateInfoRoom extends Component {
                                     title={data.label}
                                     checkedIcon='dot-circle-o'
                                     uncheckedIcon='circle-o'
-                                    checked={this.props.info.gender == data.value}
+                                    checked={this.props.info.gender === data.value}
                                     onPress = {() => this.props.setInfo(data.value, 'gender')}
                                     containerStyle={styles.radioBackground}
-                                    textStyle={this.props.info.gender == data.value ? styles.radioLabelSelected : styles.radioLabel}
+                                    textStyle={this.props.info.gender === data.value ? styles.radioLabelSelected : styles.radioLabel}
                                     checkedColor={Colors.primary}
                                 />
                             )
@@ -193,6 +193,7 @@ class CreateInfoRoom extends Component {
                                 checked={this.state.isCheckedFreeDien}
                                 onPress={
                                     ()=>{
+                                        this.props.setInfo("0", 'tiendien')
                                         this.setState({
                                             isCheckedFreeDien : !this.state.isCheckedFreeDien
                                         })
@@ -234,6 +235,7 @@ class CreateInfoRoom extends Component {
                                 checked={this.state.isCheckedFreeNuoc}
                                 onPress={
                                     ()=>{
+                                        this.props.setInfo("0", 'tiennuoc')
                                         this.setState({
                                             isCheckedFreeNuoc : !this.state.isCheckedFreeNuoc
                                         })
@@ -274,6 +276,7 @@ class CreateInfoRoom extends Component {
                                 checked={this.state.isCheckedFreeMang}
                                 onPress={
                                     ()=>{
+                                        this.props.setInfo("0", 'tienmang')
                                         this.setState({
                                             isCheckedFreeMang : !this.state.isCheckedFreeMang
                                         })
