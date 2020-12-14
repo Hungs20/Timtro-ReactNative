@@ -44,7 +44,7 @@ class Message extends Component {
                 items.push({
                     _id: child.val().createdAt,
                     user_id: child.key,
-                    lastText: child.val().lastText,
+                    lastText: child.val().lastText ?? "",
                     isRead: child.val().isRead,
                     createdAt: new Date(child.val().createdAt).toString(),
                     user: child.val().user ?? {
@@ -117,7 +117,7 @@ class Message extends Component {
                             fontWeight: item.isRead ? null : 'bold',
                             marginTop:3
                         }}>
-                            {item.lastText.text}
+                            {item.lastText.text ?? ""}
                         </Text>
                     </View>
                     <View style={{alignItems: 'flex-end'}}>
