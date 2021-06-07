@@ -81,7 +81,7 @@ class CellTable extends Component {
 }
 const styles = StyleSheet.create({
     type: {
-        fontFamily: "roboto-regular",
+        //fontFamily: "roboto-regular",
         fontSize: 12,
         color: Colors.grayLabel,
         textTransform: 'uppercase',

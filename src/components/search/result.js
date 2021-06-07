@@ -70,18 +70,16 @@ class Result extends Component {
             subscriber = subscriber.orderBy('info.giathue', "desc")
            } 
         }
-        /*subscriber.get().then(querySnapshot => {
-            var rooms = [];
-            querySnapshot.forEach(doc => {
-               //console.log(doc.data());
-               rooms.push(doc.data())
-            });
-            this.setState({listRoom: rooms, isToggleFilter: null,})
+        // subscriber.get().then(querySnapshot => {
+        //     querySnapshot.forEach(doc => {
+        //        console.log(doc.data());
+        //     });
+            
         
-          }).catch(err => {
-             console.log('Error getting documents', err);
-          });
-        */
+        //   }).catch(err => {
+        //      console.log('Error getting documents', err);
+        //   });
+        // /// remove
         subscriber.onSnapshot(querySnapshot => {
         var rooms = [];
 
@@ -119,56 +117,54 @@ class Result extends Component {
       }
 
      doSearch = async () => {
-        var subscriber = await firestore().collection('rooms')
+        var subscriber = firestore().collection('rooms')
 
         if(this.state.isFilterExtension == true && this.state.listExtChecked.length > 0)
         {
-            subscriber = await subscriber.where('extension.listExtChecked', 'array-contains-any',this.state.listExtChecked)
+            subscriber = subscriber.where('extension.listExtChecked', 'array-contains-any',this.state.listExtChecked)
         }
         if(this.state.isFilterTypeRoom == true && this.state.filterTypeRoom != null) {
-            subscriber = await subscriber.where('info.typeRoom', '==', this.state.filterTypeRoom)
+            subscriber = subscriber.where('info.typeRoom', '==', this.state.filterTypeRoom)
         }
         if(this.state.isFilterNumRoom == true && this.state.filterNumRoom != null) {
-            subscriber = await subscriber.where('info.numPersonOfRoom', '==', this.state.filterNumRoom)
-            subscriber = await subscriber.where('info.gender', '==', this.state.genderButtons[this.state.filterGender])
+            subscriber = subscriber.where('info.numPersonOfRoom', '==', this.state.filterNumRoom)
+            subscriber = subscriber.where('info.gender', '==', this.state.genderButtons[this.state.filterGender])
         }
         if(this.state.isFilterCost){
-            subscriber = await subscriber.where('info.giathue', '>=', this.state.filterCost[0]*1000000)
-            subscriber = await subscriber.where('info.giathue', '<=', this.state.filterCost[1]*1000000)
+            subscriber = subscriber.where('info.giathue', '>=', this.state.filterCost[0]*1000000)
+            subscriber = subscriber.where('info.giathue', '<=', this.state.filterCost[1]*1000000)
         }
         if(this.state.isFilterSort){
            if(this.state.filterSort === 'Mới nhất'){
-                subscriber = await subscriber.orderBy('date_create', 'desc')
+                subscriber = subscriber.orderBy('date_create', 'desc')
            }
            else if(this.state.filterSort === 'Giá thấp đến cao'){
-            subscriber = await subscriber.orderBy('info.giathue', "asc")
+            subscriber = subscriber.orderBy('info.giathue', "asc")
             
         }
            else {
-            subscriber = await subscriber.orderBy('info.giathue', "desc")
+            subscriber = subscriber.orderBy('info.giathue', "desc")
            } 
         }
         
-        /*subscriber.get().then(querySnapshot => {
-            var rooms = [];
-            querySnapshot.forEach(doc => {
-               //console.log(doc.data());
-               rooms.push(doc.data())
-            });
-            this.setState({listRoom: rooms, isToggleFilter: null,})
+        // subscriber.get().then(querySnapshot => {
+        //     var rooms = [];
+        //     querySnapshot.forEach(doc => {
+        //        console.log(doc.data());
+        //        rooms.push(doc.data())
+        //     });
+        //     this.setState({listRoom: rooms, isToggleFilter: null,})
         
-          }).catch(err => {
-             console.log('Error getting documents', err);
-          });
-        */
-        await subscriber.onSnapshot(querySnapshot => {
+        //   }).catch(err => {
+        //      console.log('Error getting documents', err);
+        //   });
+
+          //remove
+        subscriber.onSnapshot(querySnapshot => {
         var rooms = [];
 
         querySnapshot.forEach(documentSnapshot => {
-            const roomData = {
-                ...documentSnapshot.data(),
-                key: documentSnapshot.id,
-            }
+            const roomData = documentSnapshot.data()
             if(this.state.searchQuery != ''){
                 if((roomData.address.namePhuong != null && roomData.address.namePhuong.toLowerCase().includes(this.state.searchQuery.toLowerCase())) ||
                 (roomData.address.nameQuan != null && roomData.address.nameQuan.toLowerCase().includes(this.state.searchQuery.toLowerCase())) ||
@@ -176,10 +172,13 @@ class Result extends Component {
                 (roomData.confirm.title != null && roomData.confirm.title.toLowerCase().includes(this.state.searchQuery.toLowerCase()))
                 ){
                     rooms.push(roomData)
+                    console.log(roomData)
                 }
-            }
+            } else {
+                rooms.push(roomData)
+            } 
         })
-        this.setState({listRoom: rooms, isToggleFilter: null,})
+         this.setState({listRoom: rooms, isToggleFilter: null,})
         
         },error => {
             console.log(error)
@@ -193,16 +192,16 @@ class Result extends Component {
         this.setState({searchQuery: query});
         this.doSearch()
     }
-    showResultFilter = () => {
+    showResultFilter = (id) => {
         return(
-            <View>
+            <View key={id}>
                 <Text style={{fontSize: 18, marginVertical: 10, marginHorizontal: 10}}>{this.state.listRoom.length} Kết quả</Text>
                 <ScrollView>
                     <View style={{flex:1, marginHorizontal: 10}}>
                         <View style={{flex: 1, flexDirection: 'column'}}> 
                         {
                             this.state.listRoom.map((room, index) => (
-                                <ListTable key={room.key} room={room} navigation={this.props.navigation}/>
+                                <ListTable key={index} room={room} navigation={this.props.navigation}/>
                             ))
                         }
                         </View>
@@ -276,10 +275,10 @@ class Result extends Component {
             this.setState({isFilterExtension: false})
         }
       }
-    showNumRoomIndex = () => {
+    showNumRoomIndex = (id) => {
         const buttons = ['Tất cả', 'Nam', 'Nữ'];
         return(
-            <View>
+            <View key={id}>
             <View style={{flex: 1, flexDirection: "row", alignItems:"center", justifyContent: "space-between", marginHorizontal: 15}}>
                 <Text style={{fontSize: 15, flex: 2, color: Colors.grayLabel}}>Số người</Text>
                 <View style={{flex: 1, flexDirection: "row", alignItems: "center"}}>
@@ -311,7 +310,7 @@ class Result extends Component {
             
         )
     }
-    showSortIndex = () => {
+    showSortIndex = (id) => {
         const sorts = ["Mới nhất", "Giá thấp đến cao", "Giá cao xuống thấp"]
        return(
             sorts.map((data,index) => {
@@ -332,7 +331,7 @@ class Result extends Component {
             })
         )
     }
-    showTypeRoomIndex = () => {
+    showTypeRoomIndex = (id) => {
         return(
             this.state.listTypeRoom.map((data,index) => {
                 return(
@@ -352,12 +351,12 @@ class Result extends Component {
             })
         )
     }
-    showExtensionIndex = () => {
+    showExtensionIndex = (id) => {
         const exts = [{name: 'WC riêng',icon: 'toilet'},{name: 'Cửa sổ', icon: 'window-open-variant'}, {name: 'Wifi', icon: 'wifi'}, {name:'Chủ riêng',icon:'account-key-outline'}, {name:'Máy nước nóng',icon:'water-boiler'}, {name:'Tủ lạnh',icon:'fridge-outline'}, {name:'Gác lửng',icon:'stairs'}, {name:'Tủ đồ',icon:'locker'}, {name:'Thú cưng', icon:'dog'}]
         const exts2 = [{name: 'Chỗ để xe',icon: 'motorbike'},{name: 'An ninh', icon: 'security'}, {name: 'Tự do', icon: 'clock-outline'}, {name:'Máy lạnh',icon:'air-conditioner'}, {name:'Nhà bếp',icon:'chef-hat'}, {name:'Máy giặt',icon:'washing-machine'}, {name:'Giường',icon:'bed-outline'}, {name:'Tivi',icon:'television'}, {name:'Ban công', icon:'window-shutter'}]
        
         return(
-            <View style={{flex: 1, flexDirection: 'row'}}>
+            <View  key={id} style={{flex: 1, flexDirection: 'row'}}>
                   <View style={{flex: 1, flexDirection: 'column'}}>
                   {exts.map((data, index) => {
                       return (
@@ -399,17 +398,17 @@ class Result extends Component {
             </View>
         )
     }
-    showCostIndex = () => {
+    showCostIndex = (id) => {
         return(
-            <View>
+            <View key={id}>
                 <Slider changeCost={this.onChangeCost}/>
                 
             </View>
         )
     }
-    showButtonSearch = () => {
+    showButtonSearch = (id) => {
         return(
-            <View>
+            <View key={id}>
                 <Button title="Áp dụng" onPress={()=>this.doSearch()} containerStyle={{marginHorizontal: 35, borderColor: Colors.primary, borderWidth: 1, borderRadius: 10, marginVertical: 20}}/>
                 <Text style={{fontSize: 15, fontWeight: 'bold', color: Colors.grayLabel, alignItems: "center", textAlign: "center", marginHorizontal: 20}}>Vui lòng chọn yêu cầu, sau đó bấm áp dụng để tìm kiếm!</Text>
             </View>
@@ -419,22 +418,22 @@ class Result extends Component {
         var listView = [];
         switch(this.state.isToggleFilter){
             case 'gia':
-                 listView.push(this.showCostIndex())
+                 listView.push(this.showCostIndex('gia'))
                  break;
             case 'tienich':
-                 listView.push(this.showExtensionIndex())
+                 listView.push(this.showExtensionIndex('tienich'))
                  break;
             case 'loaiphong':
-                listView.push(this.showTypeRoomIndex())
+                listView.push(this.showTypeRoomIndex('loaiphong'))
                 break;
             case 'songuoi':
-                listView.push(this.showNumRoomIndex())
+                listView.push(this.showNumRoomIndex('songuoi'))
                 break;
             case 'sapxep':
-                listView.push(this.showSortIndex())
+                listView.push(this.showSortIndex('sapxep'))
                 break;
         }
-        listView.push(this.showButtonSearch())
+        listView.push(this.showButtonSearch('search'))
         return (<ScrollView>{listView}</ScrollView>)
     }
     setToggle = (value) => {
@@ -473,29 +472,29 @@ class Result extends Component {
             }
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                 {
-                    this.state.isFilterCost ? <Chip mode='outlined' onClose={async()=>{await this.setState({isFilterCost: false});if(this.state.isToggleFilter == null){
+                    this.state.isFilterCost ? <Chip key={'cost'} mode='outlined' onClose={async()=>{await this.setState({isFilterCost: false});if(this.state.isToggleFilter == null){
                         this.doSearch()
                     }}}>{this.state.filterCost[0]} triệu VND - {this.state.filterCost[1]} triệu VND</Chip> : null
                 }
                 {
                     this.state.isFilterExtension ? this.state.listExtChecked.map((value, index) => {
-                        return(<Chip mode='outlined' onClose={async()=>{await this.addExtChecked(this.state.listExtChecked, value);if(this.state.isToggleFilter == null){
+                        return(<Chip key={`ext${index}`} mode='outlined' onClose={async()=>{await this.addExtChecked(this.state.listExtChecked, value);if(this.state.isToggleFilter == null){
                             this.doSearch()
                         }}}>{value}</Chip>)
                     }) : null
                 }
                 {
-                    this.state.isFilterTypeRoom ? <Chip mode='outlined' onClose={async()=>{await this.setState({isFilterTypeRoom: false});if(this.state.isToggleFilter == null){
+                    this.state.isFilterTypeRoom ? <Chip key={'type'} mode='outlined' onClose={async()=>{await this.setState({isFilterTypeRoom: false});if(this.state.isToggleFilter == null){
                         this.doSearch()
                     }}}>{this.state.filterTypeRoom}</Chip> : null
                 }
                 {
-                    this.state.isFilterNumRoom ? <Chip mode='outlined' onClose={async()=>{await this.setState({isFilterNumRoom: false});if(this.state.isToggleFilter == null){
+                    this.state.isFilterNumRoom ? <Chip key={'num'} mode='outlined' onClose={async()=>{await this.setState({isFilterNumRoom: false});if(this.state.isToggleFilter == null){
                         this.doSearch()
                     }}}>{this.state.filterNumRoom} {this.state.genderButtons[this.state.filterGender]}</Chip> : null
                 }
                 {
-                    this.state.isFilterSort ? <Chip mode='outlined' onClose={async()=>{await this.setState({isFilterSort: false});if(this.state.isToggleFilter == null){
+                    this.state.isFilterSort ? <Chip key={'sort'} mode='outlined' onClose={async()=>{await this.setState({isFilterSort: false});if(this.state.isToggleFilter == null){
                         this.doSearch()
                     }}}>{this.state.filterSort}</Chip> : null
                 }

@@ -20,7 +20,7 @@ class CellLoveRoom extends Component {
         const { currentUser } = await firebase.auth()
         this.setState({ currentUser }) 
         const roomLoveRef = await firestore().collection('loveRooms')
-        var snapshot = roomLoveRef.where('roomId', '==', this.props.room.key).where('user', '==', this.state.currentUser ? this.state.currentUser.email : "").onSnapshot(querySnapshot => {
+        var snapshot = await roomLoveRef.where('roomId', '==', this.props.room.key).where('user', '==', this.state.currentUser ? this.state.currentUser.email : "").onSnapshot(async querySnapshot => {
             //console.log(`Received query snapshot of size ${querySnapshot.size}`);
             if(querySnapshot.size === 0){
                 this.setState({isLoveRoom: false})
@@ -59,6 +59,7 @@ class CellLoveRoom extends Component {
         }
     }
     render(){
+        console.log(this.props.room);
         return(
             <TouchableOpacity style={{flex: 1, margin: 5}} onPress={()=> this.props.navigation.navigate('RoomDetails', {room: this.props.room})}>
                 <ImageBackground source={{uri: this.props.room.extension.listImageUrl[0]}} style={{height: 200, borderRadius: 0, width: '100%', marginBottom: 5}} imageStyle={{ borderRadius: 10 }}>
@@ -81,7 +82,7 @@ class CellLoveRoom extends Component {
 }
 const styles = StyleSheet.create({
     type: {
-        fontFamily: "roboto-regular",
+        //fontFamily: "roboto-regular",
         fontSize: 12,
         color: Colors.grayLabel,
         textTransform: 'uppercase',

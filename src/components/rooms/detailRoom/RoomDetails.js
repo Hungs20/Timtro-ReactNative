@@ -328,14 +328,14 @@ const styles = StyleSheet.create({
     borderRadius: 11,
   },
   titlePart2: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(255,49,128,1)",
     fontSize: 18,
     marginTop: 16,
     marginLeft: 21
   },
   detailPart2: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "#121212",
     height: 69,
     width: "80%",
@@ -357,14 +357,14 @@ const styles = StyleSheet.create({
     borderRadius: 11
   },
   titlePart3: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "#121212",
     fontSize: 18,
     marginTop: 15,
     marginLeft: 25
   },
   detailPart3: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "#121212",
     fontSize: 12,
     marginTop: 13,
@@ -379,19 +379,19 @@ const styles = StyleSheet.create({
     //marginHorizontal: 10
   },
   tightText_Num: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(255,168,49,1)",
     fontSize: 10
   },
   fitText_Num: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(0,214,131,1)",
     fontSize: 10,
     
     marginHorizontal: 70 
   },
   wideText_Num: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(0,198,192,1)",
     fontSize: 10,
     //marginLeft: 102
@@ -449,12 +449,12 @@ const styles = StyleSheet.create({
   // marginHorizontal: 10,
   },
   tight: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "#121212",
     fontSize: 10
   },
   fit: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "#121212",
     fontSize: 10,
     //marginLeft: 127
@@ -462,7 +462,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 90
   },
   wide: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "#121212",
     fontSize: 10,
    // marginLeft: 124
@@ -487,7 +487,7 @@ const styles = StyleSheet.create({
     borderRadius: 11
   },
   address: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "#121212",
     height: 26,
     width: 58,
@@ -504,7 +504,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     position: "absolute",
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "#121212",
     height: 37,
     width: "80%",
@@ -529,7 +529,7 @@ const styles = StyleSheet.create({
     top: 2,
     left: 0,
     position: "absolute",
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(40,126,243,1)",
     fontSize: 12
   },
@@ -554,7 +554,7 @@ const styles = StyleSheet.create({
     height: 21
   },
   contactDetails: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "#121212",
     height: 18,
     width: 256,
@@ -581,7 +581,7 @@ const styles = StyleSheet.create({
     borderRadius: 11
   },
   ngayDang: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "#121212",
     fontSize: 18,
     marginTop: 20,
@@ -592,7 +592,7 @@ const styles = StyleSheet.create({
     height: 21
   },
   homNay08112020: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "#121212",
     height: 25,
     width: 285,
@@ -619,7 +619,7 @@ const styles = StyleSheet.create({
     borderRadius: 11
   },
   utility: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "#121212",
     fontSize: 18,
     marginTop: 19,
@@ -714,11 +714,11 @@ const styles = StyleSheet.create({
     borderRadius: 21
   },
   hostName: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "#121212"
   },
   numberOfRooms: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(0,214,131,1)",
     fontSize: 10,
     marginTop: 2,
@@ -749,7 +749,7 @@ const styles = StyleSheet.create({
     borderRadius: 11
   },
   reportText: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(255,168,49,1)",
     fontSize: 18,
     marginTop: 14,
@@ -812,7 +812,7 @@ const styles = StyleSheet.create({
     marginTop: 1
   },
   timNguoiThue: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     height: 16,
     width: 116,
@@ -822,7 +822,7 @@ const styles = StyleSheet.create({
     textTransform: "uppercase"
   },
   nameOfRoom: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "#121212",
     height: 65,
     width: 331,
@@ -838,7 +838,7 @@ const styles = StyleSheet.create({
     marginLeft: 1
   },
   giaTrenUngDung: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     //height: 16,
     width: 184,
@@ -846,7 +846,7 @@ const styles = StyleSheet.create({
     textAlign: "right"
   },
   giaPhong: {
-    fontFamily: "roboto-700",
+    //fontFamily: "roboto-700",
     color: "rgba(255,49,128,1)",
     //height: 16,
     width: 167,
@@ -871,7 +871,7 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   conPhong: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
    // height: 16,
     width: "33%",
@@ -879,7 +879,7 @@ const styles = StyleSheet.create({
     textAlign: "center", 
   },
   dienTich: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
    // height: 16,
     width: "33%",
@@ -888,7 +888,7 @@ const styles = StyleSheet.create({
     //marginHorizontal: 50
   },
   datCoc: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
    // height: 16,
     width: "33%",
@@ -902,7 +902,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   tinhTrangPhong: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(255,49,128,1)",
    // height: 24,
     width: "33%",
@@ -911,7 +911,7 @@ const styles = StyleSheet.create({
    // backgroundColor: "red"
   },
   dienTichPhong: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(255,49,128,1)",
    // height: 24,
     width: "33%",
@@ -922,7 +922,7 @@ const styles = StyleSheet.create({
   // backgroundColor: "green"
   },
   tienDatCoc: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(255,49,128,1)",
     //height: 24,
     width: "33%",
@@ -979,24 +979,24 @@ const styles = StyleSheet.create({
     marginLeft: 4
   },
   mark1: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     fontSize: 12
   },
   mark2: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     fontSize: 12,
   //  marginLeft: 66
   },
   mark3: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     fontSize: 12,
   //  marginLeft: 64
   },
   mark4: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     fontSize: 12,
   //  marginLeft: 62
@@ -1033,7 +1033,7 @@ const styles = StyleSheet.create({
     borderRadius: 10
   },
   chat: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(255,255,255,1)",
     fontSize: 17,
     marginTop: 15,
@@ -1053,7 +1053,7 @@ const styles = StyleSheet.create({
     borderColor: "rgba(255,49,128,1)"
   },
   holdPlace: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(255,49,128,1)",
     fontSize: 17,
     marginTop: 15,
@@ -1073,7 +1073,7 @@ const styles = StyleSheet.create({
     borderColor: "rgba(133,134,136,1)"
   },
   call: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     fontSize: 17,
     marginTop: 15,

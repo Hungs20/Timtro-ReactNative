@@ -377,7 +377,7 @@ const styles = StyleSheet.create({
     //borderTopRightRadius: 11
   },
   headerText: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "#121212",
     fontSize: 20,
     marginTop: 10,
@@ -417,12 +417,12 @@ const styles = StyleSheet.create({
     marginLeft: 14
   },
   canPhongTruocNgay: {
-    fontFamily: "roboto-300",
+    //fontFamily: "roboto-300",
     color: "rgba(133,134,136,1)",
     fontSize: 12
   },
   chonNgayText: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     fontSize: 12
   },
@@ -457,12 +457,12 @@ const styles = StyleSheet.create({
     marginLeft: 14
   },
   _LoaiPhong: {
-    fontFamily: "roboto-300",
+    //fontFamily: "roboto-300",
     color: "rgba(133,134,136,1)",
     fontSize: 12
   },
   chonLoaiPhong: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     fontSize: 12
   },
@@ -495,12 +495,12 @@ const styles = StyleSheet.create({
     marginLeft: 14
   },
   _GioiTinh: {
-    fontFamily: "roboto-300",
+    //fontFamily: "roboto-300",
     color: "rgba(133,134,136,1)",
     fontSize: 12
   },
   chonGioiTinh: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     fontSize: 12
   },
@@ -532,12 +532,12 @@ const styles = StyleSheet.create({
     marginLeft: 14
   },
   _MucGia: {
-    fontFamily: "roboto-300",
+    //fontFamily: "roboto-300",
     color: "rgba(133,134,136,1)",
     fontSize: 12
   },
   chonMucGia: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     fontSize: 12
   },
@@ -570,7 +570,7 @@ const styles = StyleSheet.create({
     position: "absolute"
   },
   khuVucText: {
-    fontFamily: "roboto-300",
+    //fontFamily: "roboto-300",
     color: "rgba(133,134,136,1)",
     fontSize: 12,
     marginLeft: 14
@@ -588,7 +588,7 @@ const styles = StyleSheet.create({
     borderWidth: 1
   },
   quanTextSelected: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: colors.primary,
     marginTop: 10,
     textAlign: "center"
@@ -600,7 +600,7 @@ const styles = StyleSheet.create({
     borderRadius: 8
   },
   quanText: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     marginTop: 10,
     textAlign: "center"
@@ -617,7 +617,7 @@ const styles = StyleSheet.create({
     borderRadius: 8
   },
   cauGiay: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     marginTop: 10,
     marginLeft: 37
@@ -640,7 +640,7 @@ const styles = StyleSheet.create({
     borderRadius: 8
   },
   thanhXuan: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     marginTop: 10,
     marginLeft: 27
@@ -657,7 +657,7 @@ const styles = StyleSheet.create({
     borderRadius: 8
   },
   HaiBaTrung: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     marginTop: 10,
     marginLeft: 25
@@ -679,7 +679,7 @@ const styles = StyleSheet.create({
     borderRadius: 8
   },
   longBien: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     marginTop: 10,
     marginLeft: 36
@@ -696,7 +696,7 @@ const styles = StyleSheet.create({
     borderRadius: 8
   },
   hoanKiem: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     marginTop: 10,
     marginLeft: 31
@@ -718,7 +718,7 @@ const styles = StyleSheet.create({
     borderRadius: 8
   },
   baDinh: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     marginTop: 10,
     marginLeft: 43
@@ -735,7 +735,7 @@ const styles = StyleSheet.create({
     borderRadius: 8
   },
   hoangMai: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     marginTop: 10,
     marginLeft: 31
@@ -758,7 +758,7 @@ const styles = StyleSheet.create({
     borderRadius: 8
   },
   haDong: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     marginTop: 10,
     marginLeft: 38
@@ -775,7 +775,7 @@ const styles = StyleSheet.create({
     borderRadius: 8
   },
   tayHo: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     marginTop: 10,
     marginLeft: 44
@@ -815,7 +815,7 @@ const styles = StyleSheet.create({
     borderRadius: 11
   },
   timPhong: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(255,255,255,1)",
     fontSize: 18,
     marginTop: 11,
@@ -834,7 +834,7 @@ const styles = StyleSheet.create({
     borderRadius: 11
   },
   huyTimKiem: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(40,126,243,1)",
     fontSize: 18,
     marginTop: 8,

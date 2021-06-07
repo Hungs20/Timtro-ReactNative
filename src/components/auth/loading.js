@@ -5,9 +5,9 @@ import '@react-native-firebase/auth'
 import * as Colors from '../../styles/colors'
 export default class Loading extends React.Component {
     componentDidMount() {
-      firebase.auth()
-  .signOut()
-  .then(() => console.log('User signed out!'));
+  //     firebase.auth()
+  // .signOut()
+  // .then(() => console.log('User signed out!'));
         firebase.auth().onAuthStateChanged(user => {
           this.props.navigation.navigate(user ? 'Main' : 'Login')
         })

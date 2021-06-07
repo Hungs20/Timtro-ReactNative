@@ -61,7 +61,7 @@ class LoveRoom extends Component {
                 {
                     this.state.listRoom.map((room, index) => {
                         return (
-                            <CellLoveRoom key={this.state.listRoom[index].key} height={200} room={this.state.listRoom[index]} navigation={this.props.navigation}/>
+                           <CellLoveRoom key={this.state.listRoom[index].key} height={200} room={room} navigation={this.props.navigation}/> 
                         )
                     })
                     }  

@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     borderRadius: 20
   },
   districText: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     fontSize: 10,
     textAlign: "center",
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     marginLeft: 1
   },
   nearYouText: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     fontSize: 10,
     textAlign: "center",
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     borderRadius: 20
   },
   postRoomText: {
-    fontFamily: "roboto-regular",
+    //fontFamily: "roboto-regular",
     color: "rgba(133,134,136,1)",
     fontSize: 10,
     textAlign: "center",

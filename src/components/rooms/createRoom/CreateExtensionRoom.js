@@ -14,7 +14,7 @@ import { IconButton } from 'react-native-paper'
 
 import { utils } from '@react-native-firebase/app';
 import storage from '@react-native-firebase/storage';
-import ImagePicker from 'react-native-image-picker';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import * as Progress from 'react-native-progress';
 class CreateExtensionRoom extends Component {
     constructor(props){
@@ -32,22 +32,13 @@ class CreateExtensionRoom extends Component {
     const options = {
       maxWidth: 2000,
       maxHeight: 2000,
-      storageOptions: {
-        skipBackup: true,
-        path: 'images'
-      }
     };
-    ImagePicker.showImagePicker(options, async response => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      } else {
+    launchImageLibrary(options, async response => {
+      console.log(response)
+      if (response.uri != null) {
         const source = { uri: response.uri };
         console.log(source);
-        await this.setState({
+        this.setState({
           image: source
         })
         this.uploadImage()

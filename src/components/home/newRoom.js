@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
         flex:1, borderRadius: 10, margin: 5, height: 100, width: '100%'
     },
     title : {
-        fontFamily: "roboto-regular",
+        //fontFamily: "roboto-regular",
         fontSize: 14,
         color: 'black', 
         fontWeight:'bold',
